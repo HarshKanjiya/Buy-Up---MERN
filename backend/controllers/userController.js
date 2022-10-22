@@ -1,107 +1,93 @@
 const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middleware/catchAsyncError");
-const User = require('../models/userModel');
+const User = require("../models/userModel");
 const sendToken = require("../utils/JWTtoken");
-const sendEmail = require('../utils/sendEmail.js')
-
-
+const sendEmail = require("../utils/sendEmail.js");
 
 // register user
-exports.registerUser = catchAsyncErrors( async(req,res,next) => {
+exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  const { name, email, password } = req.body;
+  const user = await User.create({
+    name,
+    email,
+    password,
+    avatar: {
+      public_id: "demo id is here",
+      url: "demo url is here",
+    },
+  });
 
-    const {name,email,password} = req.body;
-    const user = await User.create({
-        name,
-        email,
-        password,
-        avatar:{
-            public_id:"demo id is here",
-            url:"demo url is here"
-        }
-    })
-
-    sendToken(user,201,res)
-})
-
+  sendToken(user, 201, res);
+});
 
 // login user
-exports.loginUser = catchAsyncErrors( async(req,res,next) => {
+exports.loginUser = catchAsyncErrors(async (req, res, next) => {
+  const { email, password } = req.body;
 
-    const {email,password} = req.body;
+  if (!email || !password) {
+    return next(new ErrorHandler("Please Enter Email and Password", 400));
+  }
 
-    if(!email || !password)
-    {
-        return next(new ErrorHandler("Please Enter Email and Password",400))
-    }
+  const user = await User.findOne({ email }).select("+password");
 
-    const user = await User.findOne({email}).select("+password");
+  if (!user) {
+    return next(new ErrorHandler("invalid Email or Password", 401));
+  }
 
-    if(!user)
-    {
-        return next(new ErrorHandler("invalid Email or Password",401))
-    }
+  const isPasswordMatched = await user.comparePassword(password);
 
-    const isPasswordMatched =await user.comparePassword(password);
-
-    if(!isPasswordMatched)
-    {
-        return next(new ErrorHandler("invalid Email or Password",401))
-    }
-    sendToken(user,200,res)
-})
+  if (!isPasswordMatched) {
+    return next(new ErrorHandler("invalid Email or Password", 401));
+  }
+  sendToken(user, 200, res);
+});
 
 // logout user
-exports.logOut = catchAsyncErrors(async(req,res,next)=>{
-
-    res.cookie("token",null,{
-        expiresIn: new Date(Date.now()),
-        httpOnly:true
-        })
-    res.status(200).json({
-        success:true,
-        message:"Logged Out"
-    })
-})
-
+exports.logOut = catchAsyncErrors(async (req, res, next) => {
+  res.cookie("token", null, {
+    expiresIn: new Date(Date.now()),
+    httpOnly: true,
+  });
+  res.status(200).json({
+    success: true,
+    message: "Logged Out",
+  });
+});
 
 // forgot password
-exports.forgotPassword = catchAsyncErrors(async(req,res,next)=>{
+exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findOne(req.body.email);
 
-    const user = await User.findOne(req.body.email)
+  if (!user) {
+    return next(new ErrorHandler("user not found", 404));
+  }
 
-    if(!user){
-        return next(new ErrorHandler('user not found',404))
-    }
+  // reset token getting and saving
+  const resetToken = user.getResetPasswordToken();
 
-    // reset token getting and saving
-    const resetToken = user.getResetPasswordToken();
+  await user.save({ validateBeforeSave: false });
 
-    await user.save({ validateBeforeSave:false });
+  const resetPasswordURL = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/password/reset/${resetToken}`;
 
-    const resetPasswordURL = `${req.protocol}://${req.get('host')}/api/v1/password/reset/${resetToken}`
+  const message = `Yout password reset token is:- \n\n ${resetPasswordURL} \n\n if you have not requested this request then please ignore it!!! `;
 
-    const message = `Yout password reset token is:- \n\n ${resetPasswordURL} \n\n if you have not requested this request then please ignore it!!! `
+  try {
+    await sendEmail({
+      email: user.email, 
+      subject: `Buy up password Recovery`,
+      message, 
+    });
+    res.status(200).json({ 
+      success: true,
+      message: `Email sent to ${req.body.email} successfully`,
+    }); 
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
 
-    try{
-
-        await sendEmail({
-            email:user.email,
-            subject:`Buy up password Recovery`,
-            message
-        });
-        res.status(200).json({
-            success:true,
-            message:`Email sent to ${req.body.email} successfully`
-
-        })
-    }
-    catch(error){
-        user.resetPasswordToken = undefined;
-        user.resetPasswordExpire = undefined;
-        await user.save({ validateBeforeSave:false });
-
-        return next(new ErrorHandler(error.message,500))
-        
-    }
-
-})
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
