@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import scroll from "../../Assets/images/scroll-bar.png"
+import ProductList from "../product-list";
 
 const Home = () => {
   return (
@@ -12,7 +13,7 @@ const Home = () => {
             <img src={scroll} alt="scroll down" />
         </a>
       </Hero>
-
+      <ProductList />
 
     </Container>
   );
@@ -45,7 +46,4 @@ p{
     font-size: 2.5rem;
     padding-bottom: 3rem;
 }
-
-
-
 `;
