@@ -13,7 +13,7 @@ const Home = () => {
             <img src={scroll} alt="scroll down" />
         </a>
       </Hero>
-      <ProductList />
+      {/* <ProductList /> */}
 
     </Container>
   );

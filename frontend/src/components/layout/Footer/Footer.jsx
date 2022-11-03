@@ -22,7 +22,7 @@ const Footer = () => {
       </LeftFooter>
 
       <MidFooter>
-        <img src={logo} />
+        <img src={logo} alt="Buy Up" />
         <p>High Quality is our first priority</p>
 
        
@@ -31,9 +31,9 @@ const Footer = () => {
       <RightFooter>
         <h3>Follow Us</h3>
         <div className="Footer-RightFooter">
-          <a href="https://www.instagram.com/harxh_designs/" className="Footer-RightFooter-instagram" > <img src={instagram} />Instagram</a>
+          <a href="https://www.instagram.com/harxh_designs/" className="Footer-RightFooter-instagram" > <img src={instagram} alt="instagram" />Instagram</a>
           <a href="https://www.linkedin.com/in/harsh-kanjiya-306aa21b9/" className="Footer-RightFooter-linkedin">
-            <img src={linkedin} />LinkedIn
+            <img src={linkedin} alt="linkedin"/>LinkedIn
           </a>
         </div>
       </RightFooter>

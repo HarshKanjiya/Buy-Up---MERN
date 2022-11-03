@@ -82,18 +82,10 @@ const ProductList = () => {
       <Featured>
         <Header>
           <p>Featured Products</p>
-          <More variant="contained">
-            more <KeyboardArrowRightIcon />{" "}
-          </More>
+          <p>xbvjhbcjhbvjhcb</p>
         </Header>
         <Display>
-          {products ? (
-            products.map((product, index) => (
-              <ProductCardView key={product._id} product={product} />
-            ))
-          ) : (
-            <p>no product</p>
-          )}
+          
         </Display>
       </Featured>
     </>
@@ -129,9 +121,11 @@ const More = styled(Button)`
   padding: 0.5rem 1.5rem !important;
 `;
 const Display = styled.div`
-  display: flex;
+  /* display: flex;
   overflow-x: auto;
   &::-webkit-scrollbar {
     display: none;
-  }
+  } */
+  width: 100%;
+  background-color: red;
 `;
