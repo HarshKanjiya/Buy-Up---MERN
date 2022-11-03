@@ -82,7 +82,7 @@ const ProductList = () => {
       <Featured>
         <Header>
           <p>Featured Products</p>
-          <p>xbvjhbcjhbvjhcb</p>
+          <More>more</More>
         </Header>
         <Display>
           
