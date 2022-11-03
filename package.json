@@ -16,10 +16,13 @@
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "framer-motion": "^7.6.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
     "nodemailer": "^6.8.0",
     "nodemon": "^2.0.20",
+    "react-scripts": "^5.0.1",
+    "redux-devtools-extension": "^2.13.9",
     "validator": "^13.7.0"
   }
 }
