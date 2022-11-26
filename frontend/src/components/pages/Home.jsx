@@ -1,25 +1,25 @@
-import { useDispatch,useSelector } from 'react-redux'
-import { getProducts } from '../../db/productFetchs';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../redux/slices/productSlice";
 
 import HeroSectionCarousel from "../layouts/HeroSectionCarousel";
 import ProductList from "../layouts/productList";
 
 const Home = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
-    const Products = useSelector((state) => state.Products)
+  useEffect(() => {
+    dispatch( fetchProducts() );
+  }, []);
 
-    dispatch(getProducts)
 
-    console.log('Products :>> ', Products);
 
-    return ( 
-        <>
-        <HeroSectionCarousel/>
-        <ProductList/>
+  return (
+    <>
+      <HeroSectionCarousel />
+      <ProductList />
+    </>
+  );
+};
 
-        </>
-     );
-}
- 
 export default Home;

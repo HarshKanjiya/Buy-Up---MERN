@@ -3,6 +3,7 @@ import  {motion} from "framer-motion"
 import {Link} from "react-router-dom"
 
 const ProductCardView = ({ product }) => {
+  console.log('product :>> ', product);
   return (
     <Link to={`/product/${product._id}`} >
     <motion.div
@@ -11,7 +12,7 @@ const ProductCardView = ({ product }) => {
     whileHover={{y:-10}} 
     >
       <div>
-        <img src={product.image} />
+        <img src={product.images?product.images[0].url:null} alt="product" />
       </div>
       <div className=" flex flex-col gap-2 m-2 " >
         <p>{product.name}</p>
@@ -21,9 +22,9 @@ const ProductCardView = ({ product }) => {
             activeColor="tomato"
             isHalf
             edit={false}
-            value={3.5}
+            value={product.ratings}
           />
-          <p className=" text-gray-400 text-sm " >257 Reviews</p>
+          <p className=" text-gray-400 text-sm " >{ product.numOfReviews } Reviews</p>
         </div>
         <p>{product.price}</p>
       </div>

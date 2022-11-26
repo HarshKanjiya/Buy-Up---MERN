@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-  "proxy": "http://localhost:5050",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -24,8 +23,7 @@
     "react-router-dom": "^6.4.3",
     "redux": "^4.2.0",
     "sweetalert2": "^11.6.5",
-    "swiper": "^8.4.4",
-    "webfontloader": "^1.6.28"
+    "swiper": "^8.4.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.22",

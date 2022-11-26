@@ -6,68 +6,17 @@ import "swiper/css/bundle";
 import ProductCardView from "../components/productCardView";
 
 import '../../index.css'
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
-const products = [
-  {
-    name: "pocox3",
-    price: "$299",
-    image:
-      "https://imgs.search.brave.com/sAmhPVkmTRssU-10h-OFozHp8FR1SnHYiUxul9G0oOg/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/c1lfa1lUSTgxY2Vj/NW80aFRFWFZnSGFF/SyZwaWQ9QXBp",
-    _id: "harsh",
-  },
-  {
-    name: "pocox3",
-    price: "$299",
-    image:
-      "https://imgs.search.brave.com/sAmhPVkmTRssU-10h-OFozHp8FR1SnHYiUxul9G0oOg/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/c1lfa1lUSTgxY2Vj/NW80aFRFWFZnSGFF/SyZwaWQ9QXBp",
-    _id: "harsh",
-  },
-  {
-    name: "pocox3",
-    price: "$299",
-    image:
-      "https://imgs.search.brave.com/sAmhPVkmTRssU-10h-OFozHp8FR1SnHYiUxul9G0oOg/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/c1lfa1lUSTgxY2Vj/NW80aFRFWFZnSGFF/SyZwaWQ9QXBp",
-    _id: "harsh",
-  },
-  {
-    name: "pocox3",
-    price: "$299",
-    image:
-      "https://imgs.search.brave.com/sAmhPVkmTRssU-10h-OFozHp8FR1SnHYiUxul9G0oOg/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/c1lfa1lUSTgxY2Vj/NW80aFRFWFZnSGFF/SyZwaWQ9QXBp",
-    _id: "harsh",
-  },
-  {
-    name: "pocox3",
-    price: "$299",
-    image:
-      "https://imgs.search.brave.com/sAmhPVkmTRssU-10h-OFozHp8FR1SnHYiUxul9G0oOg/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/c1lfa1lUSTgxY2Vj/NW80aFRFWFZnSGFF/SyZwaWQ9QXBp",
-    _id: "harsh",
-  },
-  {
-    name: "pocox3",
-    price: "$299",
-    image:
-      "https://imgs.search.brave.com/sAmhPVkmTRssU-10h-OFozHp8FR1SnHYiUxul9G0oOg/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/c1lfa1lUSTgxY2Vj/NW80aFRFWFZnSGFF/SyZwaWQ9QXBp",
-    _id: "harsh",
-  },
-  {
-    name: "pocox3",
-    price: "$299",
-    image:
-      "https://imgs.search.brave.com/sAmhPVkmTRssU-10h-OFozHp8FR1SnHYiUxul9G0oOg/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/c1lfa1lUSTgxY2Vj/NW80aFRFWFZnSGFF/SyZwaWQ9QXBp",
-    _id: "harsh",
-  },
-  {
-    name: "pocox3",
-    price: "$299",
-    image:
-      "https://imgs.search.brave.com/sAmhPVkmTRssU-10h-OFozHp8FR1SnHYiUxul9G0oOg/rs:fit:844:225:1/g:ce/aHR0cHM6Ly90c2U0/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5O/c1lfa1lUSTgxY2Vj/NW80aFRFWFZnSGFF/SyZwaWQ9QXBp",
-    _id: "harsh",
-  },
-];
 
 const ProductList = () => {
+  const { productInfo } = useSelector(state => state.product)
+  const [products,setProducts] = useState(null)
 
+  useEffect(()=>{
+    setProducts(productInfo.products)
+  },[productInfo])
 
   return (
     <div className=" mx-8 my-10  ">

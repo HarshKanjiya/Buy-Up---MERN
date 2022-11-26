@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getProductsAPI } from "../../APILinks";
+import { getSingleProductAPI } from "../../APILinks";
 
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
-  async () => {
+export const fetchProductInfo = createAsyncThunk(
+  "products/fetchProductInfo",
+  async (id) => {
     try{
-        const res =await axios.get(getProductsAPI)
+        const res = await axios.get(`${getSingleProductAPI}${id}`)
         return res.data
     }catch(error){
         return error.message
@@ -15,8 +15,8 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
-const productSlice = createSlice({
-  name: "product",
+const productPageSlice = createSlice({
+  name: "productPage",
   initialState: {
     loading: false,
     productInfo: [],
@@ -24,17 +24,17 @@ const productSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(fetchProducts.pending, (state, action) => {
+    builder.addCase(fetchProductInfo.pending, (state, action) => {
       state.loading = true;
       state.productInfo = [];
       state.error = null;
     }),
-      builder.addCase(fetchProducts.fulfilled, (state, action) => {
+      builder.addCase(fetchProductInfo.fulfilled, (state, action) => {
         state.loading = false;
         state.productInfo = action.payload;
         state.error = null;
       }),
-      builder.addCase(fetchProducts.rejected, (state, action) => {
+      builder.addCase(fetchProductInfo.rejected, (state, action) => {
         state.loading = false;
         state.productInfo = [];
         state.error = action.error.message;
@@ -42,4 +42,4 @@ const productSlice = createSlice({
   },
 });
 
-export default productSlice.reducer;
+export default productPageSlice.reducer;
