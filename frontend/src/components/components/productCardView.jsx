@@ -1,15 +1,21 @@
 import ReactStars from "react-rating-stars-component";
 import  {motion} from "framer-motion"
-import {Link} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import styled from "@emotion/styled";
 
 const ProductCardView = ({ product }) => {
-  console.log('product :>> ', product);
+  const navigate = useNavigate()
+
+  const HelperClick = () => {
+    navigate(`/product/${product._id}`)
+  }
+
   return (
-    <Link to={`/product/${product._id}`} >
-    <motion.div
-    className=" max-w-sm  mx-2 rounded-lg overflow-hidden border border-gray-300 border-solid hover:shadow-lg duration-10 "
+    <div onClick={HelperClick} >
+    <Wrapper
     initial={{y:0}}
     whileHover={{y:-10}} 
+    whileTap={{ y:0}}
     >
       <div>
         <img src={product.images?product.images[0].url:null} alt="product" />
@@ -26,11 +32,25 @@ const ProductCardView = ({ product }) => {
           />
           <p className=" text-gray-400 text-sm " >{ product.numOfReviews } Reviews</p>
         </div>
-        <p>{product.price}</p>
+        <p>₹{product.price}</p>
       </div>
-    </motion.div>
-    </Link>
+    </Wrapper>
+    </div>
   );
 };
 
 export default ProductCardView;
+
+const Wrapper = styled(motion.div)`
+max-width: 170px;
+margin: 0.5rem;
+border: 1px solid #f0f0f0;
+overflow: hidden;
+border-radius:9px;
+transition: 100ms ;
+
+&:hover{
+  box-shadow: 0 10px 11px rgba(0,0,0,0.2);
+  border:1px solid white;
+}
+`

@@ -5,9 +5,9 @@ import { getProductsAPI } from "../../APILinks";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
+  async (keyword) => {
     try{
-        const res =await axios.get(getProductsAPI)
+        const res =await axios.get(`${getProductsAPI}?keyword=${keyword ? keyword : ''}`)
         return res.data
     }catch(error){
         return error.message
@@ -16,7 +16,7 @@ export const fetchProducts = createAsyncThunk(
 );
 
 const productSlice = createSlice({
-  name: "product",
+  name: "products",
   initialState: {
     loading: false,
     productInfo: [],

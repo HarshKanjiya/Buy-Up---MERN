@@ -6,8 +6,9 @@ import productSlice from "./slices/productSlice";
 
 
 const reducer = combineReducers({
-  product: productSlice,
+  products: productSlice,
   productPage: productPageSlice,
+  
 });
 
 const store = configureStore({

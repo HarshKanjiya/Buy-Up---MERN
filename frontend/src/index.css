@@ -2,36 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", "roboto";
+}
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', 'roboto';
-  }
-
-
-.swiper-button-prev{
-    background-image: url('./assets/images/arrow.png') ;
-    transform: rotate(180deg);
-    background-repeat: no-repeat;
+.swiper-button-prev {
+  background-image: url("./assets/images/arrow.png");
+  transform: rotate(180deg);
+  background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
   margin-left: 10px;
 }
-.swiper-button-next{
-    background-image: url('./assets/images/arrow.png') ;
-    background-repeat: no-repeat;
+.swiper-button-next {
+  background-image: url("./assets/images/arrow.png");
+  background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
   margin-right: 10px;
 }
 
-
 .swiper-button-prev::after {
-    display: none;
-  }
+  display: none;
+}
 
 .swiper-button-next::after {
-    display: none;
-  }
+  display: none;
+}

@@ -25,8 +25,12 @@ const Container = styled.div`
 font-size: 0.8rem;
 width:200px;
 border-radius:11px;
-border: 1px solid #909090;
+border: 1px solid #d0d0d0;
 padding:1rem;
+
+&::hover{
+    border-color:#909090;
+}
 
 .ReviewCartView-author{
     width:100%;

@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 
 const ProductList = () => {
-  const { productInfo } = useSelector(state => state.product)
+  const { productInfo } = useSelector(state => state.products)
   const [products,setProducts] = useState(null)
 
   useEffect(()=>{

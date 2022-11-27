@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
-import { Button } from "@mui/material";
+import { Button, Dialog, DialogTitle, Fab } from "@mui/material";
 import { motion } from "framer-motion";
 
-export const Wrapper = styled.div`
-min-height: 92vh;
-display: flex;
-flex-direction:column;
-justify-content: space-around;
-`
+export const Wrapper = styled(motion.div)`
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
 export const Container = styled.div`
   min-height: 60vh;
   width: 100%;
@@ -46,7 +46,7 @@ export const ProductName = styled.q`
   width: 100%;
   text-align: center;
   font-family: "Hubballi", cursive;
-
+  font-weight: 600;
   padding: 0.5rem 0;
 
   @media (max-width: 480px) {
@@ -133,19 +133,59 @@ export const QuantityUpButton = styled(motion.button)`
 export const PriceWrapper = styled.div`
   padding: 0.5rem;
 `;
+
+// add to cart UI
 export const AddToCartWrapper = styled.div`
   width: 100%;
   display: grid;
   place-items: center;
+  margin: 1rem auto;
 `;
 export const CartButton = styled(Button)`
-letter-spacing: 3px ;
-font-size: 1.1rem;
-padding: 0.3rem 4rem !important;
+  letter-spacing: 3px;
+  display: flex !important ;
+  font-size: 1.1rem !important ;
   background-image: linear-gradient(120deg, #269f4e, #20bf55) !important ;
+  transition: 400ms;
+  span {
+    width: 100%;
+  }
 
   @media (max-width: 480px) {
     width: 100% !important ;
     border-radius: 0px !important;
-    }
+    letter-spacing: 2px;
+    font-size: 1rem;
+  }
 `;
+
+// reviews UI
+export const ReviewWrapper = styled.div`
+width: calc(100% - 2rem);
+height: max-content;
+margin: 1rem;
+
+.ReviewWrapper-Header{
+  text-align:center;
+  font-weight: 500;
+  margin-bottom:0.5rem;
+}
+`
+
+// make review styles
+export const MakeReviewOpenerWrapper = styled.div`
+width: calc(100% - 2rem);
+margin:0 1rem;
+display: flex;
+justify-content: flex-end;
+`
+export const MakeReviewOpener = styled(Fab)`
+width:10rem ;
+background-image: linear-gradient(120deg, #269f4e, #20bf55) !important ;
+color:white;
+`
+export const MakeReviewWrapper = styled(Dialog)`
+`
+export const MakeReviewTitle = styled(DialogTitle)`
+
+`
