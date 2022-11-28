@@ -16,7 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.products);
 
   const [searchString, setSearchString] = useState("");
@@ -25,13 +25,11 @@ const Home = () => {
     dispatch(fetchProducts());
   }, []);
 
-
   const HelperSearchClick = () => {
-    if(searchString.trim())
-    {
-      navigate(`/products/${searchString.split(' ').join('')}`)
+    if (searchString.trim()) {
+      navigate(`/products/${searchString.split(" ").join("")}`);
     }
-  }
+  };
 
   return (
     <>
@@ -41,15 +39,15 @@ const Home = () => {
         <>
           <HeadBar>
             <div className="HeadBar-left">
-            <Link to="/products">
-              <HeadBarElement>ALL PRODUCTS</HeadBarElement>
-            </Link>
-            <Link to="/products/smartphone">
-              <HeadBarElement>PHONES</HeadBarElement>
-            </Link>
-            <Link to="/products/laptop">
-              <HeadBarElement>LAPTOP</HeadBarElement>
-            </Link>
+              <Link to="/products">
+                <HeadBarElement>ALL PRODUCTS</HeadBarElement>
+              </Link>
+              <Link to="/products/smartphone">
+                <HeadBarElement>PHONES</HeadBarElement>
+              </Link>
+              <Link to="/products/laptop">
+                <HeadBarElement>LAPTOP</HeadBarElement>
+              </Link>
             </div>
             <div className="HeadBar-right">
               <HeadBarElementSearchInput className="">
@@ -60,7 +58,7 @@ const Home = () => {
                   }}
                   placeholder="I Phone"
                 />
-                <button onClick={HelperSearchClick} >
+                <button onClick={HelperSearchClick}>
                   <SearchIcon />
                 </button>
               </HeadBarElementSearchInput>

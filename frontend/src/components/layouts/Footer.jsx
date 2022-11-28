@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 import React from "react";
 import Logo from "../../assets/images/logo.png";
-import BackGround from "../../assets/images/FooterBackground.jpg";
-
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import { Link } from "react-router-dom";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Footer = () => {
   return (
@@ -18,6 +18,14 @@ const Footer = () => {
             <img src={Logo} alt="logo" />
             <p>BUY UP</p>
           </Title>
+          <FooterBody>
+            <p className="Footer-ProfileClass">
+              Hello there,👋
+              <br />
+              I'm Harsh and You are Watching My Side Project. Find More about me
+              at About me page.
+            </p>
+          </FooterBody>
         </ProductInfo>
 
         {/* services */}
@@ -25,6 +33,31 @@ const Footer = () => {
           <Title>
             <p>SERVICES</p>
           </Title>
+          <FooterBody>
+            <Link to="/">
+              <ListItem>
+                <NavigateNextIcon /> Home
+              </ListItem>
+            </Link>
+
+            <Link to="products">
+              <ListItem>
+                <NavigateNextIcon /> Products
+              </ListItem>
+            </Link>
+
+            <Link to="profile">
+              <ListItem>
+                <NavigateNextIcon /> Profile
+              </ListItem>
+            </Link>
+
+            <Link to="aboutme">
+              <ListItem>
+                <NavigateNextIcon /> About me
+              </ListItem>
+            </Link>
+          </FooterBody>
         </ProductLinks>
 
         {/* social */}
@@ -33,24 +66,29 @@ const Footer = () => {
             <p>CONTECT ME</p>
           </TitleContectME>
 
-          <ListItem>
-            <EmailOutlinedIcon />
-            <p>harshkanjiya100@gmail.com</p>
-          </ListItem>
+          <FooterBody>
+            <ListItem>
+              <EmailOutlinedIcon />
+              <p>harshkanjiya100@gmail.com</p>
+            </ListItem>
 
-          <ListItem>
-            <WhatsAppIcon />
-            <p>90542 42004</p>
-          </ListItem>
-          <ListItem>
-            <p className="SocialLinks-SocialTag" >Social Media</p>
-          </ListItem>
+            <ListItem>
+              <WhatsAppIcon />
+              <p>90542 42004</p>
+            </ListItem>
+            <ListItem>
+              <p className="SocialLinks-SocialTag">Social Media</p>
+            </ListItem>
 
-          <ListItem>
-          <LinkedInIcon sx={{scale:'1.5'}} />
-          <InstagramIcon sx={{scale:'1.5'}}/>
-          </ListItem>
-
+            <ListItem>
+              <a href="https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile">
+                <LinkedInIcon sx={{ scale: "1.5" }} />
+              </a>
+              <a href="https://www.instagram.com/harxh_designs/">
+                <InstagramIcon sx={{ scale: "1.5" }} />
+              </a>
+            </ListItem>
+          </FooterBody>
         </SocialLinks>
       </Container>
       <FooterText>
@@ -67,7 +105,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top:2rem
+  margin-top: 2rem;
 `;
 const FooterText = styled.p`
   width: 100%;
@@ -89,10 +127,9 @@ const Container = styled.div`
   align-items: flex-start;
   overflow: hidden;
 
-  @media ( max-width: 900px ){
+  @media (max-width: 900px) {
     flex-direction: column;
   }
-
 `;
 const ProductInfo = styled.div`
   flex: 1;
@@ -102,7 +139,7 @@ const ProductInfo = styled.div`
   color: white;
   padding-top: 2rem;
 
-  @media (max-width:480px){
+  @media (max-width: 900px) {
     width: 100%;
   }
 `;
@@ -111,23 +148,23 @@ const ProductLinks = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding-top: 2rem;
+  padding: 2rem 0;
   color: white;
-  
-  @media (max-width:480px){
+
+  @media (max-width: 900px) {
     width: 100%;
   }
 `;
 const SocialLinks = styled.div`
-  padding: 2rem 0 ;
+  padding: 2rem 0;
   height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   background-image: linear-gradient(-180deg, #2bb594, #01b277);
-  
-  @media (max-width:480px){
+
+  @media (max-width: 900px) {
     width: 100%;
   }
 `;
@@ -168,18 +205,39 @@ const ListItem = styled.div`
   gap: 1rem;
   margin: 0 4rem;
 
-  .SocialLinks-SocialTag{
+  .SocialLinks-SocialTag {
     border-bottom: 1px solid black;
     width: 100%;
   }
 
-  
-  @media (max-width:480px){
+  @media (max-width: 480px) {
     width: 100%;
     margin: 0 1rem;
 
-    .SocialLinks-SocialTag{
+    .SocialLinks-SocialTag {
       width: 90%;
+    }
+  }
+`;
+const FooterBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: max-content;
+  margin: 0 auto;
+
+  .Footer-ProfileClass {
+    max-width: 290px;
+    text-justify: inter-word;
+  }
+
+  @media (max-width: 480px) {
+    align-items: flex-start;
+    width: 100%;
+    margin: 0 1rem;
+
+    .Footer-ProfileClass {
+      max-width: 90vw;
     }
   }
 `;

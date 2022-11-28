@@ -6,6 +6,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import EditIcon from "@mui/icons-material/Edit";
+import SendIcon from "@mui/icons-material/Send";
 
 import ReactStars from "react-rating-stars-component";
 import { fetchProductInfo } from "../../../redux/slices/productPageSlice";
@@ -15,6 +16,7 @@ import {
   Container,
   Description,
   Left,
+  MakeReviewContent,
   MakeReviewOpener,
   MakeReviewOpenerWrapper,
   MakeReviewTitle,
@@ -25,12 +27,16 @@ import {
   QuantityUpButton,
   QuantityWrapper,
   RatingsWrapper,
+  ReviewFooter,
+  ReviewFooterButton,
+  ReviewInputText,
   ReviewWrapper,
   Right,
   Wrapper,
 } from "./ProductPage.styles";
 import ReviewList from "../reviews/reviewList";
 import LoadingScreen from "../../components/LoadingScreen";
+import { Divider } from "@mui/material";
 
 const ProductPage = () => {
   const params = useParams();
@@ -39,11 +45,16 @@ const ProductPage = () => {
 
   const [quantity, setQuantity] = useState(1);
   const [ReviewBoxVisibility, setReviewBoxVisibility] = useState(false);
+  const [userReviewRatings, setUserReviewRatings] = useState(0);
+  const [userReviewComment, setUserReviewComment] = useState("");
 
   useEffect(() => {
     dispatch(fetchProductInfo(params.id));
   }, [dispatch]);
 
+  const HelperReviewSubmit = () => {
+    setReviewBoxVisibility(false);
+  };
 
   return (
     <>
@@ -118,13 +129,62 @@ const ProductPage = () => {
 
               {/* make review UI */}
               <MakeReviewOpenerWrapper>
-                <MakeReviewOpener variant="extended" onClick={()=>{ setReviewBoxVisibility(true) }} >
+                <MakeReviewOpener
+                  variant="extended"
+                  onClick={() => {
+                    setReviewBoxVisibility(true);
+                  }}
+                >
                   <EditIcon />
-                  &nbsp; add review
+                  &nbsp;
+                  <p>add review</p>
                 </MakeReviewOpener>
               </MakeReviewOpenerWrapper>
-              <MakeReviewWrapper open={ReviewBoxVisibility} onClose={()=>{ setReviewBoxVisibility(false) }}>
+
+              {/* inside dialog */}
+              <MakeReviewWrapper
+                open={ReviewBoxVisibility}
+                onClose={() => {
+                  setReviewBoxVisibility(false);
+                }}
+              >
                 <MakeReviewTitle>Make Review</MakeReviewTitle>
+                <Divider />
+                <MakeReviewContent>
+                  <p>Your Ratings</p>
+                  <RatingsWrapper>
+                    <ReactStars
+                      color="#f1f1f1"
+                      activeColor="tomato"
+                      isHalf
+                      size={24}
+                      edit
+                      value={userReviewRatings}
+                      onChange={(value) => {
+                        setUserReviewRatings(value);
+                      }}
+                    />
+                    <p>{userReviewRatings}</p>
+                  </RatingsWrapper>
+                  <ReviewInputText
+                    label="add your comment"
+                    multiline
+                    maxRows={4}
+                    value={userReviewComment}
+                    onChange={(e) => {
+                      setUserReviewComment(e.target.value);
+                    }}
+                  />
+                  <ReviewFooter>
+                    <ReviewFooterButton
+                      variant="contained"
+                      onClick={HelperReviewSubmit}
+                    >
+                      send
+                      <SendIcon />
+                    </ReviewFooterButton>
+                  </ReviewFooter>
+                </MakeReviewContent>
               </MakeReviewWrapper>
             </>
           ) : null}

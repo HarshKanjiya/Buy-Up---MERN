@@ -20,8 +20,8 @@ function App() {
       <Route path="/products/:keyword" element={<AllProducts />} />
     </Routes>
     </AnimatePresence>
-     </BrowserRouter>
      <Footer/>
+     </BrowserRouter>
     </div>
   )
 }

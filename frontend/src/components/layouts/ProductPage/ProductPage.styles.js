@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import { Button, Dialog, DialogTitle, Fab } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Fab,
+  TextField,
+} from "@mui/material";
 import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div)`
@@ -161,31 +168,62 @@ export const CartButton = styled(Button)`
 
 // reviews UI
 export const ReviewWrapper = styled.div`
-width: calc(100% - 2rem);
-height: max-content;
-margin: 1rem;
+  width: calc(100% - 2rem);
+  height: max-content;
+  margin: 1rem;
 
-.ReviewWrapper-Header{
-  text-align:center;
-  font-weight: 500;
-  margin-bottom:0.5rem;
-}
-`
+  .ReviewWrapper-Header {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+`;
 
 // make review styles
 export const MakeReviewOpenerWrapper = styled.div`
-width: calc(100% - 2rem);
-margin:0 1rem;
-display: flex;
-justify-content: flex-end;
-`
+  width: calc(100% - 2rem);
+  margin: 0 1rem;
+  display: flex;
+  justify-content: flex-end;
+`;
 export const MakeReviewOpener = styled(Fab)`
-width:10rem ;
-background-image: linear-gradient(120deg, #269f4e, #20bf55) !important ;
-color:white;
-`
-export const MakeReviewWrapper = styled(Dialog)`
-`
+  width: 10rem;
+  background-image: linear-gradient(120deg, #269f4e, #20bf55) !important ;
+  color: white;
+`;
+export const MakeReviewWrapper = styled(Dialog)``;
 export const MakeReviewTitle = styled(DialogTitle)`
+  font-size: 1.2rem;
+`;
+export const MakeReviewContent = styled(DialogContent)`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+  min-width: 50vw;
 
-`
+  @media (max-width: 480px) {
+    min-width: 80vw;
+  }
+`;
+export const ReviewInputText = styled(TextField)`
+  & label.Mui-focused {
+    color: #2bb594;
+  }
+  & .MuiOutlinedInput-root {
+    &.Mui-focused fieldset {
+      border-color: #2bb594;
+    }
+  }
+`;
+export const ReviewFooter = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+export const ReviewFooterButton = styled(Button)`
+  display: flex;
+  gap: 1rem;
+
+  background-image: linear-gradient(90deg, #2bb594, #01b277);
+`;
