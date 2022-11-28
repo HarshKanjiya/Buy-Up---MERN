@@ -5,9 +5,9 @@ import { getProductsAPI } from "../../APILinks";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async (keyword) => {
+  async ({keyword,page}) => {
     try{
-        const res =await axios.get(`${getProductsAPI}?keyword=${keyword ? keyword : ''}`)
+        const res =await axios.get(`${getProductsAPI}?keyword=${keyword ? keyword : ''}&page=${page ? page : '1'}`)
         return res.data
     }catch(error){
         return error.message
@@ -20,6 +20,7 @@ const productSlice = createSlice({
   initialState: {
     loading: false,
     productInfo: [],
+    resultPerPage: 15,
     error: null,
   },
 
@@ -32,6 +33,7 @@ const productSlice = createSlice({
       builder.addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.productInfo = action.payload;
+        state.resultPerPage = action.payload.resultPerPage;
         state.error = null;
       }),
       builder.addCase(fetchProducts.rejected, (state, action) => {

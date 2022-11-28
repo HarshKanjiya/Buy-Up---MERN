@@ -9,9 +9,10 @@ import ProductList from "../../layouts/productList";
 import {
   HeadBar,
   HeadBarElement,
+  HeadBarElementFilter,
   HeadBarElementSearchInput,
 } from "./Home.styles";
-import { TextField } from "@mui/material";
+import TuneIcon from "@mui/icons-material/Tune";
 import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
@@ -22,7 +23,7 @@ const Home = () => {
   const [searchString, setSearchString] = useState("");
 
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts({}));
   }, []);
 
   const HelperSearchClick = () => {
@@ -62,6 +63,11 @@ const Home = () => {
                   <SearchIcon />
                 </button>
               </HeadBarElementSearchInput>
+              <HeadBarElementFilter
+              variant="contained"
+              >
+                <TuneIcon />
+              </HeadBarElementFilter>
             </div>
           </HeadBar>
           <HeroSectionCarousel />

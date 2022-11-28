@@ -18,9 +18,10 @@ export const HeadBar = styled.div`
   }
 
   .HeadBar-right {
-    width:40%;
+    width: 40%;
     display: flex;
     justify-content: flex-end;
+    gap: 1rem;
   }
 
   @media (max-width: 480px) {
@@ -56,7 +57,7 @@ export const HeadBarElementSearchInput = styled.div`
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.08);
   color: #909090;
 
-  width:100%;
+  width: 100%;
 
   position: relative;
 
@@ -70,10 +71,9 @@ export const HeadBarElementSearchInput = styled.div`
     border-bottom: 1px solid #f5f5f5;
     width: 85%;
 
-    &::placeholder{
-        color:#a0a0a0;
+    &::placeholder {
+      color: #a0a0a0;
     }
-
   }
   button {
     position: absolute;
@@ -83,10 +83,27 @@ export const HeadBarElementSearchInput = styled.div`
     border-radius: 0 7px 7px 0;
     color: #0c3324;
     background-image: linear-gradient(90deg, #2bb594, #01b277);
+    transition:300ms;
+    &:hover{
+      color:white;
+    }
   }
 
   @media (max-width: 480px) {
     margin: 0.5rem 0;
     width: 100%;
   }
+`;
+export const HeadBarElementFilter = styled.button`
+  background-image: linear-gradient(90deg, #2bb594, #01b277);
+  display: grid;
+  place-content: center;
+  border-radius:7px;
+  padding:0 0.5rem;
+  color: #0c3324;
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.08);
+  transition:300ms;
+    &:hover{
+      color:white;
+    }
 `;
