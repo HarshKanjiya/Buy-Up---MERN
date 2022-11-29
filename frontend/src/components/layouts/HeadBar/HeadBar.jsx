@@ -13,17 +13,22 @@ import {
   FilterDialogSlider,
   FilterDialogFooter,
   FilterDialogFooterButton,
+  Categories,
+  Category,
 } from "./HeadBar.style";
 import TuneIcon from "@mui/icons-material/Tune";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
 const HeadBar = ({ page = "home" }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchString, setSearchString] = useState("");
   const [filterOpener, setFilterOpener] = useState(false);
   const [sliderValue, setSliderValue] = useState([0, 150000]);
+  const [category, setCategory] = useState([]);
+  const [categoryActiveClass, setCategoryActiveClass] = useState([false,false,false,false,false,false,false]);
 
   const HelperSearchClick = () => {
     if (searchString.trim()) {
@@ -50,6 +55,21 @@ const HeadBar = ({ page = "home" }) => {
     );
   };
 
+  const ApplyFilterProductPage = () => {
+    dispatch(
+      fetchProducts({
+        price: sliderValue,
+      })
+    );
+  };
+
+  const HelperCategorySelectionAndInsertion = (index) => {
+    let temp = categoryActiveClass
+    temp[index] = !temp[index]
+    setCategoryActiveClass(temp)
+  }
+
+  console.log('cate :>> ', categoryActiveClass);
   return (
     <>
       {page === "home" ? (
@@ -96,37 +116,38 @@ const HeadBar = ({ page = "home" }) => {
         <HeadBarWrapper>
           {/* for products */}
           <div className="HeadBar-left">
-          <Link to="/products" >
-            <HeadBarElement
+            <Link
+              to="/products"
               onClick={() => {
                 HelperForProductPageDispatchs("");
               }}
             >
-              ALL
-            </HeadBarElement>
-          </Link>
-          
-            <HeadBarElement
+              <HeadBarElement>ALL</HeadBarElement>
+            </Link>
+            <Link
+              to="/products/smartphone"
               onClick={() => {
                 HelperForProductPageDispatchs("smartphone");
               }}
             >
-              PHONES
-            </HeadBarElement>
-            <HeadBarElement
+              <HeadBarElement>PHONES</HeadBarElement>
+            </Link>
+            <Link
+              to="/products/laptop"
               onClick={() => {
                 HelperForProductPageDispatchs("laptop");
               }}
             >
-              LAPTOP
-            </HeadBarElement>
-            <HeadBarElement
+              <HeadBarElement>LAPTOP</HeadBarElement>
+            </Link>
+            <Link
+              to="/products/smartfit"
               onClick={() => {
                 HelperForProductPageDispatchs("smartfit");
               }}
             >
-              SMART FIT
-            </HeadBarElement>
+              <HeadBarElement>SMART FIT</HeadBarElement>
+            </Link>
           </div>
           <div className="HeadBar-right">
             <HeadBarElementSearchInput className="">
@@ -172,8 +193,20 @@ const HeadBar = ({ page = "home" }) => {
               setSliderValue(newValue);
             }}
           />
+
+          <p>category</p>
+          <Categories>
+            {/* {["SMART PHONES", "LAPTOPS", "SMART WATCH","CASES", "FIT BANDS","EAR BUDS","EAR PHONES"]} */}
+            <Category onClick={()=> HelperCategorySelectionAndInsertion(0)} >SMART PHONE</Category>
+            <Category onClick={()=> HelperCategorySelectionAndInsertion(1)}>LAPTOP</Category>
+            <Category onClick={()=> HelperCategorySelectionAndInsertion(2)}>SMART WATCH</Category>
+            <Category onClick={()=> HelperCategorySelectionAndInsertion(3)}>CASE</Category>
+            <Category onClick={()=> HelperCategorySelectionAndInsertion(4)}>FIT BAND</Category>
+            <Category onClick={()=> HelperCategorySelectionAndInsertion(5)}>EAR BUDS</Category>
+            <Category onClick={()=> HelperCategorySelectionAndInsertion(6)}>EAR PHONES</Category>
+          </Categories>
           <FilterDialogFooter>
-            <FilterDialogFooterButton>
+            <FilterDialogFooterButton onClick={ApplyFilterProductPage}>
               {" "}
               send <SendIcon />
             </FilterDialogFooterButton>

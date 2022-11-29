@@ -29,6 +29,7 @@ const AllProducts = () => {
     );
   }, [page]);
 
+
   return (
     <>
       {loading ? (
@@ -44,7 +45,7 @@ const AllProducts = () => {
               <ProductCardView product={product} key={index} />
             ))}
           </Body>
-          {resultPerPage < productInfo.productCount ? (
+          {resultPerPage <= productInfo.products.length ? (
             <ProductPagination
               count={Math.ceil(productInfo.productCount / resultPerPage)}
               boundaryCount={2}
@@ -55,9 +56,7 @@ const AllProducts = () => {
                 setPage(value);
               }}
             />
-          ) : (
-            <p>no product found</p>
-          )}
+          ) : null}
         </Container>
       </>) : null}
     </>

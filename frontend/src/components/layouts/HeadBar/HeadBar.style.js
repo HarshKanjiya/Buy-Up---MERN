@@ -156,3 +156,24 @@ export const FilterDialogFooterButton = styled(Button)`
 
   background-image: linear-gradient(90deg, #2bb594, #01b277);
 `;
+export const Categories = styled.div`
+display: flex;
+flex-wrap: wrap;
+gap:0.7rem;
+` 
+export const Category = styled.button`
+width:max-content;
+padding:0.3rem 1rem;
+border-radius: 7px;
+border:2px solid #f5f5f5;
+transition: 300ms;
+&:hover{
+    border-color:white;
+    box-shadow: 0 0 11px rgba(0,0,0,0.15);
+}
+
+&:disabled{
+    background-image: linear-gradient(90deg, #2bb594, #01b277);
+    color:white;
+}
+`
