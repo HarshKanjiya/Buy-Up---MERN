@@ -11,8 +11,9 @@ const ProductCardView = ({ product }) => {
   }
 
   return (
-    <div onClick={HelperClick} >
+    <>
     <Wrapper
+    onClick={HelperClick}
     initial={{y:0}}
     whileHover={{y:-10}} 
     whileTap={{ y:0}}
@@ -35,7 +36,7 @@ const ProductCardView = ({ product }) => {
         <p>₹{product.price}</p>
       </div>
     </Wrapper>
-    </div>
+    </>
   );
 };
 
@@ -52,5 +53,10 @@ transition: 100ms ;
 &:hover{
   box-shadow: 0 10px 11px rgba(0,0,0,0.2);
   border:1px solid white;
+}
+
+@media (min-width: 480px){
+  max-width: 150px;
+  font-size: 0.8rem;
 }
 `
