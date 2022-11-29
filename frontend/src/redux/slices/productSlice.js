@@ -5,9 +5,9 @@ import { getProductsAPI } from "../../APILinks";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async ({keyword,page}) => {
+  async ({keyword,page,price = [0,150000]}) => {
     try{
-        const res =await axios.get(`${getProductsAPI}?keyword=${keyword ? keyword : ''}&page=${page ? page : '1'}`)
+        const res =await axios.get(`${getProductsAPI}?keyword=${keyword ? keyword : ''}&page=${page ? page : '1'}&price[gte]=${price[0]}&price[lte]=${price[1]}`)
         return res.data
     }catch(error){
         return error.message

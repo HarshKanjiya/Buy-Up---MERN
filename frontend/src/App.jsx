@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Footer from "./components/layouts/Footer";
 
 import Header from "./components/layouts/Header";
-import ProductPage from "./components/layouts/ProductPage/ProductPage";
 import AllProducts from "./components/pages/AllProducts/AllProducts";
 import Home from "./components/pages/home/Home";
+import ProductPage from "./components/pages/ProductPage/ProductPage";
 
 
 const lightTheme = {

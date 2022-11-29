@@ -23,7 +23,7 @@ const ProductCardView = ({ product }) => {
       </div>
       <div className=" flex flex-col gap-2 m-2 " >
         <p>{product.name}</p>
-        <div className=" flex align-middle justify-between " >
+        <div className=" flex items-center justify-between " >
           <ReactStars
             color="#f1f1f1"
             activeColor="tomato"
@@ -31,7 +31,7 @@ const ProductCardView = ({ product }) => {
             edit={false}
             value={product.ratings}
           />
-          <p className=" text-gray-400 text-sm " >{ product.numOfReviews } Reviews</p>
+          <p className=" text-gray-400 text-[0.8rem] " >{ product.ratings }</p>
         </div>
         <p>₹{product.price}</p>
       </div>
@@ -56,7 +56,7 @@ transition: 100ms ;
 }
 
 @media (min-width: 480px){
-  max-width: 150px;
+  max-width: min-content(40vw,150px);
   font-size: 0.8rem;
 }
 `

@@ -29,10 +29,10 @@ const ProductList = () => {
       className=" py-4 "
         navigation
         modules={[Navigation]}
-        slidesPerView={ sliderForPhone === true ? 2:5 }
+        slidesPerView={ sliderForPhone }
         draggable
         grabCursor
-        onSwiper={(swiper) => { setSliderForPhone( swiper.device.android === true || swiper.device.ios === true ? true : false ) }}
+        onSwiper={(swiper) => { setSliderForPhone( Math.floor(swiper.width / 150)) }}
 
       >
         {products ? (

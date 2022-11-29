@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Scrollbar, A11y } from 'swiper';
 import { HeroSectionCarouselComponent } from '../components/HeroSectionCaro';
 import AppleLogo from "../../assets/HeroCaro/appleLogo.png"
+import BuyUpLogo from "../../assets/images/logo.png"
 import XiaomiLogo from "../../assets/HeroCaro/xiaomiLogo.png"
 import Iphone14Img from "../../assets/HeroCaro/i phone 14.png"
 import XiomiPhoneImg from "../../assets/HeroCaro/xiaomi 11 note.png"
@@ -39,7 +40,7 @@ const carouselData = [
   },
   {
     image:AccesoriesImg,
-    logo:null,
+    logo:BuyUpLogo,
     name:'Daily offers for Accessories',
     feature:'headsets, smart were, Smart Phone cases end much more... ',
     price: null,

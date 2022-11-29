@@ -13,9 +13,9 @@ export const HeroSectionCarouselComponent = ({ item }) => {
     <Container borderColor={item.color} onPointerMove={onMove}>
       <Blob
         style={{
-          left: pos[0]-60,
+          left: pos[0] - 60,
           top: pos[1] - 150,
-          backgroundColor:item.color
+          backgroundColor: item.color,
         }}
       ></Blob>
 
@@ -68,6 +68,15 @@ const DetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  border-radius: 7px;
+  margin: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(100px);
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.15)
+  );
 
   p {
     height: max-content;
@@ -77,6 +86,15 @@ const DetailsWrapper = styled.div`
 
   .HeroSectionCarouselComponent-feature {
     color: #909090;
+
+    @media (max-width: 480px) {
+      visibility: hidden;
+    }
+  }
+  .HeroSectionCarouselComponent-price {
+    @media (max-width: 480px) {
+      visibility: hidden;
+    }
   }
 
   @media (max-width: 730px) {
@@ -84,6 +102,15 @@ const DetailsWrapper = styled.div`
     left: 0;
     font-size: 0.9rem;
     justify-content: flex-start;
+  }
+  @media (max-width: 480px) {
+    background: none;
+    border: none;
+    height: max-content;
+    width: max-content;
+    backdrop-filter: none;
+    margin: 0;
+    padding: 0.5rem;
   }
 `;
 const DetailsHeader = styled.div`
@@ -110,4 +137,8 @@ const Blob = styled.div`
   transform-origin: center;
 
   filter: blur(80px);
+
+  @media (max-width: 480px) {
+    visibility: hidden;
+  }
 `;

@@ -97,7 +97,8 @@ export const QuantityDownButton = styled(motion.button)`
 
   font-size: 1.2rem;
   color: white;
-  background-image: linear-gradient(120deg, #20bf55, #63d471);
+  background-image: linear-gradient(0deg, #2bb594, #01b277);
+
   transition: 150ms ease-in-out;
 
   &:hover {
@@ -122,7 +123,7 @@ export const QuantityUpButton = styled(motion.button)`
 
   font-size: 1.2rem;
   color: white;
-  background-image: linear-gradient(-45deg, #20bf55, #63d471);
+  background-image: linear-gradient(90deg, #2bb594, #01b277);
   transition: 150ms ease-in-out;
 
   &:hover {
@@ -152,7 +153,7 @@ export const CartButton = styled(Button)`
   letter-spacing: 3px;
   display: flex !important ;
   font-size: 1.1rem !important ;
-  background-image: linear-gradient(120deg, #269f4e, #20bf55) !important ;
+  background-image: linear-gradient(90deg, #2bb594, #01b277);
   transition: 400ms;
   span {
     width: 100%;
@@ -188,7 +189,7 @@ export const MakeReviewOpenerWrapper = styled.div`
 `;
 export const MakeReviewOpener = styled(Fab)`
   width: 10rem;
-  background-image: linear-gradient(120deg, #269f4e, #20bf55) !important ;
+  background-image: linear-gradient(90deg, #2bb594, #01b277);
   color: white;
 `;
 export const MakeReviewWrapper = styled(Dialog)``;

@@ -10,6 +10,7 @@ import {
 import ProductCardView from "../../components/productCardView";
 import LoadingScreen from "../../components/LoadingScreen.jsx";
 import { useParams } from "react-router-dom";
+import HeadBar from "../../layouts/HeadBar/HeadBar";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ const AllProducts = () => {
     <>
       {loading ? (
         <LoadingScreen />
-      ) : productInfo.products ? (
+      ) : productInfo.products ? (<>
+        <HeadBar page="products" />
         <Container>
           <Title>
             <h1>All Products</h1>
@@ -53,9 +55,11 @@ const AllProducts = () => {
                 setPage(value);
               }}
             />
-          ) : null}
+          ) : (
+            <p>no product found</p>
+          )}
         </Container>
-      ) : null}
+      </>) : null}
     </>
   );
 };

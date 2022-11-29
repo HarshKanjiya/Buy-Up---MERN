@@ -34,7 +34,7 @@ import {
   Right,
   Wrapper,
 } from "./ProductPage.styles";
-import ReviewList from "../reviews/reviewList";
+import ReviewList from "../../layouts/reviews/reviewList";
 import LoadingScreen from "../../components/LoadingScreen";
 import { Divider } from "@mui/material";
 
