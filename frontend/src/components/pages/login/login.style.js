@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 `;
 export const Container = styled.div`
   height: 80vh;
-  width: 80vw;
+  width: 70vw;
   background-color: white;
   overflow: hidden;
   border-radius: 6px;

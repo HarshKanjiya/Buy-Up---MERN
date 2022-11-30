@@ -26,27 +26,11 @@ import { Input, InputLabel, FormControl } from "@mui/material";
 
 const Login = () => {
   const [mode, setMode] = useState("login");
-
   const [values, setValues] = useState({
     email: "",
     password: "",
     showPassword: false,
   });
-
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
   return (
     <>
@@ -113,6 +97,10 @@ const Login = () => {
                 <FormTextField
                   variant="standard"
                   label="Email"
+                  value={values.email}
+                  onChange={(event) => {
+                    setValues({ ...values, email: event.target.value });
+                  }}
                   helperText=" "
                 />
                 <FormControl variant="standard">
@@ -122,13 +110,22 @@ const Login = () => {
                   <Input
                     type={values.showPassword ? "text" : "password"}
                     value={values.password}
-                    onChange={handleChange("password")}
+                    onChange={(event) => {
+                      setValues({ ...values, password: event.target.value });
+                    }}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
+                          onClick={() => {
+                            setValues({
+                              ...values,
+                              showPassword: !values.showPassword,
+                            });
+                          }}
+                          onMouseDown={(event) => {
+                            event.preventDefault();
+                          }}
                         >
                           {values.showPassword ? (
                             <VisibilityOff />
@@ -139,7 +136,9 @@ const Login = () => {
                       </InputAdornment>
                     }
                   />
-                  <p className="FormTextFieldWrapper-forgotPassword">Forgot Password?</p>
+                  <p className="FormTextFieldWrapper-forgotPassword">
+                    Forgot Password?
+                  </p>
                 </FormControl>
 
                 <LogBtn>login</LogBtn>
