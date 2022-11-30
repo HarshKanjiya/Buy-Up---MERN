@@ -1,16 +1,19 @@
 import styled from "@emotion/styled";
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useRef } from "react";
 
 export const HeroSectionCarouselComponent = ({ item }) => {
   const [pos, setPos] = React.useState([0, 0]);
+  const ref = useRef(0)
 
   const onMove = (e) => {
-    setPos([e.clientX, e.clientY]);
+    let x = ref.current.clientWidth - e.clientX
+    let y = ref.current.clientHeight - e.clientY
+    setPos([x, y]);
   };
 
   return (
-    <Container borderColor={item.color} onPointerMove={onMove}>
+    <Container borderColor={item.color} onPointerMove={onMove} ref={ref}>
       <Blob
         style={{
           left: pos[0] - 60,
@@ -55,6 +58,8 @@ const Container = styled(motion.div)`
 
   &:hover {
     border-color: #2bb594;
+    transform: scale(1.01);
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
   }
 `;
 const DetailsWrapper = styled.div`
@@ -129,14 +134,14 @@ const DetailsHeader = styled.div`
   }
 `;
 const Blob = styled.div`
-  height: 250px;
-  width: 250px;
+  height: 650px;
+  width: 650px;
   border-radius: 50%;
   z-index: -1;
   position: absolute;
   transform-origin: center;
 
-  filter: blur(80px);
+  filter: blur(250px);
 
   @media (max-width: 480px) {
     visibility: hidden;

@@ -19,7 +19,7 @@ import {
 import TuneIcon from "@mui/icons-material/Tune";
 import { Link, useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import SortIcon from '@mui/icons-material/Sort';
 
 const HeadBar = ({ page = "home" }) => {
   const dispatch = useDispatch();
@@ -27,8 +27,8 @@ const HeadBar = ({ page = "home" }) => {
   const [searchString, setSearchString] = useState("");
   const [filterOpener, setFilterOpener] = useState(false);
   const [sliderValue, setSliderValue] = useState([0, 150000]);
-  const [category, setCategory] = useState([]);
-  const [categoryActiveClass, setCategoryActiveClass] = useState([false,false,false,false,false,false,false]);
+  const [filterRating, setFilterRating] = useState(null);
+  const [categorySelection, setcategorySelection] = useState(null);
 
   const HelperSearchClick = () => {
     if (searchString.trim()) {
@@ -45,49 +45,73 @@ const HeadBar = ({ page = "home" }) => {
       );
     }
   };
-
-  const HelperForProductPageDispatchs = (key) => {
+  const HelperForProductPageDispatchs = (category) => {
     dispatch(
       fetchProducts({
-        keyword: key,
-        page: 1,
+        category: category,
       })
     );
   };
+ 
+  const QuickActionHome = (v) => {
+    navigate(`products/${v}`);
+    dispatch(fetchProducts({ category: v }));
+  };
 
+// filter applicationnnnnnnnnnnnn
+  const FilterBoxExited = () => {
+    setFilterOpener(false)
+    setFilterRating(null)
+    setSliderValue([0,150000])
+    setcategorySelection('')
+  }
   const ApplyFilterProductPage = () => {
+    setFilterRating(null)
+    setcategorySelection('')
     dispatch(
       fetchProducts({
         price: sliderValue,
+        category: categorySelection,
+        ratings:filterRating
       })
     );
   };
-
-  const HelperCategorySelectionAndInsertion = (index) => {
-    let temp = categoryActiveClass
-    temp[index] = !temp[index]
-    setCategoryActiveClass(temp)
-  }
-
-  console.log('cate :>> ', categoryActiveClass);
   return (
     <>
       {page === "home" ? (
         <HeadBarWrapper>
           {/* for home page */}
           <div className="HeadBar-left">
-            <Link to="/products">
-              <HeadBarElement>ALL</HeadBarElement>
-            </Link>
-            <Link to="/products/smartphone">
-              <HeadBarElement>PHONES</HeadBarElement>
-            </Link>
-            <Link to="/products/laptop">
-              <HeadBarElement>LAPTOP</HeadBarElement>
-            </Link>
-            <Link to="/products/smartfit">
-              <HeadBarElement>SMART FIT</HeadBarElement>
-            </Link>
+            <HeadBarElement
+              onClick={() => {
+                QuickActionHome("");
+              }}
+            >
+              ALL
+            </HeadBarElement>
+
+            <HeadBarElement
+              onClick={() => {
+                QuickActionHome("smartphone");
+              }}
+            >
+              PHONES
+            </HeadBarElement>
+            <HeadBarElement
+              onClick={() => {
+                QuickActionHome("laptop");
+              }}
+            >
+              LAPTOP
+            </HeadBarElement>
+
+            <HeadBarElement
+              onClick={() => {
+                QuickActionHome("smartwatch");
+              }}
+            >
+              SMART WATCH
+            </HeadBarElement>
           </div>
           <div className="HeadBar-right">
             <HeadBarElementSearchInput className="">
@@ -102,14 +126,16 @@ const HeadBar = ({ page = "home" }) => {
                 <SearchIcon />
               </button>
             </HeadBarElementSearchInput>
-            <HeadBarElementFilter
-              variant="contained"
-              onClick={() => {
-                setFilterOpener(true);
-              }}
-            >
-              <TuneIcon />
-            </HeadBarElementFilter>
+            {page !== "home" ? (
+              <HeadBarElementFilter
+                variant="contained"
+                onClick={() => {
+                  setFilterOpener(true);
+                }}
+              >
+                <TuneIcon />
+              </HeadBarElementFilter>
+            ) : null}
           </div>
         </HeadBarWrapper>
       ) : (
@@ -141,12 +167,12 @@ const HeadBar = ({ page = "home" }) => {
               <HeadBarElement>LAPTOP</HeadBarElement>
             </Link>
             <Link
-              to="/products/smartfit"
+              to="/products/smartwatch"
               onClick={() => {
-                HelperForProductPageDispatchs("smartfit");
+                HelperForProductPageDispatchs("smartwatch");
               }}
             >
-              <HeadBarElement>SMART FIT</HeadBarElement>
+              <HeadBarElement>SMART WATCH</HeadBarElement>
             </Link>
           </div>
           <div className="HeadBar-right">
@@ -173,11 +199,11 @@ const HeadBar = ({ page = "home" }) => {
           </div>
         </HeadBarWrapper>
       )}
+
+      {/* for  product */}
       <FilterDialog
         open={filterOpener}
-        onClose={() => {
-          setFilterOpener(false);
-        }}
+        onClose={FilterBoxExited}
       >
         <FilterDialogTitle>Filter</FilterDialogTitle>
         <Divider />
@@ -194,21 +220,81 @@ const HeadBar = ({ page = "home" }) => {
             }}
           />
 
+          {/* catogories */}
           <p>category</p>
           <Categories>
-            {/* {["SMART PHONES", "LAPTOPS", "SMART WATCH","CASES", "FIT BANDS","EAR BUDS","EAR PHONES"]} */}
-            <Category onClick={()=> HelperCategorySelectionAndInsertion(0)} >SMART PHONE</Category>
-            <Category onClick={()=> HelperCategorySelectionAndInsertion(1)}>LAPTOP</Category>
-            <Category onClick={()=> HelperCategorySelectionAndInsertion(2)}>SMART WATCH</Category>
-            <Category onClick={()=> HelperCategorySelectionAndInsertion(3)}>CASE</Category>
-            <Category onClick={()=> HelperCategorySelectionAndInsertion(4)}>FIT BAND</Category>
-            <Category onClick={()=> HelperCategorySelectionAndInsertion(5)}>EAR BUDS</Category>
-            <Category onClick={()=> HelperCategorySelectionAndInsertion(6)}>EAR PHONES</Category>
+            <Category
+              onClick={() => {
+                setcategorySelection("smartphone");
+              }}
+              disabled={categorySelection === "smartphone"}
+            >
+              SMART PHONE
+            </Category>
+            <Category
+              onClick={() => {
+                setcategorySelection("laptop");
+              }}
+              disabled={categorySelection === "laptop"}
+            >
+              LAPTOP
+            </Category>
+            <Category
+              onClick={() => {
+                setcategorySelection("smartwatch");
+              }}
+              disabled={categorySelection === "smartwatch"}
+            >
+              SMART WATCH
+            </Category>
+            <Category
+              onClick={() => {
+                setcategorySelection("case");
+              }}
+              disabled={categorySelection === "case"}
+            >
+              CASE
+            </Category>
+            <Category
+              onClick={() => {
+                setcategorySelection("fitband");
+              }}
+              disabled={categorySelection === "fitband"}
+            >
+              FIT BAND
+            </Category>
+            <Category
+              onClick={() => {
+                setcategorySelection("earbuds");
+              }}
+              disabled={categorySelection === "earbuds"}
+            >
+              EAR BUDS
+            </Category>
+            <Category
+              onClick={() => {
+                setcategorySelection("earphones");
+              }}
+              disabled={categorySelection === "earphones"}
+            >
+              EAR PHONES
+            </Category>
           </Categories>
+
+          {/* rating */}
+          <p>minimum rating</p>
+          <FilterDialogSlider
+            valueLabelDisplay={ filterRating === null ? "auto":'on' }
+            onChange={(e, newValue) => {
+              setFilterRating(newValue);
+            }}
+            min={0}
+            max={5}
+          />
+          {/* button */}
           <FilterDialogFooter>
             <FilterDialogFooterButton onClick={ApplyFilterProductPage}>
-              {" "}
-              send <SendIcon />
+              sort <SortIcon />
             </FilterDialogFooterButton>
           </FilterDialogFooter>
         </FilterDialogContent>

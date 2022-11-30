@@ -5,13 +5,23 @@ import { getProductsAPI } from "../../APILinks";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async ({ keyword, page, price = [0, 150000] }) => {
+  async ({ keyword, page, price = [0, 150000], category, ratings }) => {
+    let link = `${getProductsAPI}?keyword=${keyword ? keyword : ""}&page=${
+      page ? page : "1"
+    }&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${
+      ratings ? ratings : "0"
+    }`;
+
+    if (category) {
+      link = `${getProductsAPI}?keyword=${keyword ? keyword : ""}&page=${
+        page ? page : "1"
+      }&price[gte]=${price[0]}&price[lte]=${
+        price[1]
+      }&category=${category}&ratings[gte]=${ratings ? ratings : "0"}`;
+    }
+
     try {
-      const res = await axios.get(
-        `${getProductsAPI}?keyword=${keyword ? keyword : ""}&page=${
-          page ? page : "1"
-        }&price[gte]=${price[0]}&price[lte]=${price[1]}`
-      );
+      const res = await axios.get(link);
       return res.data;
     } catch (error) {
       return error.message;
@@ -27,6 +37,11 @@ const productSlice = createSlice({
     resultPerPage: 15,
     filteredProductCount: 0,
     error: null,
+  },
+  reducers: {
+    clearErrors: (state) => {
+      state.error = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -49,5 +64,6 @@ const productSlice = createSlice({
       });
   },
 });
+export const { clearErrors } = productSlice.reducer;
 
 export default productSlice.reducer;

@@ -6,11 +6,11 @@ import { getSingleProductAPI } from "../../APILinks";
 export const fetchProductInfo = createAsyncThunk(
   "products/fetchProductInfo",
   async (id) => {
-    try{
-        const res = await axios.get(`${getSingleProductAPI}${id}`)
-        return res.data
-    }catch(error){
-        return error.message
+    try {
+      const res = await axios.get(`${getSingleProductAPI}${id}`);
+      return res.data;
+    } catch (error) {
+      return error.message;
     }
   }
 );
@@ -21,6 +21,11 @@ const productPageSlice = createSlice({
     loading: false,
     productInfo: [],
     error: null,
+  },
+  reducers: {
+    clearErrors: (state) => {
+      state.error = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -41,5 +46,5 @@ const productPageSlice = createSlice({
       });
   },
 });
-
+export const { clearErrors } = productPageSlice.reducer;
 export default productPageSlice.reducer;

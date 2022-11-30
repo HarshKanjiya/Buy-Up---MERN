@@ -121,7 +121,7 @@ const Container = styled.div`
   height: max-content;
   overflow: hidden;
   background-image: linear-gradient(#121212, black);
-  border-top: 1rem solid #2bb594;
+  border-top: 0.5rem solid #2bb594;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;

@@ -30,6 +30,7 @@ const ProductList = () => {
         navigation
         modules={[Navigation]}
         slidesPerView={ sliderForPhone }
+        
         draggable
         grabCursor
         onSwiper={(swiper) => { setSliderForPhone( Math.floor(swiper.width / 150)) }}

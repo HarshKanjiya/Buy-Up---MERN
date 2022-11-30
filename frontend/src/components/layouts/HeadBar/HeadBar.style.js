@@ -16,11 +16,12 @@ export const HeadBarWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.3rem 1rem;
+  padding: 0.4rem 1rem;
 
   .HeadBar-left {
     display: flex;
     gap: 0.8rem;
+    flex-wrap: wrap;
   }
 
   .HeadBar-right {
@@ -38,7 +39,7 @@ export const HeadBarWrapper = styled.div`
     .HeadBar-right {
       width: 100%;
       align-items: center;
-      flex-wrap: wrap;
+      
     }
   }
   @media (max-width: 650px) {
@@ -52,6 +53,7 @@ export const HeadBarElement = styled(Button)`
   border-radius: 7px;
   box-shadow: 0 0 7px rgba(0, 0, 0, 0.08);
   color: #909090;
+  min-width: max-content;
 
   display: grid !important;
   place-content: center !important;
@@ -100,7 +102,7 @@ export const HeadBarElementSearchInput = styled.div`
   }
 
   @media (max-width: 480px) {
-    margin: 0.5rem 0;
+    margin-bottom: 0.2rem;
     width: 100%;
   }
 `;
@@ -123,57 +125,60 @@ export const HeadBarElementFilter = styled.button`
 
 // filter UI
 
-export const FilterDialog = styled(Dialog)``;
+export const FilterDialog = styled(Dialog)`
+overflow: hidden;
+`;
 export const FilterDialogTitle = styled(DialogTitle)`
   font-size: 1.2rem;
 `;
 export const FilterDialogContent = styled(DialogContent)`
   display: flex;
   flex-direction: column;
-  margin:0.5rem;
   padding: 1rem;
   gap: 0.5rem;
-  min-width: 50vw;
 
   @media (max-width: 480px) {
     min-width: 80vw;
   }
 `;
 export const FilterDialogSlider = styled(Slider)`
-width: 60%;
-color:#2bb594;
-
+  width: 60%;
+  color: #2bb594;
 `;
+
+export const Categories = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  max-width: calc(100% - 1rem);
+`;
+export const Category = styled.button`
+  width: max-content;
+  padding: 0.3rem 1rem;
+  border-radius: 7px;
+  border: 2px solid #f5f5f5;
+  transition: 300ms;
+  &:hover {
+    border-color: white;
+    box-shadow: 0 0 11px rgba(0, 0, 0, 0.15);
+  }
+
+  &:disabled {
+    background-image: linear-gradient(90deg, #2bb594, #01b277);
+    color: white;
+  }
+`;
+
+
+// footerrrrrrrrr
 export const FilterDialogFooter = styled.div`
-  width: 100%;
   display: flex;
   justify-content: flex-end;
-  `;
+`;
 export const FilterDialogFooterButton = styled(Button)`
   display: flex;
   gap: 1rem;
-  color:white;
+  color: white;
 
   background-image: linear-gradient(90deg, #2bb594, #01b277);
 `;
-export const Categories = styled.div`
-display: flex;
-flex-wrap: wrap;
-gap:0.7rem;
-` 
-export const Category = styled.button`
-width:max-content;
-padding:0.3rem 1rem;
-border-radius: 7px;
-border:2px solid #f5f5f5;
-transition: 300ms;
-&:hover{
-    border-color:white;
-    box-shadow: 0 0 11px rgba(0,0,0,0.15);
-}
-
-&:disabled{
-    background-image: linear-gradient(90deg, #2bb594, #01b277);
-    color:white;
-}
-`

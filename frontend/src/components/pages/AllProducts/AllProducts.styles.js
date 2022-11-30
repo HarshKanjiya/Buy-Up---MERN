@@ -21,8 +21,16 @@ place-content: center;
 export const Body = styled.div`
   display: flex;
   flex-wrap: wrap;
+  
   justify-content: center;
   gap: 1rem;
+
+
+  @media (max-width:650px){
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap:0.5rem;
+  }
 `;
 
 // pagination

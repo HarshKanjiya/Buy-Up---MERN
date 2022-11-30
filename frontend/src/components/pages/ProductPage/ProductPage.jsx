@@ -41,7 +41,7 @@ import { Divider } from "@mui/material";
 const ProductPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { productInfo, loading } = useSelector((state) => state.productPage);
+  const { productInfo, loading, error } = useSelector((state) => state.productPage);
 
   const [quantity, setQuantity] = useState(1);
   const [ReviewBoxVisibility, setReviewBoxVisibility] = useState(false);
@@ -49,6 +49,13 @@ const ProductPage = () => {
   const [userReviewComment, setUserReviewComment] = useState("");
 
   useEffect(() => {
+    if(error){
+      Swal.fire({
+        icon:'warning',
+        text:'Please, Check your Network and refresh'
+      })
+      dispatch( clearErrors() )
+    }
     dispatch(fetchProductInfo(params.id));
   }, [dispatch]);
 

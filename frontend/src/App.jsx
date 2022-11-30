@@ -6,6 +6,7 @@ import Footer from "./components/layouts/Footer";
 import Header from "./components/layouts/Header";
 import AllProducts from "./components/pages/AllProducts/AllProducts";
 import Home from "./components/pages/home/Home";
+import Login from "./components/pages/login/login";
 import ProductPage from "./components/pages/ProductPage/ProductPage";
 
 
@@ -35,6 +36,7 @@ function App() {
             <Route exact path="/product/:id" element={<ProductPage />} />
             <Route exact path="/products" element={<AllProducts />} />
             <Route path="/products/:keyword" element={<AllProducts />} />
+            <Route path="/login" element={<Login/>} />
           </Routes>
         </AnimatePresence>
         <Footer />

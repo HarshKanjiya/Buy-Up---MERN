@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../../../redux/slices/productSlice";
+import { clearErrors, fetchProducts } from "../../../redux/slices/productSlice";
 import {
   Body,
   Container,
   ProductPagination,
   Title,
 } from "./AllProducts.styles";
-import ProductCardView from "../../components/productCardView";
 import LoadingScreen from "../../components/LoadingScreen.jsx";
 import { useParams } from "react-router-dom";
 import HeadBar from "../../layouts/HeadBar/HeadBar";
+import ProductPageProductCardView from "../../components/ProductPageProductCardView";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
@@ -21,12 +21,21 @@ const AllProducts = () => {
 
   const [page, setPage] = useState(1);
   useEffect(() => {
-    dispatch(
-      fetchProducts({
-        keyword: params.keyword,
-        page,
+
+    if(error){
+      Swal.fire({
+        icon:'warning',
+        text:'Please, Check your Network and refresh'
       })
-    );
+      dispatch( clearErrors() )
+    }
+      dispatch(
+        fetchProducts({
+          category:params.keyword,
+          page,
+        })
+      );
+    
   }, [page]);
 
 
@@ -38,14 +47,14 @@ const AllProducts = () => {
         <HeadBar page="products" />
         <Container>
           <Title>
-            <h1>All Products</h1>
+            <h1>Products</h1>
           </Title>
           <Body>
             {productInfo.products.map((product, index) => (
-              <ProductCardView product={product} key={index} />
+              <ProductPageProductCardView product={product} key={index} />
             ))}
           </Body>
-          {resultPerPage <= productInfo.products.length ? (
+          {/* {resultPerPage <= productInfo.products.length ? ( */}
             <ProductPagination
               count={Math.ceil(productInfo.productCount / resultPerPage)}
               boundaryCount={2}
@@ -56,7 +65,7 @@ const AllProducts = () => {
                 setPage(value);
               }}
             />
-          ) : null}
+          {/* ) : null} */}
         </Container>
       </>) : null}
     </>
