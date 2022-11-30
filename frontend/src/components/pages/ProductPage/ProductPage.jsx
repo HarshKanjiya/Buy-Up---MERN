@@ -37,11 +37,15 @@ import {
 import ReviewList from "../../layouts/reviews/reviewList";
 import LoadingScreen from "../../components/LoadingScreen";
 import { Divider } from "@mui/material";
+import Footer from "../../layouts/Footer";
+import Header from "../../layouts/Header";
 
 const ProductPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { productInfo, loading, error } = useSelector((state) => state.productPage);
+  const { productInfo, loading, error } = useSelector(
+    (state) => state.productPage
+  );
 
   const [quantity, setQuantity] = useState(1);
   const [ReviewBoxVisibility, setReviewBoxVisibility] = useState(false);
@@ -49,12 +53,12 @@ const ProductPage = () => {
   const [userReviewComment, setUserReviewComment] = useState("");
 
   useEffect(() => {
-    if(error){
+    if (error) {
       Swal.fire({
-        icon:'warning',
-        text:'Please, Check your Network and refresh'
-      })
-      dispatch( clearErrors() )
+        icon: "warning",
+        text: "Please, Check your Network and refresh",
+      });
+      dispatch(clearErrors());
     }
     dispatch(fetchProductInfo(params.id));
   }, [dispatch]);
@@ -68,134 +72,138 @@ const ProductPage = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <Wrapper
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          {productInfo.product ? (
-            <>
-              <Container>
-                <Left>
-                  <img
-                    src={productInfo.product.images[0].url}
-                    alt={productInfo.name}
-                  />
-                </Left>
-                <Right>
-                  <ProductName>{productInfo.product.name}</ProductName>
-                  <Description>{productInfo.product.description}</Description>
-
-                  <RatingsWrapper>
-                    <ReactStars
-                      color="#f1f1f1"
-                      activeColor="tomato"
-                      isHalf
-                      size={24}
-                      edit={false}
-                      value={productInfo.product.ratings}
+        <>
+          <Header />
+          <Wrapper
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            {productInfo.product ? (
+              <>
+                <Container>
+                  <Left>
+                    <img
+                      src={productInfo.product.images[0].url}
+                      alt={productInfo.name}
                     />
+                  </Left>
+                  <Right>
+                    <ProductName>{productInfo.product.name}</ProductName>
+                    <Description>{productInfo.product.description}</Description>
 
-                    <p> {`${productInfo.product.numOfReviews} Reviews`} </p>
-                  </RatingsWrapper>
+                    <RatingsWrapper>
+                      <ReactStars
+                        color="#f1f1f1"
+                        activeColor="tomato"
+                        isHalf
+                        size={24}
+                        edit={false}
+                        value={productInfo.product.ratings}
+                      />
 
-                  <QuantityWrapper>
-                    <QuantityDownButton
-                      onClick={() => {
-                        setQuantity(quantity - 1);
-                      }}
-                      disabled={quantity <= 1}
-                    >
-                      <NavigateBeforeIcon />
-                    </QuantityDownButton>
-                    <motion.p>{quantity}</motion.p>
-                    <QuantityUpButton
-                      onClick={() => {
-                        setQuantity(quantity + 1);
-                      }}
-                      // disabled={quantity}
-                    >
-                      <NavigateNextIcon />
-                    </QuantityUpButton>
-                  </QuantityWrapper>
-                  <PriceWrapper>₹{productInfo.product.price}</PriceWrapper>
-                  <AddToCartWrapper>
-                    <CartButton variant="contained">
-                      <span>
-                        <ShoppingCartIcon /> &nbsp;&nbsp;add to Cart{" "}
-                      </span>
-                    </CartButton>
-                  </AddToCartWrapper>
-                </Right>
-              </Container>
-              <ReviewWrapper>
-                <p className="ReviewWrapper-Header">Reviews</p>
-                <hr />
-                <ReviewList reviews={productInfo.product.reviews} />
-              </ReviewWrapper>
+                      <p> {`${productInfo.product.numOfReviews} Reviews`} </p>
+                    </RatingsWrapper>
 
-              {/* make review UI */}
-              <MakeReviewOpenerWrapper>
-                <MakeReviewOpener
-                  variant="extended"
-                  onClick={() => {
-                    setReviewBoxVisibility(true);
+                    <QuantityWrapper>
+                      <QuantityDownButton
+                        onClick={() => {
+                          setQuantity(quantity - 1);
+                        }}
+                        disabled={quantity <= 1}
+                      >
+                        <NavigateBeforeIcon />
+                      </QuantityDownButton>
+                      <motion.p>{quantity}</motion.p>
+                      <QuantityUpButton
+                        onClick={() => {
+                          setQuantity(quantity + 1);
+                        }}
+                        // disabled={quantity}
+                      >
+                        <NavigateNextIcon />
+                      </QuantityUpButton>
+                    </QuantityWrapper>
+                    <PriceWrapper>₹{productInfo.product.price}</PriceWrapper>
+                    <AddToCartWrapper>
+                      <CartButton variant="contained">
+                        <span>
+                          <ShoppingCartIcon /> &nbsp;&nbsp;add to Cart{" "}
+                        </span>
+                      </CartButton>
+                    </AddToCartWrapper>
+                  </Right>
+                </Container>
+                <ReviewWrapper>
+                  <p className="ReviewWrapper-Header">Reviews</p>
+                  <hr />
+                  <ReviewList reviews={productInfo.product.reviews} />
+                </ReviewWrapper>
+
+                {/* make review UI */}
+                <MakeReviewOpenerWrapper>
+                  <MakeReviewOpener
+                    variant="extended"
+                    onClick={() => {
+                      setReviewBoxVisibility(true);
+                    }}
+                  >
+                    <EditIcon />
+                    &nbsp;
+                    <p>add review</p>
+                  </MakeReviewOpener>
+                </MakeReviewOpenerWrapper>
+
+                {/* inside dialog */}
+                <MakeReviewWrapper
+                  open={ReviewBoxVisibility}
+                  onClose={() => {
+                    setReviewBoxVisibility(false);
                   }}
                 >
-                  <EditIcon />
-                  &nbsp;
-                  <p>add review</p>
-                </MakeReviewOpener>
-              </MakeReviewOpenerWrapper>
-
-              {/* inside dialog */}
-              <MakeReviewWrapper
-                open={ReviewBoxVisibility}
-                onClose={() => {
-                  setReviewBoxVisibility(false);
-                }}
-              >
-                <MakeReviewTitle>Make Review</MakeReviewTitle>
-                <Divider />
-                <MakeReviewContent>
-                  <p>Your Ratings</p>
-                  <RatingsWrapper>
-                    <ReactStars
-                      color="#f1f1f1"
-                      activeColor="tomato"
-                      isHalf
-                      size={24}
-                      edit
-                      value={userReviewRatings}
-                      onChange={(value) => {
-                        setUserReviewRatings(value);
+                  <MakeReviewTitle>Make Review</MakeReviewTitle>
+                  <Divider />
+                  <MakeReviewContent>
+                    <p>Your Ratings</p>
+                    <RatingsWrapper>
+                      <ReactStars
+                        color="#f1f1f1"
+                        activeColor="tomato"
+                        isHalf
+                        size={24}
+                        edit
+                        value={userReviewRatings}
+                        onChange={(value) => {
+                          setUserReviewRatings(value);
+                        }}
+                      />
+                      <p>{userReviewRatings}</p>
+                    </RatingsWrapper>
+                    <ReviewInputText
+                      label="add your comment"
+                      multiline
+                      maxRows={4}
+                      value={userReviewComment}
+                      onChange={(e) => {
+                        setUserReviewComment(e.target.value);
                       }}
                     />
-                    <p>{userReviewRatings}</p>
-                  </RatingsWrapper>
-                  <ReviewInputText
-                    label="add your comment"
-                    multiline
-                    maxRows={4}
-                    value={userReviewComment}
-                    onChange={(e) => {
-                      setUserReviewComment(e.target.value);
-                    }}
-                  />
-                  <ReviewFooter>
-                    <ReviewFooterButton
-                      variant="contained"
-                      onClick={HelperReviewSubmit}
-                    >
-                      send
-                      <SendIcon />
-                    </ReviewFooterButton>
-                  </ReviewFooter>
-                </MakeReviewContent>
-              </MakeReviewWrapper>
-            </>
-          ) : null}
-        </Wrapper>
+                    <ReviewFooter>
+                      <ReviewFooterButton
+                        variant="contained"
+                        onClick={HelperReviewSubmit}
+                      >
+                        send
+                        <SendIcon />
+                      </ReviewFooterButton>
+                    </ReviewFooter>
+                  </MakeReviewContent>
+                </MakeReviewWrapper>
+              </>
+            ) : null}
+          </Wrapper>
+          <Footer />
+        </>
       )}
     </>
   );

@@ -29,7 +29,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Header />
         <AnimatePresence>
           <Routes>
             <Route exact path="/" element={<Home />} />
@@ -39,7 +38,6 @@ function App() {
             <Route path="/login" element={<Login/>} />
           </Routes>
         </AnimatePresence>
-        <Footer />
       </BrowserRouter>
     </div>
   );
