@@ -193,7 +193,6 @@ export const FormHeaderElementToggleBtn = styled(ToggleButton)`
   }
 `;
 export const FormBody = styled(motion.div)`
-  margin-top: 1.5rem;
   height: 100%;
   width: 100%;
   display: flex;
@@ -205,7 +204,7 @@ export const FormBody = styled(motion.div)`
 
   .FormBody-Header {
     position: absolute;
-    top: 0;
+    top: 1rem;
     left: 0;
     font-size: 1.5rem;
     font-weight: 500;
@@ -214,7 +213,7 @@ export const FormBody = styled(motion.div)`
   .FormBody-Header-beta {
     position: absolute;
     left: 0;
-    top: 2rem;
+    top: 3rem;
     font-size: 0.7rem;
     text-align: left;
   }
@@ -227,7 +226,7 @@ export const FormBody = styled(motion.div)`
     } 
     .FormBody-Header-beta{
       position: relative;
-      top:0;
+      top:1rem;
       text-align: center;
  }
 }
@@ -235,7 +234,7 @@ export const FormBody = styled(motion.div)`
 export const FormTextFieldWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 70%;
+  width: 75%;
   margin: 1rem;
 
   .FormTextFieldWrapper-forgotPassword {
@@ -247,9 +246,14 @@ export const FormTextFieldWrapper = styled.div`
   }
   @media (max-width: 835px){
  width: 90%; 
+ max-width: 300px;
 }
 `;
 export const FormTextField = styled(TextField)`
+padding: 0.5rem 0;
+@media (max-width:950px) and (min-width: 835px) {
+  padding: 0.2rem 0 ;
+}
  @media (max-width: 835px){
  width: 100%; 
 }

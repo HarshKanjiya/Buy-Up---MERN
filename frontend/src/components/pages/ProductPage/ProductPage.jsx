@@ -39,6 +39,7 @@ import LoadingScreen from "../../components/LoadingScreen";
 import { Divider } from "@mui/material";
 import Footer from "../../layouts/Footer";
 import Header from "../../layouts/Header";
+import { Alert } from "../../components/Alert";
 
 const ProductPage = () => {
   const params = useParams();
@@ -54,10 +55,11 @@ const ProductPage = () => {
 
   useEffect(() => {
     if (error) {
-      Swal.fire({
-        icon: "warning",
-        text: "Please, Check your Network and refresh",
-      });
+      Alert({
+        icon:'error',
+        text:error,
+        title:'Oops!'
+      })
       dispatch(clearErrors());
     }
     dispatch(fetchProductInfo(params.id));

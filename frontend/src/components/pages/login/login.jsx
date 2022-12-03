@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/images/logo.png";
 import Profile from "../../../assets/images/Profile.png";
 import {
@@ -21,16 +23,24 @@ import {
   Wrapper,
 } from "./login.style";
 
+import LoadingScreen from "../../components/LoadingScreen";
 import UploadIcon from "@mui/icons-material/Upload";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
-import { Input, InputLabel, FormControl, Button } from "@mui/material";
+import { Input, InputLabel, FormControl } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import { Alert } from "../../components/Alert";
+import { clearErrors, login } from "../../../redux/slices/userSlice";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, userInfo, error, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
+
   const [mode, setMode] = useState("login");
   const [pageSwitch, setPageSwitch] = useState(true); // true for login page & false for forgot password
   const [logInValues, setlogInValues] = useState({
@@ -48,17 +58,32 @@ const Login = () => {
   });
   const [fileName, setFileName] = useState("Upload Avatar");
 
+  useEffect(() => {
+    if (error) {
+      Alert({
+        title: "Login Failed!",
+        icon: "error",
+        text: error,
+      });
+    }
+    if (isAuthenticated) {
+      // navigate('/account')
+    }
+    dispatch(clearErrors());
+  }, [error,isAuthenticated]);
+
   const HelperLogInBTN = () => {
     if (!logInValues.email.trim() || !logInValues.password.trim()) {
       Alert({
         icon: "error",
-        title: "Oops!",
-        text: "Please, fill all the details",
+        text: "Please Enter Email and Password",
       });
+      return;
     }
-    const myForm = new FormData();
-    myForm.set("email", logInValues.email);
-    myForm.set("password", logInValues.password);
+
+    dispatch(
+      login({ email: logInValues.email, password: logInValues.password })
+    );
   };
   const HelperSignUpBtn = () => {
     if (
@@ -69,16 +94,16 @@ const Login = () => {
     ) {
       Alert({
         icon: "error",
-        title: "Oops!",
         text: "Please, fill all the details",
       });
+      return;
     }
     if (signUpValues.password !== signUpValues.confimPassword) {
       Alert({
         icon: "error",
-        title: "Oops!",
         text: "Passwords do not Match!",
       });
+      return;
     }
 
     const myForm = new FormData();
@@ -164,7 +189,11 @@ const Login = () => {
 
                 {/* body */}
                 <AnimatePresence mode="wait">
-                  {mode === "login" ? (
+                  {loading ? (
+                    <>
+                      <LoadingScreen size="small" />
+                    </>
+                  ) : mode === "login" ? (
                     <FormBody
                       key={"login"}
                       initial={{ y: -10, opacity: 0 }}
@@ -192,7 +221,6 @@ const Login = () => {
                               email: event.target.value,
                             });
                           }}
-                          helperText=" "
                         />
                         <FormControl variant="standard">
                           <InputLabel htmlFor="standard-adornment-password">
@@ -205,7 +233,7 @@ const Login = () => {
                             value={logInValues.password}
                             onChange={(event) => {
                               setlogInValues({
-                                ...values,
+                                ...logInValues,
                                 password: event.target.value,
                               });
                             }}
@@ -215,7 +243,7 @@ const Login = () => {
                                   aria-label="toggle password visibility"
                                   onClick={() => {
                                     setlogInValues({
-                                      ...values,
+                                      ...logInValues,
                                       showPassword: !logInValues.showPassword,
                                     });
                                   }}
@@ -275,7 +303,6 @@ const Login = () => {
                               name: event.target.value,
                             });
                           }}
-                          helperText=" "
                         />
                         <FormTextField
                           variant="standard"
@@ -288,7 +315,6 @@ const Login = () => {
                               email: event.target.value,
                             });
                           }}
-                          helperText=" "
                         />
                         <FormControl variant="standard">
                           <InputLabel htmlFor="standard-adornment-password">
@@ -328,7 +354,6 @@ const Login = () => {
                               </InputAdornment>
                             }
                           />
-                          <p>&nbsp;</p>
                         </FormControl>
 
                         <FormTextField

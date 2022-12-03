@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import ReactStars from "react-rating-stars-component";
 
 const ReviewCartView = ({review}) => {
-    console.log('review :>> ', review);
     return ( 
         <Container>
          <ReactStars

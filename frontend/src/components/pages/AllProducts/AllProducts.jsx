@@ -13,6 +13,7 @@ import HeadBar from "../../layouts/HeadBar/HeadBar";
 import ProductPageProductCardView from "../../components/ProductPageProductCardView";
 import Header from "../../layouts/Header";
 import Footer from "../../layouts/Footer";
+import { Alert } from "../../components/Alert";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
@@ -23,11 +24,11 @@ const AllProducts = () => {
 
   const [page, setPage] = useState(1);
   useEffect(() => {
-
     if(error){
-      Swal.fire({
-        icon:'warning',
-        text:'Please, Check your Network and refresh'
+      Alert({
+        icon:'error',
+        text:error,
+        title:'Oops!'
       })
       dispatch( clearErrors() )
     }

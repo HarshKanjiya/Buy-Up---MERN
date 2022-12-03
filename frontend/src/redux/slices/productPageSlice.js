@@ -8,9 +8,10 @@ export const fetchProductInfo = createAsyncThunk(
   async (id) => {
     try {
       const res = await axios.get(`${getSingleProductAPI}${id}`);
+      
       return res.data;
     } catch (error) {
-      return error.message;
+      return rejectWithValue(error.response.data.message)
     }
   }
 );
@@ -46,5 +47,5 @@ const productPageSlice = createSlice({
       });
   },
 });
-export const { clearErrors } = productPageSlice.reducer;
+export const { clearErrors } = productPageSlice.actions;
 export default productPageSlice.reducer;
