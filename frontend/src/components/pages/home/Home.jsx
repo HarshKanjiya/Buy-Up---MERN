@@ -5,9 +5,9 @@ import LoadingScreen from "../../components/LoadingScreen";
 import HeadBar from "../../layouts/HeadBar/HeadBar";
 import HeroSectionCarousel from "../../layouts/HeroSectionCarousel";
 import ProductList from "../../layouts/productList";
-import Swal from "sweetalert2";
 import Header from "../../layouts/Header";
 import Footer from "../../layouts/Footer";
+import { Alert } from "../../components/Alert";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const Home = () => {
 
   useEffect(() => {
     if (error) {
-      Swal.fire({
+      Alert({
         icon: "warning",
         text: "Please, Check your Network and refresh",
       });
@@ -28,7 +28,7 @@ const Home = () => {
   }, []);
 
   if (productInfo === "Network Error") {
-    Swal.fire({
+    Alert({
       icon: "warning",
       text: "Please, Check your Network and refresh",
     });
