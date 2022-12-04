@@ -4,16 +4,23 @@ const User = require("../models/userModel");
 const sendToken = require("../utils/JWTtoken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const cloudinary = require("cloudinary");
+
 // register user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: "avatars",
+    width: 150,
+    crop: "scale",
+  });
   const { name, email, password } = req.body;
   const user = await User.create({
     name,
     email,
     password,
     avatar: {
-      public_id: "demo id is here",
-      url: "demo url is here",
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
     },
   });
 
@@ -152,7 +159,6 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-
 // user update profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
@@ -170,41 +176,36 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
-
 // admin routes
 
 //get all users
 exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
-
   const users = await User.find();
   res.status(200).json({
     success: true,
     users,
-  })
-})
+  });
+});
 
 //get single users
 exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
-
   const user = await User.findById(req.params.id);
-  if(!user){
+  if (!user) {
     return next(new ErrorHandler(`User not found on ID:${req.params.id}`, 404));
   }
-  console.log('hi Harxh!!!');
+  console.log("hi Harxh!!!");
   res.status(200).json({
     success: true,
     user,
-  })
-})
-
+  });
+});
 
 // update user role
 exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
-    role:req.body.role
+    role: req.body.role,
   };
 
   const user = await User.findByIdAndUpdate(req.params.id, newUserData, {
@@ -216,19 +217,16 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 // dlt user
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
 
-  const user = await User.findById(req.params.id)
-  
-  if(!user){
-    return next(new ErrorHandler(`User not found on ID:${req.params.id}`, 404))
+  if (!user) {
+    return next(new ErrorHandler(`User not found on ID:${req.params.id}`, 404));
   }
-  await user.remove()
-  
+  await user.remove();
+
   res.status(200).json({
     success: true,
   });
 });
-

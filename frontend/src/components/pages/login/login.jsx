@@ -32,7 +32,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { Input, InputLabel, FormControl } from "@mui/material";
 import { AnimatePresence } from "framer-motion";
 import { Alert } from "../../components/Alert";
-import { clearErrors, login } from "../../../redux/slices/userSlice";
+import { clearErrors, login, signup } from "../../../redux/slices/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -52,10 +52,10 @@ const Login = () => {
     name: "",
     email: "",
     password: "",
-    confimPassword: "",
-    avatar: Profile,
+    avatar: null,
     showPassword: false,
   });
+  const [avatarPrev,setAvatarPrev] = useState(Profile)
   const [fileName, setFileName] = useState("Upload Avatar");
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const Login = () => {
       });
     }
     if (isAuthenticated) {
-      // navigate('/account')
+      navigate('/profile')
     }
     dispatch(clearErrors());
   }, [error,isAuthenticated]);
@@ -89,19 +89,11 @@ const Login = () => {
     if (
       !signUpValues.email.trim() ||
       !signUpValues.password.trim() ||
-      !signUpValues.name.trim() ||
-      !signUpValues.confimPassword.trim()
+      !signUpValues.name.trim()
     ) {
       Alert({
         icon: "error",
         text: "Please, fill all the details",
-      });
-      return;
-    }
-    if (signUpValues.password !== signUpValues.confimPassword) {
-      Alert({
-        icon: "error",
-        text: "Passwords do not Match!",
       });
       return;
     }
@@ -110,17 +102,21 @@ const Login = () => {
     myForm.set("name", signUpValues.name);
     myForm.set("email", signUpValues.email);
     myForm.set("password", signUpValues.password);
-    myForm.set("confirmPassword", signUpValues.confimPassword);
+    myForm.set('avatar', avatarPrev)
+    dispatch(signup(myForm))
   };
 
-  const HelperImageUpload = (e) => {
-    const reader = new FileReader();
-    reader.onload = () => {
+
+  const HelperImageUpload = ( event ) => {
+    setFileName(event.target.files[0].name);
+    let reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0])
+    reader.onload = function(){
       if (reader.readyState === 2) {
+        setAvatarPrev(reader.result)
         setSignupValues({ ...signUpValues, avatar: reader.result });
-        setFileName(e.target.files[0].name);
       }
-    };
+    }
   };
   return (
     <>
@@ -160,7 +156,9 @@ const Login = () => {
                 {/* headerrrr */}
                 <FormHeader>
                   <FormHeaderElement>
+                    <div className="FormHeaderElement-img" >
                     <img src={Logo} alt="logo" />
+                    </div>
                     <p className="FormHeaderElement-p">BUY UP</p>
                   </FormHeaderElement>
                   <FormHeaderElement>
@@ -285,12 +283,12 @@ const Login = () => {
                         type: "tween",
                       }}
                     >
-                      {/* <div>
-                        <p className="FormBody-Header">HI there👋!</p>
-                       <p className="FormBody-Header-beta">
-                          Your Data is Safe with us
+                      <div>
+                        <p className="FormBody-Header-signup">HI there👋!</p>
+                       <p className="FormBody-Header-beta-signup">
+                          1 Step away from being part of <span>BUY UP</span> family!
                         </p>
-                      </div> */}
+                      </div>
                       <FormTextFieldWrapper>
                         <FormTextField
                           variant="standard"
@@ -354,44 +352,20 @@ const Login = () => {
                               </InputAdornment>
                             }
                           />
+                          <p>&nbsp;</p>
                         </FormControl>
 
-                        <FormTextField
-                          variant="standard"
-                          label="confirm password"
-                          type="password"
-                          error={
-                            signUpValues.confimPassword !== "" &&
-                            signUpValues.confimPassword !==
-                              signUpValues.password
-                          }
-                          value={signUpValues.confimPassword}
-                          onChange={(event) => {
-                            setSignupValues({
-                              ...signUpValues,
-                              confimPassword: event.target.value,
-                            });
-                          }}
-                          helperText={
-                            signUpValues.confimPassword === "" ||
-                            signUpValues.confimPassword ===
-                              signUpValues.password
-                              ? " "
-                              : "Passwords do not match!"
-                          }
-                        />
                         <ImgInputWrapper>
-                          <img src={Profile} alt="profile image" />
+                          <img src={avatarPrev} alt="profile image" />
                           <button>
                             <ImgUploadBtn variant="contained" component="label">
                               <UploadIcon />
                               {fileName}
                               <input
-                                className="job6inputUploadProposal"
                                 type="file"
                                 name="avatar"
                                 accept="image/*"
-                                onChange={(e) => HelperImageUpload(e)}
+                                onChange={(event)=>{HelperImageUpload(event)}}
                                 required
                                 hidden
                               />

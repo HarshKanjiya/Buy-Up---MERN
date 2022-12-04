@@ -103,19 +103,19 @@ export const ImgText = styled.div`
     color: white;
   }
 
-  @media (max-width: 1050px){
+  @media (max-width: 1050px) {
     font-size: 1.3rem;
     padding: 1rem;
-  span{
-    font-size: 1.7rem;
+    span {
+      font-size: 1.7rem;
+    }
+    h6 {
+      font-size: 0.8rem;
+    }
   }
-  h6{
-    font-size: 0.8rem;
+  @media (max-width: 700px) {
+    padding: 0.5rem;
   }
-}
-@media (max-width: 700px){
-  padding: 0.5rem;
-}
 `;
 
 // form
@@ -139,24 +139,28 @@ export const FormHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  img {
-    height: 3rem;
-    width: auto;
-    @media (max-width: 835px){
-      margin-left:-6px ;
+  .FormHeaderElement-img{
+    margin-left: -4px;
+
+    img {
+      height: 3rem;
+      width: 3rem;
+    }
+    @media (max-width: 835px) {
     }
   }
+
   .FormHeaderElement-p {
     font-size: 1.5rem;
     font-weight: 700;
     color: #0c3324;
 
-
-    @media (max-width: 950px) and (min-width:835px ) {
+    @media (max-width: 950px) and (min-width: 835px) {
       visibility: hidden;
     }
-    @media (max-width:380px){
+    @media (max-width: 380px) {
       visibility: hidden;
+      position: absolute;
     }
   }
 `;
@@ -217,19 +221,55 @@ export const FormBody = styled(motion.div)`
     font-size: 0.7rem;
     text-align: left;
   }
+  .FormBody-Header-signup {
+    position: absolute;
+    top: 0.7rem;
+    right: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    /* text-align: right; */
+  }
+  .FormBody-Header-beta-signup {
+    position: absolute;
+    right: 0;
+    top: 2.7rem;
+    font-size: 0.7rem;
+    /* text-align: left; */
 
-  @media (max-width: 835px){
+    span {
+      font-weight: 700;
+    }
+  }
 
-    .FormBody-Header{
+  @media (max-width: 1150px) and (min-width: 835px){
+    .FormBody-Header-signup{
+      top:0rem;
+    }
+    .FormBody-Header-beta-signup{
+      top:1.7rem;
+    }
+  }
+
+  @media (max-width: 835px) {
+    .FormBody-Header {
       position: relative;
       text-align: center;
-    } 
-    .FormBody-Header-beta{
+    }
+    .FormBody-Header-beta {
       position: relative;
-      top:1rem;
+      top: 1rem;
       text-align: center;
- }
-}
+    }
+    .FormBody-Header-signup {
+      position: relative;
+      text-align: center;
+    }
+    .FormBody-Header-beta-signup {
+      position: relative;
+      top: 1rem;
+      text-align: center;
+    }
+  }
 `;
 export const FormTextFieldWrapper = styled.div`
   display: flex;
@@ -244,20 +284,19 @@ export const FormTextFieldWrapper = styled.div`
     padding: 0.5rem 0 1rem 0;
     color: #01b277;
   }
-  @media (max-width: 835px){
- width: 90%; 
- max-width: 300px;
-}
+  @media (max-width: 835px) {
+    width: 90%;
+    max-width: 300px;
+  }
 `;
 export const FormTextField = styled(TextField)`
-padding: 0.5rem 0;
-@media (max-width:950px) and (min-width: 835px) {
-  padding: 0.2rem 0 ;
-}
- @media (max-width: 835px){
- width: 100%; 
-}
-
+  padding: 0.5rem 0;
+  @media (max-width: 950px) and (min-width: 835px) {
+    padding: 0.2rem 0;
+  }
+  @media (max-width: 835px) {
+    width: 100%;
+  }
 `;
 export const ImgInputWrapper = styled.div`
   display: flex;
