@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loadUser } from "../../../redux/slices/userSlice";
+import { motion } from "framer-motion";
+import Header from "../../layouts/Header";
+import Footer from "../../layouts/Footer";
 
 const Profile = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { loading, isAuthenticated, userInfo, error} = useSelector((state) => state.user)
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -14,7 +16,23 @@ const Profile = () => {
     }
   }, []);
 
-  return <div>Profile</div>;
+  if(userInfo){
+    return (
+      <motion.div
+        key={"profilePage"}
+        // initial={{ opacity: 0 }}
+        //     animate={{ opacity: 1 }}
+        //     exit={{ opacity: 0 }}
+        //     transition={{
+        //       duration: 0.4,
+        //     }}
+      >
+      <Header/>
+        {userInfo.name}
+        <Footer/>
+      </motion.div>
+    );
+  }
 };
 
 export default Profile;

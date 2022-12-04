@@ -8,6 +8,7 @@ import ProductList from "../../layouts/productList";
 import Header from "../../layouts/Header";
 import Footer from "../../layouts/Footer";
 import { Alert } from "../../components/Alert";
+import { motion } from "framer-motion";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -39,13 +40,22 @@ const Home = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <>
+        <motion.div
+          key={"homePage"}
+          // initial={{ opacity: 0 }}
+          // animate={{ opacity: 1 }}
+          // exit={{ opacity: 0 }}
+          // transition={{
+          //   duration: 0.4,
+          // }}
+         
+        >
           <Header />
           <HeadBar />
           <HeroSectionCarousel />
           <ProductList />
           <Footer />
-        </>
+        </motion.div>
       )}
     </>
   );

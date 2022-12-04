@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
 import Logo from "../../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
@@ -9,6 +9,7 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 const Footer = () => {
+  const navigate = useNavigate()
   return (
     <Wrapper>
       <Container>
@@ -34,29 +35,23 @@ const Footer = () => {
             <p>SERVICES</p>
           </Title>
           <FooterBody>
-            <Link to="/">
-              <ListItem>
+            
+              <ListItem onClick={()=>{ navigate('/') }} >
                 <NavigateNextIcon /> Home
               </ListItem>
-            </Link>
+            
 
-            <Link to="products">
-              <ListItem>
+              <ListItem onClick={()=>{ navigate('/products') }}>
                 <NavigateNextIcon /> Products
               </ListItem>
-            </Link>
 
-            <Link to="profile">
-              <ListItem>
+              <ListItem onClick={()=>{ navigate('/profile') }}>
                 <NavigateNextIcon /> Profile
               </ListItem>
-            </Link>
 
-            <Link to="aboutme">
-              <ListItem>
+              <ListItem onClick={()=>{ navigate('/aboutme') }}>
                 <NavigateNextIcon /> About me
               </ListItem>
-            </Link>
           </FooterBody>
         </ProductLinks>
 
@@ -105,6 +100,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  font-size: 0.9rem;
   margin-top: 2rem;
 `;
 const FooterText = styled.p`
@@ -180,7 +176,7 @@ const Title = styled.div`
   p {
     border-radius: 3px;
     border-bottom: 3px solid #2bb594;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: "Hubballi", cursive;
   }
 `;
@@ -204,6 +200,8 @@ const ListItem = styled.div`
   display: flex;
   gap: 1rem;
   margin: 0 4rem;
+  cursor: pointer;
+
 
   .SocialLinks-SocialTag {
     border-bottom: 1px solid black;

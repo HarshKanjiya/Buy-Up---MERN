@@ -56,10 +56,10 @@ const ProductPage = () => {
   useEffect(() => {
     if (error) {
       Alert({
-        icon:'error',
-        text:error,
-        title:'Oops!'
-      })
+        icon: "error",
+        text: error,
+        title: "Oops!",
+      });
       dispatch(clearErrors());
     }
     dispatch(fetchProductInfo(params.id));
@@ -74,7 +74,16 @@ const ProductPage = () => {
       {loading ? (
         <LoadingScreen />
       ) : (
-        <>
+        <motion.div
+          key={"productPage"}
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 10, opacity: 0 }}
+          transition={{
+            duration: 0.4,
+           
+          }}
+        >
           <Header />
           <Wrapper
             initial={{ opacity: 0 }}
@@ -205,7 +214,7 @@ const ProductPage = () => {
             ) : null}
           </Wrapper>
           <Footer />
-        </>
+        </motion.div>
       )}
     </>
   );

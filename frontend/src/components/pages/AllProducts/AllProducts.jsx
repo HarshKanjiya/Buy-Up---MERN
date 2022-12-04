@@ -14,6 +14,7 @@ import ProductPageProductCardView from "../../components/ProductPageProductCardV
 import Header from "../../layouts/Header";
 import Footer from "../../layouts/Footer";
 import { Alert } from "../../components/Alert";
+import { motion } from "framer-motion";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
@@ -24,41 +25,48 @@ const AllProducts = () => {
 
   const [page, setPage] = useState(1);
   useEffect(() => {
-    if(error){
+    if (error) {
       Alert({
-        icon:'error',
-        text:error,
-        title:'Oops!'
-      })
-      dispatch( clearErrors() )
+        icon: "error",
+        text: error,
+        title: "Oops!",
+      });
+      dispatch(clearErrors());
     }
-      dispatch(
-        fetchProducts({
-          category:params.keyword,
-          page,
-        })
-      );
-    
+    dispatch(
+      fetchProducts({
+        category: params.keyword,
+        page,
+      })
+    );
   }, [page]);
-
 
   return (
     <>
       {loading ? (
         <LoadingScreen />
-      ) : productInfo.products ? (<>
-      <Header/>
-        <HeadBar page="products" />
-        <Container>
-          <Title>
-            <h1>Products</h1>
-          </Title>
-          <Body>
-            {productInfo.products.map((product, index) => (
-              <ProductPageProductCardView product={product} key={index} />
-            ))}
-          </Body>
-          {/* {resultPerPage <= productInfo.products.length ? ( */}
+      ) : productInfo.products ? (
+        <motion.div
+          key={"allProductsPage"}
+          // initial={{ opacity: 0 }}
+          // animate={{ opacity: 1 }}
+          // exit={{ opacity: 0 }}
+          // transition={{
+          //   duration: 0.4,
+          // }}
+        >
+          <Header />
+          <HeadBar page="products" />
+          <Container>
+            <Title>
+              <h1>Products</h1>
+            </Title>
+            <Body>
+              {productInfo.products.map((product, index) => (
+                <ProductPageProductCardView product={product} key={index} />
+              ))}
+            </Body>
+            {/* {resultPerPage <= productInfo.products.length ? ( */}
             <ProductPagination
               count={Math.ceil(productInfo.productCount / resultPerPage)}
               boundaryCount={2}
@@ -69,10 +77,11 @@ const AllProducts = () => {
                 setPage(value);
               }}
             />
-          {/* ) : null} */}
-        </Container>
-        <Footer/>
-      </>) : null}
+            {/* ) : null} */}
+          </Container>
+          <Footer />
+        </motion.div>
+      ) : null}
     </>
   );
 };

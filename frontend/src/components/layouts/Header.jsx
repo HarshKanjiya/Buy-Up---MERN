@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import NotesIcon from "@mui/icons-material/Notes";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
@@ -13,11 +14,13 @@ import PhonelinkIcon from "@mui/icons-material/Phonelink";
 import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import LaptopIcon from "@mui/icons-material/Laptop";
 import PersonIcon from "@mui/icons-material/Person";
-import InfoIcon from '@mui/icons-material/Info';
+import InfoIcon from "@mui/icons-material/Info";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [sideBarVisibility, setSideBarVisibility] = useState(false);
-
+  const { isAuthenticated, userInfo } = useSelector((state) => state.user);
   return (
     <div className="border-b py-3 flex align-middle justify-between backdrop-blur sticky ">
       <div
@@ -52,64 +55,103 @@ const Header = () => {
         }}
       >
         <SideBarContentWrapper>
-          <SideBarElements>
-            <SideBarEle>
-              <div className="SideBarEle-imgWrapper">
-                <img src={logo} alt="avatar" />
-              </div>
-              <p>NAME</p>
-            </SideBarEle>
-          </SideBarElements>
-          <Divider />
-          {/* user s */}
-          <SideBarElements>
-          <p className="SideBarElements-header">personal</p>
-            <SideBarEle>
-              <PersonIcon />
-              <p>profile</p>
-            </SideBarEle>
-            <SideBarEle>
-              <ShoppingCartIcon />
-              <p>cart</p>
-            </SideBarEle>
-          </SideBarElements>
-          <Divider />
+          {isAuthenticated ? (
+            <>
+              <SideBarElements>
+                <SideBarElePROFILE disableFocusRipple disableRipple>
+                  <div className="SideBarEle-imgWrapper">
+                    <img src={userInfo && userInfo.avatar.url} alt="avatar" />
+                  </div>
+                  <p>{userInfo ? userInfo.name : null}</p>
+                </SideBarElePROFILE>
+              </SideBarElements>
+              <Divider />
+              {/* user s */}
+              <SideBarElements>
+                <p className="SideBarElements-header">personal</p>
+                <SideBarEle
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
+                >
+                  <PersonIcon />
+                  <p>profile</p>
+                </SideBarEle>
+                {userInfo && userInfo.role === "admin" ? (
+                  <SideBarEle
+                    onClick={() => {
+                      navigate("/dashboard");
+                    }}
+                  >
+                    <DashboardIcon />
+                    <p>dashboard</p>
+                  </SideBarEle>
+                ) : null}
+                <SideBarEle
+                  onClick={() => {
+                    navigate("/cart");
+                  }}
+                >
+                  <ShoppingCartIcon />
+                  <p>cart</p>
+                </SideBarEle>
+              </SideBarElements>
+              <Divider />
+            </>
+          ) : null}
+
           {/*  app s */}
           <SideBarElements>
             <p className="SideBarElements-header">overview</p>
-            <SideBarEle variant="outlined">
+            <SideBarEle
+              onClick={() => {
+                navigate("/");
+              }}
+            >
               <HomeIcon />
               <p>home</p>
             </SideBarEle>
 
-            <SideBarEle variant="outlined">
+            <SideBarEle
+              onClick={() => {
+                navigate("/products");
+              }}
+            >
               <PhonelinkIcon />
               <p>all</p>
             </SideBarEle>
 
-            <SideBarEle variant="outlined">
+            <SideBarEle onClick={() => {}}>
               <SmartphoneIcon />
               <p>phone</p>
             </SideBarEle>
 
-            <SideBarEle variant="outlined">
+            <SideBarEle onClick={() => {}}>
               <LaptopIcon />
               <p>laptop</p>
             </SideBarEle>
           </SideBarElements>
           <Divider />
           <SideBarElements>
-          <p className="SideBarElements-header">personal</p>
-            <SideBarEle>
-              <InfoIcon/>
+            <p className="SideBarElements-header">Developer</p>
+            <SideBarEle
+              onClick={() => {
+                navigate("/aboutme");
+              }}
+            >
+              <InfoIcon />
               <p>about me</p>
             </SideBarEle>
           </SideBarElements>
-          <Divider/>
           {/* logout */}
-          <SideBarElements>
-            <LogOut />
-          </SideBarElements>
+         
+            <>
+              <Divider />
+              <SideBarElements>
+                <LogOut />
+              </SideBarElements>
+            </>
+
         </SideBarContentWrapper>
       </Drawer>
     </div>
@@ -149,22 +191,16 @@ const SideBarContentWrapper = styled.div`
   height: 100vh;
   min-width: min(230px, 70vw);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-
-  &:after {
-    content: "";
-    height: 100%;
-    width: 3px;
-    position: absolute;
-    z-index: 999;
-    right: 0;
-    top: 0;
-    background-image: linear-gradient(90deg, #2bb594, #01b277);
+  &::-webkit-scrollbar {
+    width: 0 !important;
   }
+
+  border-right: 4px solid #2bb594;
 `;
 
 const SideBarElements = styled.div`
@@ -187,6 +223,24 @@ const SideBarEle = styled(Button)`
   color: #343434;
   border: none;
   transition: 300ms;
+
+  p {
+    flex: 1;
+    text-align: left;
+  }
+  &:hover {
+    border: none;
+    background-color: white;
+  }
+`;
+const SideBarElePROFILE = styled(Button)`
+  display: flex;
+  gap: 1rem;
+  background-color: white;
+  color: #343434;
+  border: none;
+  transition: 300ms;
+  cursor: default;
   .SideBarEle-imgWrapper {
     height: 3rem;
     width: 3rem;

@@ -30,9 +30,10 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import { Input, InputLabel, FormControl } from "@mui/material";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, MotionConfig } from "framer-motion";
 import { Alert } from "../../components/Alert";
 import { clearErrors, login, signup } from "../../../redux/slices/userSlice";
+import { motion } from "framer-motion";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -55,7 +56,7 @@ const Login = () => {
     avatar: null,
     showPassword: false,
   });
-  const [avatarPrev,setAvatarPrev] = useState(Profile)
+  const [avatarPrev, setAvatarPrev] = useState(Profile);
   const [fileName, setFileName] = useState("Upload Avatar");
 
   useEffect(() => {
@@ -67,10 +68,10 @@ const Login = () => {
       });
     }
     if (isAuthenticated) {
-      navigate('/profile')
+      navigate("/profile");
     }
     dispatch(clearErrors());
-  }, [error,isAuthenticated]);
+  }, [error, isAuthenticated]);
 
   const HelperLogInBTN = () => {
     if (!logInValues.email.trim() || !logInValues.password.trim()) {
@@ -102,24 +103,31 @@ const Login = () => {
     myForm.set("name", signUpValues.name);
     myForm.set("email", signUpValues.email);
     myForm.set("password", signUpValues.password);
-    myForm.set('avatar', avatarPrev)
-    dispatch(signup(myForm))
+    myForm.set("avatar", avatarPrev);
+    dispatch(signup(myForm));
   };
 
-
-  const HelperImageUpload = ( event ) => {
+  const HelperImageUpload = (event) => {
     setFileName(event.target.files[0].name);
     let reader = new FileReader();
-    reader.readAsDataURL(event.target.files[0])
-    reader.onload = function(){
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = function () {
       if (reader.readyState === 2) {
-        setAvatarPrev(reader.result)
+        setAvatarPrev(reader.result);
         setSignupValues({ ...signUpValues, avatar: reader.result });
       }
-    }
+    };
   };
   return (
-    <>
+    <motion.div
+      key={"loginPage"}
+      initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{
+            duration: 0.4,
+          }}
+    >
       <Wrapper>
         <AnimatePresence mode="wait">
           {pageSwitch ? (
@@ -155,9 +163,9 @@ const Login = () => {
               <Form>
                 {/* headerrrr */}
                 <FormHeader>
-                  <FormHeaderElement>
-                    <div className="FormHeaderElement-img" >
-                    <img src={Logo} alt="logo" />
+                  <FormHeaderElement onClick={()=>{ navigate('/') }} >
+                    <div className="FormHeaderElement-img">
+                      <img src={Logo} alt="logo" />
                     </div>
                     <p className="FormHeaderElement-p">BUY UP</p>
                   </FormHeaderElement>
@@ -285,8 +293,9 @@ const Login = () => {
                     >
                       <div>
                         <p className="FormBody-Header-signup">HI there👋!</p>
-                       <p className="FormBody-Header-beta-signup">
-                          1 Step away from being part of <span>BUY UP</span> family!
+                        <p className="FormBody-Header-beta-signup">
+                          1 Step away from being part of <span>BUY UP</span>{" "}
+                          family!
                         </p>
                       </div>
                       <FormTextFieldWrapper>
@@ -365,7 +374,9 @@ const Login = () => {
                                 type="file"
                                 name="avatar"
                                 accept="image/*"
-                                onChange={(event)=>{HelperImageUpload(event)}}
+                                onChange={(event) => {
+                                  HelperImageUpload(event);
+                                }}
                                 required
                                 hidden
                               />
@@ -442,7 +453,7 @@ const Login = () => {
           )}
         </AnimatePresence>
       </Wrapper>
-    </>
+    </motion.div>
   );
 };
 
