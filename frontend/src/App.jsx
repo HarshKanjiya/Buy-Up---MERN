@@ -28,8 +28,8 @@ const themez = createTheme({
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(loadUser());
-  });
+    dispatch(loadUser({}));
+  }, []);
   return (
     <div className="App">
       <BrowserRouter>

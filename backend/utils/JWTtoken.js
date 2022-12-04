@@ -7,7 +7,7 @@ const sendToken = (user, statusCode, res) => {
     expires : new Date(
       Date.now() + 432000000
     ),
-    httpOnly: false,
+    httpOnly: true,
     secure:true,
     domain: "127.0.0.1",
     sameSite: "none"

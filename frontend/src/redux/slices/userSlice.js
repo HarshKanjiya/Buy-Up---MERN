@@ -61,14 +61,16 @@ export const logOut = createAsyncThunk(
   }
 );
 export const loadUser = createAsyncThunk(
-  "user/loaduser", async ({ dispatch, getState, rejectWithValue, fulfillWithValue }) => {
-  try {
-    const { data } = await axios.get(profileAPI);
-    return data.user;
-  } catch (error) {
-    return rejectWithValue(error.response.data.message);
+  "user/loadUser",
+  async ({}, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await axios.get(profileAPI);
+      return response.data.user;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
   }
-});
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -131,22 +133,22 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
-      // loadUser
-      builder.addCase(loadUser.pending, (state, action) => {
-        state.loading = true;
-        state.isAuthenticated = false;
+    // loadUser
+    builder.addCase(loadUser.pending, (state, action) => {
+      state.loading = true;
+      state.isAuthenticated = false;
+    }),
+      builder.addCase(loadUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = true;
+        state.userInfo = action.payload;
       }),
-        builder.addCase(loadUser.fulfilled, (state, action) => {
-          state.loading = false;
-          state.isAuthenticated = true;
-          state.userInfo = action.payload;
-        }),
-        builder.addCase(loadUser.rejected, (state, action) => {
-          state.loading = false;
-          state.isAuthenticated = false;
-          state.userInfo = null;
-          state.error = action.payload;
-        });
+      builder.addCase(loadUser.rejected, (state, action) => {
+        state.loading = false;
+        state.isAuthenticated = false;
+        state.userInfo = null;
+        state.error = action.payload;
+      });
   },
 });
 export const { clearErrors } = userSlice.actions;
