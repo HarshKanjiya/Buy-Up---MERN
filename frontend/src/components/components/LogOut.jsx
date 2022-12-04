@@ -12,6 +12,7 @@ const LogOut = () => {
   const { isAuthenticated } = useSelector((state) => state.user);
   const Helper = () => {
     dispatch(logout({}));
+    navigate('/')
   };
   return (
     <>

@@ -14,7 +14,7 @@ const Profile = () => {
     if (!isAuthenticated) {
       navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   if(userInfo){
     return (

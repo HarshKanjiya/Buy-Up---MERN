@@ -51,9 +51,10 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
 // logout user
 exports.logOut = catchAsyncErrors(async (req, res, next) => {
-  res.cookie("token", null, {
-    expiresIn: new Date(Date.now()),
+  res.cookie("token", null , {
+    maxAge: 0,
     httpOnly: true,
+    overwrite: true,
   });
   res.status(200).json({
     success: true,
