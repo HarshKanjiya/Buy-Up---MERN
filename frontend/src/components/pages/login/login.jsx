@@ -60,7 +60,7 @@ const Login = () => {
   const [fileName, setFileName] = useState("Upload Avatar");
 
   useEffect(() => {
-    if (error) {
+    if (error && error !== 'Please, login to Access this Resource') {
       Alert({
         title: "Login Failed!",
         icon: "error",
@@ -121,12 +121,14 @@ const Login = () => {
   return (
     <motion.div
       key={"loginPage"}
-      initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{
-            duration: 0.4,
-          }}
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 10, opacity: 0 }}
+      transition={{
+        duration: 0.4,
+        ease: "easeInOut",
+        type: "tween",
+      }}
     >
       <Wrapper>
         <AnimatePresence mode="wait">
@@ -163,7 +165,11 @@ const Login = () => {
               <Form>
                 {/* headerrrr */}
                 <FormHeader>
-                  <FormHeaderElement onClick={()=>{ navigate('/') }} >
+                  <FormHeaderElement
+                    onClick={() => {
+                      navigate("/");
+                    }}
+                  >
                     <div className="FormHeaderElement-img">
                       <img src={Logo} alt="logo" />
                     </div>

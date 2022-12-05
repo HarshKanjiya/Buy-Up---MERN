@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/system";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import AboutMe from "./components/pages/about/AboutMe";
 import Cart from "./components/pages/cart/Cart";
@@ -40,10 +40,14 @@ function App() {
           <Route exact path="/products" element={<AllProducts />} />
           <Route path="/products/:keyword" element={<AllProducts />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/aboutme" element={<AboutMe />} />
+         
+          
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard/>} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/aboutme" element={<AboutMe />} />
+         
+         
         </Routes>
       </AnimatePresence>
     </div>

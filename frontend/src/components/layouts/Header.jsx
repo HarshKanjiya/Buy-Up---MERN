@@ -16,6 +16,7 @@ import LaptopIcon from "@mui/icons-material/Laptop";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import { motion } from "framer-motion";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -56,8 +57,14 @@ const Header = () => {
       >
         <SideBarContentWrapper>
           {isAuthenticated ? (
-            <>
-              <SideBarElements>
+            <motion.div layout>
+              <SideBarElements 
+              layout
+              key="profileImg"
+              initial={{scale:0.8,opacity:0}}
+              animate={{scale:1,opacity:1}}
+              exit={{scale:0.8,opacity:0}}
+               >
                 <SideBarElePROFILE disableFocusRipple disableRipple>
                   <div className="SideBarEle-imgWrapper">
                     <img src={userInfo && userInfo.avatar.url} alt="avatar" />
@@ -67,7 +74,13 @@ const Header = () => {
               </SideBarElements>
               <Divider />
               {/* user s */}
-              <SideBarElements>
+              <SideBarElements
+              layout
+              key="personal"
+              initial={{scale:0.8,opacity:0}}
+              animate={{scale:1,opacity:1}}
+              exit={{scale:0.8,opacity:0}}
+              >
                 <p className="SideBarElements-header">personal</p>
                 <SideBarEle
                   onClick={() => {
@@ -97,11 +110,17 @@ const Header = () => {
                 </SideBarEle>
               </SideBarElements>
               <Divider />
-            </>
+            </motion.div>
           ) : null}
 
           {/*  app s */}
-          <SideBarElements>
+          <SideBarElements
+          layout
+              key="overview"
+              initial={{scale:0.8,opacity:0}}
+              animate={{scale:1,opacity:1}}
+              exit={{scale:0.8,opacity:0}}
+          >
             <p className="SideBarElements-header">overview</p>
             <SideBarEle
               onClick={() => {
@@ -132,7 +151,12 @@ const Header = () => {
             </SideBarEle>
           </SideBarElements>
           <Divider />
-          <SideBarElements>
+          <SideBarElements
+          layout
+              key="devSection"
+              initial={{scale:0.8,opacity:0}}
+              animate={{scale:1,opacity:1}}
+              exit={{scale:0.8,opacity:0}}>
             <p className="SideBarElements-header">Developer</p>
             <SideBarEle
               onClick={() => {
@@ -186,7 +210,6 @@ const HomeBtn = styled.div`
     }
   }
 `;
-
 const SideBarContentWrapper = styled.div`
   height: 100vh;
   min-width: min(230px, 70vw);
@@ -202,8 +225,7 @@ const SideBarContentWrapper = styled.div`
 
   border-right: 4px solid #2bb594;
 `;
-
-const SideBarElements = styled.div`
+const SideBarElements = styled(motion.div)`
   width: 100%;
   height: max-content;
   display: flex;

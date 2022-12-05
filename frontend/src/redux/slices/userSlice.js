@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { logInAPI, logOutAPI, profileAPI, signUpAPI } from "../../APILinks";
+import { logInAPI, logOutAPI, profileAPI, signUpAPI, updateProfileAPI } from "../../APILinks";
 
 export const login = createAsyncThunk(
   "user/login",
@@ -71,7 +71,29 @@ export const loadUser = createAsyncThunk(
     }
   }
 );
-
+export const updateProfile = createAsyncThunk(
+  "user/updateProfile",
+  async (
+    userData,
+    { dispatch, getState, rejectWithValue, fulfillWithValue }
+  ) => {
+    try {
+      const response = await axios.put(
+        updateProfileAPI,
+        userData,
+        { withCredentials: true },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data.user;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -150,6 +172,19 @@ const userSlice = createSlice({
         state.userInfo = null;
         state.error = action.payload;
       });
+
+      builder.addCase(updateProfile.pending, (state, action) => {
+        state.loading = true;
+      }),
+        builder.addCase(updateProfile.fulfilled, (state, action) => {
+          state.loading = false;
+          state.userInfo = action.payload;
+        }),
+        builder.addCase(updateProfile.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        });
+
   },
 });
 export const { clearErrors } = userSlice.actions;
