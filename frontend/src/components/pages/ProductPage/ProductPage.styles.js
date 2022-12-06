@@ -14,6 +14,7 @@ export const Wrapper = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding-bottom: 2rem;
 `;
 export const Container = styled.div`
   min-height: 60vh;
@@ -208,13 +209,12 @@ export const MakeReviewContent = styled(DialogContent)`
   }
 `;
 export const ReviewInputText = styled(TextField)`
-  & label.Mui-focused {
+ & label.Mui-focused {
     color: #2bb594;
   }
-  & .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #2bb594;
-    }
+
+  & .MuiInput-underline:after {
+    border-color: #2bb594;
   }
 `;
 export const ReviewFooter = styled.div`

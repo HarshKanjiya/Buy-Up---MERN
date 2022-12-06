@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { logInAPI, logOutAPI, profileAPI, signUpAPI, updateProfileAPI } from "../../APILinks";
+import { logInAPI, logOutAPI, profileAPI, routineCheckAPI, signUpAPI, updateProfileAPI } from "../../APILinks";
 
 export const login = createAsyncThunk(
   "user/login",
@@ -64,7 +64,7 @@ export const loadUser = createAsyncThunk(
   "user/loadUser",
   async ({}, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
     try {
-      const response = await axios.get(profileAPI);
+      const response = await axios.get(routineCheckAPI);
       return response.data.user;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -94,6 +94,8 @@ export const updateProfile = createAsyncThunk(
     }
   }
 );
+
+// slice
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -101,11 +103,19 @@ const userSlice = createSlice({
     isAuthenticated: false,
     userInfo: null,
     error: null,
+    underUpdate: false,
+    isUpdated: null
   },
   reducers: {
     clearErrors: (state) => {
       state.error = null;
     },
+    setUnderUpdate: (state) => {
+      state.underUpdate = true
+    },
+    updateProfileReset: (state) => {
+      state.isUpdated = false
+    }
   },
 
   extraReducers: (builder) => {
@@ -173,20 +183,23 @@ const userSlice = createSlice({
         state.error = action.payload;
       });
 
+      // update profile
       builder.addCase(updateProfile.pending, (state, action) => {
         state.loading = true;
       }),
         builder.addCase(updateProfile.fulfilled, (state, action) => {
           state.loading = false;
-          state.userInfo = action.payload;
+          state.underUpdate = false;
+          state.isUpdated = action.payload;
         }),
         builder.addCase(updateProfile.rejected, (state, action) => {
           state.loading = false;
+          // state.userInfo = null
           state.error = action.payload;
         });
 
   },
 });
-export const { clearErrors } = userSlice.actions;
+export const { clearErrors,setUnderUpdate,updateProfileReset } = userSlice.actions;
 
 export default userSlice.reducer;

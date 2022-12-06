@@ -194,7 +194,6 @@ exports.getSingleUser = catchAsyncErrors(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler(`User not found on ID:${req.params.id}`, 404));
   }
-  console.log("hi Harxh!!!");
   res.status(200).json({
     success: true,
     user,

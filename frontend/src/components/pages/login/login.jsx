@@ -60,17 +60,17 @@ const Login = () => {
   const [fileName, setFileName] = useState("Upload Avatar");
 
   useEffect(() => {
-    if (error && error !== 'Please, login to Access this Resource') {
+    if (error) {
       Alert({
         title: "Login Failed!",
         icon: "error",
         text: error,
       });
+      dispatch(clearErrors());
     }
     if (isAuthenticated) {
       navigate("/profile");
     }
-    dispatch(clearErrors());
   }, [error, isAuthenticated]);
 
   const HelperLogInBTN = () => {

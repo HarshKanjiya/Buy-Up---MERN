@@ -12,6 +12,7 @@ import ProductPage from "./components/pages/ProductPage/ProductPage";
 import Profile from "./components/pages/Profile/profile";
 import { loadUser } from "./redux/slices/userSlice";
 import Dashboard from "./components/pages/dashboard/Dashboard";
+import { UpdateProfile } from "./components/pages/update Profile/UpdateProfile";
 
 const lightTheme = {
   body: "#fff",
@@ -43,9 +44,11 @@ function App() {
           <Route path="/aboutme" element={<AboutMe />} />
          
           
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/dashboard" element={<Dashboard/>} />
-          <Route path="/cart" element={<Cart />} />
+          <Route exact path="/profile" element={<Profile />} />
+          <Route exact path="/profile/update" element={<UpdateProfile />} />
+
+          <Route exact path="/dashboard" element={<Dashboard/>} />
+          <Route exact path="/cart" element={<Cart />} />
          
          
         </Routes>

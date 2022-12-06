@@ -101,7 +101,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   gap: 1rem;
   font-size: 0.9rem;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
 `;
 const FooterText = styled.p`
   width: 100%;

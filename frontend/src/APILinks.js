@@ -17,6 +17,7 @@ export const deleteReviewAPI = "/api/v1/reviews?"  //doubt ful //give product an
 
 // user APIs
 export const profileAPI = "/api/v1/profile"
+export const routineCheckAPI = "/api/v1/routinecheck"
 export const updateProfileAPI = "/api/v1/me/update"
 
 // order APIs

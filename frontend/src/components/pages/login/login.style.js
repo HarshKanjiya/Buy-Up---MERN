@@ -297,6 +297,13 @@ export const FormTextField = styled(TextField)`
   @media (max-width: 835px) {
     width: 100%;
   }
+  & label.Mui-focused {
+    color: #2bb594;
+  }
+
+  & .MuiInput-underline:after {
+    border-color: #2bb594;
+  }
 `;
 export const ImgInputWrapper = styled.div`
   display: flex;

@@ -16,6 +16,7 @@ import {
 } from "./profile.styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { setUnderUpdate } from "../../../redux/slices/userSlice";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -74,7 +75,12 @@ const Profile = () => {
                 <img src={userInfo.avatar.url} alt={userInfo.name} />
               </div>
               <LeftFoot>
-                <LeftFootItem variant="contained">
+                <LeftFootItem variant="contained"
+                onClick={()=>{
+                  dispatch(setUnderUpdate())
+                  navigate('/profile/update')
+                  }}
+                >
                   <EditIcon /> update 
                 </LeftFootItem>
                 <LeftFootItemDlt variant="contained">
@@ -100,7 +106,7 @@ const Profile = () => {
                   delay: 0.8,
                 }}
               >
-                <p className="right-beta">Member since</p>
+                <p className="right-beta">you are Member since</p>
                 <p> {ChangeFormat(userInfo.createAt)} </p>
               </RightItem>
             </Right>
