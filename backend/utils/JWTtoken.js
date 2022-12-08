@@ -9,7 +9,6 @@ const sendToken = (user, statusCode, res) => {
     ),
     httpOnly: true,
     secure:true,
-    domain: "127.0.0.1",
     sameSite: "none"
   };
 

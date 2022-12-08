@@ -6,7 +6,7 @@ export const getSingleProductAPI = "/api/v1/product/"
 export const logInAPI = "/api/v1/login"
 export const signUpAPI = "/api/v1/register"
 export const logOutAPI = "/api/v1/logout"
-export const forgotPasswordAPI = "localhost:5050/api/v1/password/forgot"
+export const forgotPasswordAPI = "/api/v1/password/forgot"
 export const resetPasswordAPI = "/api/v1/password/reset/"
 export const updatePasswordAPI = "/api/v1/password/update"
 
