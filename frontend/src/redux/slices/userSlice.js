@@ -234,6 +234,7 @@ const userSlice = createSlice({
     builder.addCase(updatePassword.fulfilled, (state, action) => {
       state.loading = false;
       state.underUpdate = false;
+      state.userInfo = action.payload.user;
       state.isUpdated = action.payload.success;
     })
     builder.addCase(updatePassword.rejected, (state, action) => {

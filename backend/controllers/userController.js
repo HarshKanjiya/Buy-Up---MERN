@@ -188,7 +188,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     runValidatorsOnUpdate: true,
   });
   res.status(200).json({
-    seccess: true,
+    success: true,
   });
 });
 

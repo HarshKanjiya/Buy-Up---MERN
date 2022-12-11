@@ -7,6 +7,7 @@ import {
   clearErrors,
   loadUser,
   updateProfile,
+  updateProfileReset,
 } from "../../../redux/slices/userSlice";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -54,6 +55,7 @@ export const UpdateProfile = () => {
         title: "success",
         text: "your profile haas been Updated!",
       });
+      dispatch(updateProfileReset())
       dispatch(loadUser({}));
     }
     if (!underUpdate) {
@@ -90,7 +92,16 @@ export const UpdateProfile = () => {
 
   if (userInfo) {
     return (
-      <>
+      <motion.div
+      key={"updateProfilePage"}
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 10, opacity: 0 }}
+      transition={{
+        duration: 0.4,
+        type: "tween",
+      }}
+      >
         <Header />
         <Wrapper>
           {loading ? (
@@ -155,7 +166,7 @@ export const UpdateProfile = () => {
             </Container>
           )}
         </Wrapper>
-      </>
+      </motion.div>
     );
   }
 };

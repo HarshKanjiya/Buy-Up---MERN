@@ -126,7 +126,6 @@ const Login = () => {
       exit={{ y: 10, opacity: 0 }}
       transition={{
         duration: 0.4,
-        ease: "easeInOut",
         type: "tween",
       }}
     >

@@ -3,11 +3,11 @@ import React from "react";
 import Header from "../../layouts/Header";
 
 import LoadingScreen from "../../components/LoadingScreen";
-import UploadIcon from "@mui/icons-material/Upload";
 import {
   clearErrors,
   loadUser,
-  updateProfile,
+  updatePassword,
+  updateProfileReset,
 } from "../../../redux/slices/userSlice";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
@@ -23,6 +23,7 @@ import {
   Wrapper,
 } from "../update Profile/updateProfile.styles";
 import styled from "@emotion/styled";
+import { Alert } from "../../components/Alert";
 
 const UpdatePassword = () => {
   const navigate = useNavigate();
@@ -33,9 +34,9 @@ const UpdatePassword = () => {
     oldPassword: "",
     newPassword: "",
     confirmPassword: "",
-    seePass1:false,
-    seePass2:false
   });
+  const [pass1, setPass1] = useState(false);
+  const [pass2, setPass2] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -46,6 +47,7 @@ const UpdatePassword = () => {
         title: "Update Failed!",
         icon: "error",
         text: error,
+        timer:3000,
       });
       dispatch(clearErrors());
     }
@@ -54,6 +56,7 @@ const UpdatePassword = () => {
         title: "success",
         text: "your profile haas been Updated!",
       });
+      dispatch(updateProfileReset())
       dispatch(loadUser({}));
     }
     if (!underUpdate) {
@@ -62,54 +65,62 @@ const UpdatePassword = () => {
   }, [error, underUpdate, isUpdated, userInfo]);
 
   const HelperUpdateBtn = () => {
-    dispatch({
-      oldPassword: newUserInfo.oldPassword,
-      newPassword: newUserInfo.newPassword,
-      confirmPassword: newUserInfo.confirmPassword,
-      seePass1: false,
-      seePass2: false,
-    });
+    dispatch(
+      updatePassword({
+        oldPassword: newUserInfo.oldPassword,
+        newPassword: newUserInfo.newPassword,
+        confirmPassword: newUserInfo.confirmPassword,
+      })
+    );
   };
 
   if (userInfo) {
     return (
-      <>
+      <motion.div 
+      key={"changePasswordPage"}
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 10, opacity: 0 }}
+      transition={{
+        duration: 0.4,
+        type: "tween",
+      }}
+      >
         <Header />
         <Wrapper>
           {loading ? (
             <LoadingScreen />
           ) : (
             <Container>
+              <Text>Change Password</Text>
               <Center>
-              <>
-                <TextFields
-                  variant="standard"
-                  label="current password"
-                  type={ userInfo.seePass1 ? "text" : "password" }
-                  value={newUserInfo.oldPassword}
-                  onChange={(event) => {
-                    setNewUserInfo({
-                      ...newUserInfo,
-                      oldPassword: event.target.value,
-                    });
-                  }}
-                />
-                 <div
-                    onClick={() => {
+                <Wrp>
+                  <TextFields
+                    variant="standard"
+                    label="current password"
+                    type={pass1 ? "text" : "password"}
+                    value={newUserInfo.oldPassword}
+                    onChange={(event) => {
                       setNewUserInfo({
-                        ...userInfo,
-                        seePass1: !userInfo.seePass1,
+                        ...newUserInfo,
+                        oldPassword: event.target.value,
                       });
                     }}
+                  />
+                  <div
+                    className="Wrp-icon"
+                    onClick={() => {
+                      setPass1(!pass1);
+                    }}
                   >
-                    {newUserInfo.seePass1 ? <Visibility /> : <VisibilityOff />}
+                    {pass1 ? <Visibility /> : <VisibilityOff />}
                   </div>
-              </>
-                <>
+                </Wrp>
+                <Wrp>
                   <TextFields
                     variant="standard"
                     label="new password"
-                    type={ userInfo.seePass1 ? "text" : "password" }
+                    type={pass2 ? "text" : "password"}
                     value={newUserInfo.newPassword}
                     onChange={(event) => {
                       setNewUserInfo({
@@ -119,16 +130,14 @@ const UpdatePassword = () => {
                     }}
                   />
                   <div
+                    className="Wrp-icon"
                     onClick={() => {
-                      setNewUserInfo({
-                        ...userInfo,
-                        seePass2: !userInfo.seePass2,
-                      });
+                      setPass2(!pass2);
                     }}
                   >
-                    {newUserInfo.seePass2 ? <Visibility /> : <VisibilityOff />}
+                    {pass2 ? <Visibility /> : <VisibilityOff />}
                   </div>
-                </>
+                </Wrp>
                 <>
                   <TextFields
                     variant="standard"
@@ -143,20 +152,39 @@ const UpdatePassword = () => {
                   />
                 </>
                 <Btn variant="contained" onClick={HelperUpdateBtn}>
-                  <UploadIcon />
-                  upload
+                  <Text2>CHANGE</Text2>
                 </Btn>
               </Center>
             </Container>
           )}
         </Wrapper>
-      </>
+      </motion.div>
     );
   }
 };
 
 export default UpdatePassword;
 
+const Text = styled.h1`
+  position: absolute;
+  top: 20%;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #565656;
+`;
+const Text2 = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+const Wrp = styled.div`
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+
+  .Wrp-icon {
+    color: #a0a0a0;
+  }
+`;
 const Center = styled.div`
   padding: 1rem;
   min-width: 300px;
