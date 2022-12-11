@@ -2,9 +2,6 @@ import Header from "../../layouts/Header";
 
 import LoadingScreen from "../../components/LoadingScreen";
 import UploadIcon from "@mui/icons-material/Upload";
-import IconButton from "@mui/material/IconButton";
-import { Input } from "@mui/material";
-import { AnimatePresence } from "framer-motion";
 import { Alert } from "../../components/Alert";
 import {
   clearErrors,
@@ -44,9 +41,6 @@ export const UpdateProfile = () => {
     if (!isAuthenticated) {
       navigate("/login");
     }
-    if (!underUpdate) {
-      navigate("/profile");
-    }
     if (error) {
       Alert({
         title: "Update Failed!",
@@ -62,13 +56,23 @@ export const UpdateProfile = () => {
       });
       dispatch(loadUser({}));
     }
+    if (!underUpdate) {
+      navigate("/profile");
+    }
   }, [error, underUpdate, isUpdated, userInfo]);
 
   const HelperUpdateBtn = () => {
     const myForm = new FormData();
+    let Temp = userInfo && userInfo.avatar.url
+    if(Temp === avatarPrev){
+      Temp = ''
+    }
+    else{
+      Temp = avatarPrev
+    }
     myForm.set("name", newUserInfo.name);
     myForm.set("email", newUserInfo.email);
-    myForm.set("avatar", avatarPrev);
+    myForm.set("avatar", Temp);
     dispatch(updateProfile(myForm));
   };
 
@@ -89,63 +93,67 @@ export const UpdateProfile = () => {
       <>
         <Header />
         <Wrapper>
-          <Container>
-            <Left>
-              <div className="Left-imgWrapper">
-                <img src={avatarPrev} alt={userInfo.name} />
-              </div>
+          {loading ? (
+            <LoadingScreen />
+          ) : (
+            <Container>
+              <Left>
+                <div className="Left-imgWrapper">
+                  <img src={avatarPrev} alt={userInfo.name} />
+                </div>
 
-              <Btn variant="contained" component="label">
-                <UploadIcon />
-                {fileName}
-                <input
-                  type="file"
-                  name="avatar"
-                  accept="image/*"
-                  onChange={(event) => {
-                    HelperImageUpload(event);
-                  }}
-                  required
-                  hidden
-                />
-              </Btn>
-            </Left>
-            <Right>
-              <RightItem>
-                <TextFields
-                  variant="standard"
-                  label="Name"
-                  value={userInfo.name}
-                  onChange={(event) => {
-                    setNewUserInfo({
-                      ...newUserInfo,
-                      name: event.target.value,
-                    });
-                  }}
-                />
-                <TextFields
-                  variant="standard"
-                  label="Email"
-                  value={userInfo.email}
-                  onChange={(event) => {
-                    setNewUserInfo({
-                      ...newUserInfo,
-                      email: event.target.value,
-                    });
-                  }}
-                />
-              </RightItem>
-            </Right>
-            <TitleUpdate>
+                <Btn variant="contained" component="label">
+                  <UploadIcon />
+                  {fileName}
+                  <input
+                    type="file"
+                    name="avatar"
+                    accept="image/*"
+                    onChange={(event) => {
+                      HelperImageUpload(event);
+                    }}
+                    required
+                    hidden
+                  />
+                </Btn>
+              </Left>
+              <Right>
+                <RightItem>
+                  <TextFields
+                    variant="standard"
+                    label="Name"
+                    value={newUserInfo.name}
+                    onChange={(event) => {
+                      setNewUserInfo({
+                        ...newUserInfo,
+                        name: event.target.value,
+                      });
+                    }}
+                  />
+                  <TextFields
+                    variant="standard"
+                    label="Email"
+                    value={newUserInfo.email}
+                    onChange={(event) => {
+                      setNewUserInfo({
+                        ...newUserInfo,
+                        email: event.target.value,
+                      });
+                    }}
+                  />
+                </RightItem>
+              </Right>
+              <TitleUpdate>
                 <p>Update PROFILE</p>
-            </TitleUpdate>
-          <BtnUpload>
-            <Btn variant="contained">
-                <UploadIcon/>
-                upload
-            </Btn>
-          </BtnUpload>
-          </Container>
+              </TitleUpdate>
+              <BtnUpload>
+                <Btn variant="contained" onClick={HelperUpdateBtn}>
+                  <UploadIcon />
+                  upload
+                </Btn>
+              </BtnUpload>
+            </Container>
+          )}
         </Wrapper>
       </>
     );

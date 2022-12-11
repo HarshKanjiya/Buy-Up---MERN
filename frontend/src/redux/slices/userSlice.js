@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { logInAPI, logOutAPI, profileAPI, routineCheckAPI, signUpAPI, updateProfileAPI } from "../../APILinks";
+import {
+  logInAPI,
+  logOutAPI,
+  profileAPI,
+  routineCheckAPI,
+  signUpAPI,
+  updatePasswordAPI,
+  updateProfileAPI,
+} from "../../APILinks";
 
 export const login = createAsyncThunk(
   "user/login",
@@ -51,9 +59,9 @@ export const signup = createAsyncThunk(
 );
 export const logout = createAsyncThunk(
   "user/logout",
-  async ({},{ dispatch, getState, rejectWithValue, fulfillWithValue }) => {
+  async ({}, { dispatch, getState, rejectWithValue, fulfillWithValue }) => {
     try {
-      const { data } = await axios.get(logOutAPI,{ withCredentials: true });
+      const { data } = await axios.get(logOutAPI, { withCredentials: true });
       return data.message;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -84,17 +92,38 @@ export const updateProfile = createAsyncThunk(
         { withCredentials: true },
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": "application/x-www-form-urlencoded",
           },
         }
       );
-      return response.data.user;
+      return response.data.success;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
     }
   }
 );
+export const updatePassword = createAsyncThunk(
+  "user/updatePassword",
+  async ({ oldPassword, newPassword, confirmPassword }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        updatePasswordAPI,
 
+        { oldPassword, newPassword, confirmPassword },
+        { withCredentials: true },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("response.data :>> ", response.data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 // slice
 const userSlice = createSlice({
   name: "user",
@@ -104,18 +133,18 @@ const userSlice = createSlice({
     userInfo: null,
     error: null,
     underUpdate: false,
-    isUpdated: null
+    isUpdated: null,
   },
   reducers: {
     clearErrors: (state) => {
       state.error = null;
     },
     setUnderUpdate: (state) => {
-      state.underUpdate = true
+      state.underUpdate = true;
     },
     updateProfileReset: (state) => {
-      state.isUpdated = false
-    }
+      state.isUpdated = false;
+    },
   },
 
   extraReducers: (builder) => {
@@ -123,83 +152,98 @@ const userSlice = createSlice({
     builder.addCase(login.pending, (state, action) => {
       state.loading = true;
       state.isAuthenticated = false;
-    }),
-      builder.addCase(login.fulfilled, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = true;
-        state.userInfo = action.payload;
-      }),
-      builder.addCase(login.rejected, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = false;
-        state.userInfo = null;
-        state.error = action.payload;
-      });
+    });
+    builder.addCase(login.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.userInfo = action.payload;
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.userInfo = null;
+      state.error = action.payload;
+    });
 
     // signup
     builder.addCase(signup.pending, (state, action) => {
       state.loading = true;
       state.isAuthenticated = false;
-    }),
-      builder.addCase(signup.fulfilled, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = true;
-        state.userInfo = action.payload;
-      }),
-      builder.addCase(signup.rejected, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = false;
-        state.userInfo = null;
-        state.error = action.payload;
-      });
+    });
+    builder.addCase(signup.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.userInfo = action.payload;
+    });
+    builder.addCase(signup.rejected, (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.userInfo = null;
+      state.error = action.payload;
+    });
     //   logout
     builder.addCase(logout.pending, (state, action) => {
       state.loading = true;
-    }),
-      builder.addCase(logout.fulfilled, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = false;
-        state.userInfo = null
-      }),
-      builder.addCase(logout.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+    });
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.userInfo = null;
+    });
+    builder.addCase(logout.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
 
     // loadUser
     builder.addCase(loadUser.pending, (state, action) => {
       state.loading = true;
       state.isAuthenticated = false;
-    }),
-      builder.addCase(loadUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = true;
-        state.userInfo = action.payload;
-      }),
-      builder.addCase(loadUser.rejected, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = false;
-        state.userInfo = null;
-        state.error = action.payload;
-      });
+    });
+    builder.addCase(loadUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.userInfo = action.payload;
+    });
+    builder.addCase(loadUser.rejected, (state, action) => {
+      state.loading = false;
+      state.isAuthenticated = false;
+      state.userInfo = null;
+      state.error = action.payload;
+    });
 
-      // update profile
-      builder.addCase(updateProfile.pending, (state, action) => {
-        state.loading = true;
-      }),
-        builder.addCase(updateProfile.fulfilled, (state, action) => {
-          state.loading = false;
-          state.underUpdate = false;
-          state.isUpdated = action.payload;
-        }),
-        builder.addCase(updateProfile.rejected, (state, action) => {
-          state.loading = false;
-          // state.userInfo = null
-          state.error = action.payload;
-        });
+    // update profile
+    builder.addCase(updateProfile.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProfile.fulfilled, (state, action) => {
+      state.loading = false;
+      state.underUpdate = false;
+      state.isUpdated = action.payload;
+    });
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+
+    // update password
+
+    builder.addCase(updatePassword.pending, (state, action) => {
+      state.loading = true;
+    }),
+    builder.addCase(updatePassword.fulfilled, (state, action) => {
+      state.loading = false;
+      state.underUpdate = false;
+      state.isUpdated = action.payload.success;
+    })
+    builder.addCase(updatePassword.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
 
   },
 });
-export const { clearErrors,setUnderUpdate,updateProfileReset } = userSlice.actions;
+export const { clearErrors, setUnderUpdate, updateProfileReset } =
+  userSlice.actions;
 
 export default userSlice.reducer;

@@ -14,9 +14,9 @@ import {
   RightItem,
   Wrapper,
 } from "./profile.styles";
-import DeleteIcon from "@mui/icons-material/Delete";
+import KeyIcon from '@mui/icons-material/Key';
 import EditIcon from "@mui/icons-material/Edit";
-import { setUnderUpdate } from "../../../redux/slices/userSlice";
+import { loadUser, setUnderUpdate } from "../../../redux/slices/userSlice";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -25,8 +25,8 @@ const Profile = () => {
     (state) => state.user
   );
 
-  console.log("userInfo :>> ", userInfo);
   useEffect(() => {
+    dispatch(loadUser({}))
     if (!isAuthenticated) {
       navigate("/login");
     }
@@ -83,8 +83,13 @@ const Profile = () => {
                 >
                   <EditIcon /> update 
                 </LeftFootItem>
-                <LeftFootItemDlt variant="contained">
-                  <DeleteIcon /> delete account
+                <LeftFootItemDlt variant="contained"
+                 onClick={()=>{
+                  dispatch(setUnderUpdate())
+                  navigate('/profile/password')
+                  }}
+                >
+                    <KeyIcon/> Change Password
                 </LeftFootItemDlt>
               </LeftFoot>
             </Left>
