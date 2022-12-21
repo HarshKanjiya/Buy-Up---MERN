@@ -6,6 +6,7 @@ import {
   logInAPI,
   logOutAPI,
   profileAPI,
+  resetPasswordAPI,
   routineCheckAPI,
   signUpAPI,
   updatePasswordAPI,
@@ -105,7 +106,10 @@ export const updateProfile = createAsyncThunk(
 );
 export const updatePassword = createAsyncThunk(
   "user/updatePassword",
-  async ({ oldPassword, newPassword, confirmPassword }, { rejectWithValue }) => {
+  async (
+    { oldPassword, newPassword, confirmPassword },
+    { rejectWithValue }
+  ) => {
     try {
       const response = await axios.put(
         updatePasswordAPI,
@@ -125,9 +129,29 @@ export const updatePassword = createAsyncThunk(
     }
   }
 );
+export const resetPassword = createAsyncThunk(
+  "user/resetPassword",
+  async ({ password, confirmPassword, token }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(
+        `${resetPasswordAPI}${token}`,
+        { password, confirmPassword },
+        { withCredentials: true },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 export const forgotPassword = createAsyncThunk(
   "user/forgotPassword",
-  async (email , { rejectWithValue }) => {
+  async (email, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         forgotPasswordAPI,
@@ -146,7 +170,6 @@ export const forgotPassword = createAsyncThunk(
   }
 );
 
-
 // slice
 const userSlice = createSlice({
   name: "user",
@@ -157,7 +180,7 @@ const userSlice = createSlice({
     error: null,
     underUpdate: false,
     isUpdated: null,
-    message:null,
+    message: null,
   },
   reducers: {
     clearErrors: (state) => {
@@ -171,7 +194,7 @@ const userSlice = createSlice({
     },
     resetMessage: (state) => {
       state.message = null;
-    }
+    },
   },
 
   extraReducers: (builder) => {
@@ -236,7 +259,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = false;
       state.userInfo = null;
-      if(action.payload !== "routine123"){
+      if (action.payload !== "routine123") {
         state.error = action.payload;
       }
     });
@@ -260,12 +283,12 @@ const userSlice = createSlice({
     builder.addCase(updatePassword.pending, (state, action) => {
       state.loading = true;
     }),
-    builder.addCase(updatePassword.fulfilled, (state, action) => {
-      state.loading = false;
-      state.underUpdate = false;
-      state.userInfo = action.payload.user;
-      state.isUpdated = action.payload.success;
-    })
+      builder.addCase(updatePassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.underUpdate = false;
+        state.userInfo = action.payload.user;
+        state.isUpdated = action.payload.success;
+      });
     builder.addCase(updatePassword.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
@@ -275,19 +298,31 @@ const userSlice = createSlice({
     builder.addCase(forgotPassword.pending, (state, action) => {
       state.loading = true;
     }),
-    builder.addCase(forgotPassword.fulfilled, (state, action) => {
-      state.loading = false;
-      state.message = action.payload.message
-    }),
-    builder.addCase(forgotPassword.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload
-    })
-
-
+      builder.addCase(forgotPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.message;
+      }),
+      builder.addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      }),
+      // reset password
+      builder.addCase(resetPassword.pending, (state, action) => {
+        state.loading = true;
+      }),
+      builder.addCase(resetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userInfo = action.payload;
+        state.isAuthenticated = true;
+      }),
+      builder.addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+        state.isAuthenticated = false;
+      });
   },
 });
-export const { clearErrors, setUnderUpdate, updateProfileReset,resetMessage } =
+export const { clearErrors, setUnderUpdate, updateProfileReset, resetMessage } =
   userSlice.actions;
 
 export default userSlice.reducer;

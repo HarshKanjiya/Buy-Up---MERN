@@ -14,6 +14,7 @@ import { loadUser } from "./redux/slices/userSlice";
 import Dashboard from "./components/pages/dashboard/Dashboard";
 import { UpdateProfile } from "./components/pages/update Profile/UpdateProfile";
 import UpdatePassword from "./components/pages/update Password/UpdatePassword";
+import ResetPassword from "./components/pages/ResetPassword/ResetPassword";
 
 const lightTheme = {
   body: "#fff",
@@ -48,6 +49,7 @@ function App() {
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/profile/update" element={<UpdateProfile />} />
           <Route exact path="/profile/password" element={<UpdatePassword />} />
+          <Route exact path="/password/reset/:token" element={<ResetPassword />} />
 
           <Route exact path="/dashboard" element={<Dashboard/>} />
           <Route exact path="/cart" element={<Cart />} />

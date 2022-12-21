@@ -57,69 +57,76 @@ const Header = () => {
       >
         <SideBarContentWrapper>
           {isAuthenticated ? (
-            <motion.div layout>
-              <SideBarElements 
-              layout
-              key="profileImg"
-              initial={{scale:0.8,opacity:0}}
-              animate={{scale:1,opacity:1}}
-              exit={{scale:0.8,opacity:0}}
-               >
-                <SideBarElePROFILE disableFocusRipple disableRipple>
-                  <div className="SideBarEle-imgWrapper">
-                    <img src={userInfo && userInfo.avatar.url} alt="avatar" />
-                  </div>
-                  <p>{userInfo ? userInfo.name : null}</p>
-                </SideBarElePROFILE>
-              </SideBarElements>
-              <Divider />
-              {/* user s */}
-              <SideBarElements
-              layout
-              key="personal"
-              initial={{scale:0.8,opacity:0}}
-              animate={{scale:1,opacity:1}}
-              exit={{scale:0.8,opacity:0}}
-              >
-                <p className="SideBarElements-header">personal</p>
-                <SideBarEle
-                  onClick={() => {
-                    navigate("/profile");
-                  }}
-                >
-                  <PersonIcon />
-                  <p>profile</p>
-                </SideBarEle>
-                {userInfo && userInfo.role === "admin" ? (
-                  <SideBarEle
-                    onClick={() => {
-                      navigate("/dashboard");
-                    }}
+            <>
+              {userInfo ? (
+                <motion.div layout>
+                  <SideBarElements
+                    layout
+                    key="profileImg"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
                   >
-                    <DashboardIcon />
-                    <p>dashboard</p>
-                  </SideBarEle>
-                ) : null}
-                <SideBarEle
-                  onClick={() => {
-                    navigate("/cart");
-                  }}
-                >
-                  <ShoppingCartIcon />
-                  <p>cart</p>
-                </SideBarEle>
-              </SideBarElements>
-              <Divider />
-            </motion.div>
+                    <SideBarElePROFILE disableFocusRipple disableRipple>
+                      <div className="SideBarEle-imgWrapper">
+                        <img
+                          src={userInfo.avatar && userInfo.avatar.url}
+                          alt="avatar"
+                        />
+                      </div>
+                      <p>{userInfo ? userInfo.name : null}</p>
+                    </SideBarElePROFILE>
+                  </SideBarElements>
+                  <Divider />
+                  {/* user s */}
+                  <SideBarElements
+                    layout
+                    key="personal"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                  >
+                    <p className="SideBarElements-header">personal</p>
+                    <SideBarEle
+                      onClick={() => {
+                        navigate("/profile");
+                      }}
+                    >
+                      <PersonIcon />
+                      <p>profile</p>
+                    </SideBarEle>
+                    {userInfo && userInfo.role === "admin" ? (
+                      <SideBarEle
+                        onClick={() => {
+                          navigate("/dashboard");
+                        }}
+                      >
+                        <DashboardIcon />
+                        <p>dashboard</p>
+                      </SideBarEle>
+                    ) : null}
+                    <SideBarEle
+                      onClick={() => {
+                        navigate("/cart");
+                      }}
+                    >
+                      <ShoppingCartIcon />
+                      <p>cart</p>
+                    </SideBarEle>
+                  </SideBarElements>
+                  <Divider />
+                </motion.div>
+              ) : null}
+            </>
           ) : null}
 
           {/*  app s */}
           <SideBarElements
-          layout
-              key="overview"
-              initial={{scale:0.8,opacity:0}}
-              animate={{scale:1,opacity:1}}
-              exit={{scale:0.8,opacity:0}}
+            layout
+            key="overview"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
           >
             <p className="SideBarElements-header">overview</p>
             <SideBarEle
@@ -152,11 +159,12 @@ const Header = () => {
           </SideBarElements>
           <Divider />
           <SideBarElements
-          layout
-              key="devSection"
-              initial={{scale:0.8,opacity:0}}
-              animate={{scale:1,opacity:1}}
-              exit={{scale:0.8,opacity:0}}>
+            layout
+            key="devSection"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+          >
             <p className="SideBarElements-header">Developer</p>
             <SideBarEle
               onClick={() => {
@@ -168,14 +176,13 @@ const Header = () => {
             </SideBarEle>
           </SideBarElements>
           {/* logout */}
-         
-            <>
-              <Divider />
-              <SideBarElements>
-                <LogOut />
-              </SideBarElements>
-            </>
 
+          <>
+            <Divider />
+            <SideBarElements>
+              <LogOut />
+            </SideBarElements>
+          </>
         </SideBarContentWrapper>
       </Drawer>
     </div>
