@@ -139,7 +139,7 @@ export const FormHeader = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  .FormHeaderElement-img{
+  .FormHeaderElement-img {
     margin-left: -4px;
 
     img {
@@ -241,12 +241,12 @@ export const FormBody = styled(motion.div)`
     }
   }
 
-  @media (max-width: 1150px) and (min-width: 835px){
-    .FormBody-Header-signup{
-      top:0rem;
+  @media (max-width: 1150px) and (min-width: 835px) {
+    .FormBody-Header-signup {
+      top: 0rem;
     }
-    .FormBody-Header-beta-signup{
-      top:1.7rem;
+    .FormBody-Header-beta-signup {
+      top: 1.7rem;
     }
   }
 
@@ -283,6 +283,7 @@ export const FormTextFieldWrapper = styled.div`
     font-size: 0.9rem;
     padding: 0.5rem 0 1rem 0;
     color: #01b277;
+    cursor: pointer;
   }
   @media (max-width: 835px) {
     width: 90%;
@@ -322,4 +323,45 @@ export const ImgUploadBtn = styled(Button)`
 export const LogBtn = styled(Button)`
   background-image: linear-gradient(90deg, #2bb594, #01b277);
   color: white;
+`;
+
+export const TextFields = styled(TextField)`
+width: 90%;
+margin-top: 0.5rem;
+  & label.Mui-focused {
+    color: #2bb594;
+  }
+
+  & .MuiInput-underline:after {
+    border-color: #2bb594;
+  }
+  
+  @media (max-width:835px) and (min-width: 505px) {
+   width: 50%;
+  }
+`;
+export const Btn = styled(Button)`
+  margin: 2rem;
+  color: white;
+  background-image: linear-gradient(40deg, #2bb594, #01b277);
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  position: relative;
+  p {
+    flex: 1;
+    text-align: left;
+  }
+`;
+
+export const ForgotPasswordBackBtn = styled(Button)`
+  color: #2bb594;
+  background-color: white;
+  padding-bottom: 2px;
+  box-shadow: none;
+
+  &:hover{
+    background-color: white;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.05);
+  }
 `;

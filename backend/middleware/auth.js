@@ -21,7 +21,7 @@ exports.forRoutineCheck = catchAsyncError(async (req, res, next) => {
   const { token } = req.cookies;
 
   if (token == null ) {
-    return 
+    return next(new ErrorHandler("routine123", 401))
   }
   const decodedData = jwt.verify(token, process.env.JWT_SECRET_KEY);
 

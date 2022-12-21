@@ -5,7 +5,9 @@ import Logo from "../../../assets/images/logo.png";
 import Profile from "../../../assets/images/Profile.png";
 import {
   Blur,
+  Btn,
   Container,
+  ForgotPasswordBackBtn,
   Form,
   FormBody,
   FormHeader,
@@ -20,6 +22,7 @@ import {
   ImgTextWrapper,
   ImgUploadBtn,
   LogBtn,
+  TextFields,
   Wrapper,
 } from "./login.style";
 
@@ -32,13 +35,19 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { Input, InputLabel, FormControl } from "@mui/material";
 import { AnimatePresence, MotionConfig } from "framer-motion";
 import { Alert } from "../../components/Alert";
-import { clearErrors, login, signup } from "../../../redux/slices/userSlice";
+import {
+  clearErrors,
+  forgotPassword,
+  login,
+  resetMessage,
+  signup,
+} from "../../../redux/slices/userSlice";
 import { motion } from "framer-motion";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading, userInfo, error, isAuthenticated } = useSelector(
+  const { loading, userInfo, error, isAuthenticated, message } = useSelector(
     (state) => state.user
   );
 
@@ -58,6 +67,7 @@ const Login = () => {
   });
   const [avatarPrev, setAvatarPrev] = useState(Profile);
   const [fileName, setFileName] = useState("Upload Avatar");
+  const [EmailReco, setEmailReco] = useState("");
 
   useEffect(() => {
     if (error) {
@@ -71,7 +81,16 @@ const Login = () => {
     if (isAuthenticated) {
       navigate("/profile");
     }
-  }, [error, isAuthenticated]);
+    if (message) {
+      Alert({
+        title: "Mail Sent!",
+        text: message,
+        timer:3000,
+      });
+      setEmailReco('')
+      dispatch(resetMessage());
+    }
+  }, [error, isAuthenticated, message]);
 
   const HelperLogInBTN = () => {
     if (!logInValues.email.trim() || !logInValues.password.trim()) {
@@ -118,6 +137,11 @@ const Login = () => {
       }
     };
   };
+
+  const HelperEmailRecovery = () => {
+    dispatch(forgotPassword(EmailReco));
+  };
+
   return (
     <motion.div
       key={"loginPage"}
@@ -414,30 +438,37 @@ const Login = () => {
                       Password Recovery
                     </p>
                   </FormHeaderElement>
+                  <FormHeaderElement>
+                    <ForgotPasswordBackBtn
+                      variant="contained"
+                      onClick={() => {
+                        setPageSwitch(true);
+                      }}
+                    >
+                      {/* <ArrowBackIosIcon/> */}
+                      back
+                    </ForgotPasswordBackBtn>
+                  </FormHeaderElement>
                 </FormHeader>
-                <FormBody>
-                  <button
-                    onClick={() => {
-                      setPageSwitch(true);
-                    }}
-                  >
-                    wqwqwqw
-                  </button>
-                  <button
-                    onClick={() => {
-                      setPageSwitch(true);
-                    }}
-                  >
-                    wqwqwqw
-                  </button>
-                  <button
-                    onClick={() => {
-                      setPageSwitch(true);
-                    }}
-                  >
-                    wqwqwqw
-                  </button>
-                </FormBody>
+                {loading ? (
+                  <LoadingScreen size="small" />
+                ) : (
+                  <FormBody>
+                    <p> Enter Your Email to send verification</p>
+                    <TextFields
+                      variant="standard"
+                      label="email"
+                      type="email"
+                      value={EmailReco}
+                      onChange={(event) => {
+                        setEmailReco(event.target.value);
+                      }}
+                    />
+                    <Btn variant="contained" onClick={HelperEmailRecovery}>
+                      <p>submit</p>
+                    </Btn>
+                  </FormBody>
+                )}
               </Form>
               <Img>
                 <Grid />
