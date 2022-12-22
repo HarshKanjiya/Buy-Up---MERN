@@ -1,11 +1,10 @@
 import React from "react";
-import { motion } from "framer-motion";
 import Header from "../../layouts/Header";
-import Footer from "../../layouts/Footer";
+import { Wrapper } from "./cart.styles";
 
 const Cart = () => {
   return (
-    <motion.div
+    <Wrapper
       key="cart"
       // initial={{ opacity: 0 }}
       // animate={{ opacity: 1 }}
@@ -16,8 +15,7 @@ const Cart = () => {
     >
       <Header />
       Cart
-      <Footer />
-    </motion.div>
+    </Wrapper>
   );
 };
 

@@ -10,25 +10,17 @@ import "../../../index.css";
 const ReviewList = ({ reviews }) => {
   return (
     <Container>
-      <Swiper
-        className=" py-4 "
-        navigation
-        modules={[Navigation]}
-        slidesPerView={4}
-        draggable
-        centeredSlides
-        grabCursor
+      <Master
+        
       >
         {reviews.length !== 0 ? (
           reviews.map((review, index) => (
-            <SwiperSlide key={index}>
-              <ReviewCartView review={review} />
-            </SwiperSlide>
+              <ReviewCartView review={review} key={index} />
           ))
         ) : (
           <NoReviewsYet>no reviews yet</NoReviewsYet>
         )}
-      </Swiper>
+      </Master>
     </Container>
   );
 };
@@ -37,11 +29,22 @@ export default ReviewList;
 
 const Container = styled.div`
   width: 100%;
-  padding: 0 1rem;
+  padding: 1rem 0;
 `;
 
 const NoReviewsYet = styled.p`
 width: 100%;
 text-align: center;
 color:#909090;
+`
+const Master = styled.div`
+display: flex;
+overflow-x: auto;
+overflow-y: hidden;
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+
 `

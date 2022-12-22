@@ -202,7 +202,7 @@ export const MakeReviewContent = styled(DialogContent)`
   flex-direction: column;
   padding: 1rem;
   gap: 0.5rem;
-  min-width: 50vw;
+  min-width: 40vw;
 
   @media (max-width: 480px) {
     min-width: 80vw;
@@ -216,6 +216,7 @@ export const ReviewInputText = styled(TextField)`
   & .MuiInput-underline:after {
     border-color: #2bb594;
   }
+  max-width: 100%;
 `;
 export const ReviewFooter = styled.div`
   width: 100%;

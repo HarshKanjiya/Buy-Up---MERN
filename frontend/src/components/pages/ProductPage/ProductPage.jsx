@@ -9,7 +9,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import SendIcon from "@mui/icons-material/Send";
 
 import ReactStars from "react-rating-stars-component";
-import { fetchProductInfo } from "../../../redux/slices/productPageSlice";
+import {
+  clearErrors,
+  fetchProductInfo,
+  submitReview,
+} from "../../../redux/slices/productPageSlice";
 import {
   AddToCartWrapper,
   CartButton,
@@ -63,9 +67,16 @@ const ProductPage = () => {
       dispatch(clearErrors());
     }
     dispatch(fetchProductInfo(params.id));
-  }, [dispatch]);
+  }, [dispatch,error]);
 
   const HelperReviewSubmit = () => {
+    dispatch(
+      submitReview({
+        productID: params.id,
+        comment: userReviewComment,
+        rating: userReviewRatings,
+      })
+    );
     setReviewBoxVisibility(false);
   };
 
@@ -81,7 +92,6 @@ const ProductPage = () => {
           exit={{ y: 10, opacity: 0 }}
           transition={{
             duration: 0.4,
-           
           }}
         >
           <Header />

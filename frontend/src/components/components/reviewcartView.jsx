@@ -23,9 +23,11 @@ export default ReviewCartView;
 const Container = styled.div`
 font-size: 0.8rem;
 width:200px;
+min-width: 170px;
 border-radius:11px;
 border: 1px solid #d0d0d0;
 padding:1rem;
+margin: 0 0.5rem;
 
 &::hover{
     border-color:#909090;
