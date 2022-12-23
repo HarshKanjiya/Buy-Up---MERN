@@ -29,7 +29,6 @@ export const Container = styled.div`
 
 
   @media (max-width: 800px) {
-    padding: 2rem 0;
     width: 100%;
    flex-direction: column;
    align-items: center;

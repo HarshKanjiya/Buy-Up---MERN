@@ -65,8 +65,8 @@ const ProductPage = () => {
         title: "Oops!",
       });
       dispatch(clearErrors());
+      dispatch(fetchProductInfo(params.id));
     }
-    dispatch(fetchProductInfo(params.id));
   }, [dispatch,error]);
 
   const HelperReviewSubmit = () => {

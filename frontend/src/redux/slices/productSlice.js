@@ -22,6 +22,7 @@ export const fetchProducts = createAsyncThunk(
 
     try {
       const res = await axios.get(link);
+      console.log('res.data :>> ', res.data);
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message)
