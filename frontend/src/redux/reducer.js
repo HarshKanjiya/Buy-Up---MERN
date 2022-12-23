@@ -6,6 +6,13 @@ import productPageSlice from "./slices/productPageSlice";
 import productSlice from "./slices/productSlice";
 import userSlice from "./slices/userSlice";
 
+let initialState = {
+  cart: {
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cart"))
+      : [],
+  },
+};
 
 const reducer = combineReducers({
   products: productSlice,
@@ -15,9 +22,9 @@ const reducer = combineReducers({
 });
 
 const store = configureStore({
+  initialState,
   reducer,
   devTools: true,
 });
 
 export default store;
-

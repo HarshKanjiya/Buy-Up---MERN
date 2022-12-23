@@ -43,7 +43,7 @@ const Header = () => {
         </div>
       </Link>
       <div className=" flex align-middle justify-center mr-8  gap-4 text-gray-500 ">
-        <Link to="/" style={{ padding: 2 }}>
+        <Link to="/cart" style={{ padding: 2 }}>
           <ShoppingCartIcon style={{ height: "1.3rem" }} />
         </Link>
       </div>

@@ -44,6 +44,7 @@ import { Divider } from "@mui/material";
 import Footer from "../../layouts/Footer";
 import Header from "../../layouts/Header";
 import { Alert } from "../../components/Alert";
+import { addItemToCart } from "../../../redux/slices/cartPageSlice";
 
 const ProductPage = () => {
   const params = useParams();
@@ -67,7 +68,12 @@ const ProductPage = () => {
       dispatch(clearErrors());
       dispatch(fetchProductInfo(params.id));
     }
-  }, [dispatch,error]);
+  }, [dispatch, error]);
+
+  useEffect(() => {
+    dispatch(fetchProductInfo(params.id));
+  }, []);
+  // console.log("productInfo :>> ", productInfo);
 
   const HelperReviewSubmit = () => {
     dispatch(
@@ -78,6 +84,10 @@ const ProductPage = () => {
       })
     );
     setReviewBoxVisibility(false);
+  };
+
+  const HelperAddItemToCart = () => {
+    dispatch(addItemToCart({ id: params.id, quantity }));
   };
 
   return (
@@ -140,14 +150,17 @@ const ProductPage = () => {
                         onClick={() => {
                           setQuantity(quantity + 1);
                         }}
-                        // disabled={quantity}
+                        disabled={quantity >= productInfo.product.stock}
                       >
                         <NavigateNextIcon />
                       </QuantityUpButton>
                     </QuantityWrapper>
                     <PriceWrapper>₹{productInfo.product.price}</PriceWrapper>
                     <AddToCartWrapper>
-                      <CartButton variant="contained">
+                      <CartButton
+                        variant="contained"
+                        onClick={HelperAddItemToCart}
+                      >
                         <span>
                           <ShoppingCartIcon /> &nbsp;&nbsp;add to Cart{" "}
                         </span>

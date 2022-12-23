@@ -34,7 +34,7 @@ const ProductPageProductCardView = ({ product }) => {
               edit={false}
               value={product.ratings}
             />
-            <p className=" text-gray-400 text-[0.8rem] ">{product.ratings}</p>
+            <p className=" text-[tomato] text-[0.8rem] bg-[#ffbf4795] w-8 rounded-[0.4rem] text-center ">{product.ratings}</p>
           </div>
           <p>₹{product.price}</p>
         </div>
