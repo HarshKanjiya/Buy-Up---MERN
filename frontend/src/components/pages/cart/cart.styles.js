@@ -94,6 +94,7 @@ export const HeadBar = styled.div`
 `;
 export const Body = styled.div`
   width: 100%;
+  margin: 0.8rem 0;
   flex: 1;
   overflow-x: hidden;
   overflow-y: scroll;

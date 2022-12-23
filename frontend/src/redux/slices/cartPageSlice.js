@@ -55,7 +55,6 @@ const cartPageSlice = createSlice({
       if (itemExistance) {
         state.cartItems.map((i) => {
           if (i.id === item.id) {
-            console.log('i.id :>> ', i.id);
             i.quantity = i.quantity + item.quantity;
           }
         });
