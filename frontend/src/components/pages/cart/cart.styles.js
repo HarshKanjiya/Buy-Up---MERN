@@ -55,6 +55,33 @@ export const LeftSection = styled.div`
     gap: 1rem;
     color: #2bb594;
   }
+  .LeftSection-mids-ele{
+    border-radius: 3px;
+    padding: 0.4rem;
+    border: 1px solid white;
+    transition:100ms ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    p{
+      display: none;
+    }
+    
+    &:hover{
+      position: absolute;
+      z-index: 100;
+      top: 0;
+      left: -0.2rem;
+      background-color: white;
+      border: 1px solid #2bb594;
+      box-shadow: 0 0 10px rgba(0,0,0,0.15);
+      p{
+        display: block;
+      }
+
+    }
+  }
 `;
 export const RightSection = styled.div`
   height: 100%;
@@ -81,23 +108,57 @@ export const HeadBar = styled.div`
   button {
     height: 2.5rem;
     width: 2.5rem;
-    border-radius: 50%;
-    display: grid;
-    place-content: center;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid #f5f5f5;
     background-color: white;
+    transition: 300ms;
+
+    P {
+      display: none;
+    }
   }
   .cart-delete-all-btn {
     background-color: #ff5050;
     color: white;
+    transition: 300ms ease-out;
+    &:hover {
+      background-color: red;
+      width: 12rem;
+      padding: 0 1rem;
+      p {
+        display: block;
+        font-weight: 400;
+        font-size: 1rem;
+        animation: animDlt 300ms;
+        @keyframes animDlt {
+          0%,50%{
+            opacity: 0;
+            margin-top: 5rem;
+          }
+          100%{
+            opacity: 1;
+            margin-top: 0;
+          }
+        }
+      }
+    }
   }
 `;
 export const Body = styled.div`
   width: 100%;
-  margin: 0.8rem 0;
+  margin: 0.5rem 0;
   flex: 1;
   overflow-x: hidden;
   overflow-y: scroll;
+
+  
+  ::-webkit-scrollbar {
+  width: 2px;
+  
+}
 `;
 export const Footer = styled.div`
   width: 100%;
@@ -115,19 +176,4 @@ export const CheckOut = styled(Button)`
   background-image: linear-gradient(-90deg, #2bb594, #01b277);
   font-weight: 700;
   letter-spacing: 2px;
-`;
-
-export const ExtraSpacs = styled.div`
-  height: 100%;
-  flex: 0.45;
-  background-color: #fdfdfd;
-
-  .ExtraSpacs-header {
-    width: 100%;
-    padding: 1rem;
-    font-size: 1.3rem;
-    font-weight: 700;
-    text-align: right;
-    color: #454545;
-  }
 `;

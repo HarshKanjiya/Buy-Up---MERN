@@ -1,10 +1,35 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 import React from "react";
+import { useDispatch } from "react-redux";
+import {
+  removeItemFromCart,
+  setSpacsInfo,
+} from "../../redux/slices/cartPageSlice";
 
 const CartCardView = ({ data, index }) => {
+  const dispatch = useDispatch();
   return (
-    <Wrapper>
-      <Container>
+    <Wrapper
+      key={data.id}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8 }}
+      transition={{ duration: 0.3, delay: (index + 1) * 0.1 }}
+      layout
+      onClick={() => {
+        dispatch(setSpacsInfo(data));
+      }}
+    >
+      <Container
+        initial={{ boxShadow: "none" }}
+        whileHover={{
+          boxShadow: "0 8px 11px rgba(0, 0, 0, 0.1)",
+          border: " 1px solid white",
+        }}
+        whileTap={{ boxShadow: "none" }}
+        transition={{ duration: 0.3 }}
+      >
         <Left>
           <div className="CartCardView-img-wrapper">
             {" "}
@@ -18,9 +43,12 @@ const CartCardView = ({ data, index }) => {
         </Right>
       </Container>
 
-      <CloseBtnWrapper>
-        {" "}
-        <p>&times;</p>{" "}
+      <CloseBtnWrapper
+        onClick={() => {
+          dispatch(removeItemFromCart(data.id));
+        }}
+      >
+        <p>&times;</p>
       </CloseBtnWrapper>
     </Wrapper>
   );
@@ -28,7 +56,7 @@ const CartCardView = ({ data, index }) => {
 
 export default CartCardView;
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   align-items: center;
@@ -51,24 +79,17 @@ const CloseBtnWrapper = styled.div`
   }
 `;
 
-const Container = styled.div`
+const Container = styled(motion.div)`
   width: 80%;
   display: flex;
   padding: 0.8rem;
   background-color: white;
-  /* box-shadow: 0 0px 11px rgba(0, 0, 0, 0.3); */
   border: 1px solid #f0f0f0;
   border-radius: 6px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  transition: 300ms;
-  &:hover {
-    box-shadow: 0 8px 11px rgba(0, 0, 0, 0.1);
-    border: 1px solid white;
-  }
 `;
 
 const Left = styled.div`

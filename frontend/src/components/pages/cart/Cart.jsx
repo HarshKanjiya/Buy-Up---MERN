@@ -1,11 +1,10 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../../assets/images/logo.png";
 import {
   Body,
   CheckOut,
   Container,
-  ExtraSpacs,
   Footer,
   HeadBar,
   LeftSection,
@@ -16,10 +15,24 @@ import HomeIcon from "@mui/icons-material/Home";
 import PhonelinkIcon from "@mui/icons-material/Phonelink";
 import PersonIcon from "@mui/icons-material/Person";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from "@mui/icons-material/Delete";
 import CartViewLayout from "../../layouts/Cart/CartViewLayout";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  DeleteCart,
+  setCartFromLocalStorage,
+} from "../../../redux/slices/cartPageSlice";
+import ExtraSpacs from "../../layouts/Extra Spacs -- cart page/ExtraSpacs";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { cartItems } = useSelector((state) => state.cart);
+  useEffect(() => {
+    dispatch(setCartFromLocalStorage());
+  }, []);
+
   return (
     <motion.div
       key="cart"
@@ -35,51 +48,92 @@ const Cart = () => {
           <LeftSection>
             <img src={Logo} alt="Buy Up" />
             <div className="LeftSection-mids">
-              <HomeIcon />
-              <PhonelinkIcon />
-              <PersonIcon />
+              <div
+                style={{ position: "relative", height: "2rem", width: "2rem" }}
+              >
+                <div
+                  className="LeftSection-mids-ele"
+                  onClick={() => {
+                    navigate("/");
+                  }}
+                >
+                  <HomeIcon />
+                  <p>Home</p>
+                </div>
+              </div>
+              <div
+                style={{ position: "relative", height: "2rem", width: "2rem", }}
+              >
+                <div
+                  className="LeftSection-mids-ele"
+                  onClick={() => {
+                    navigate("/products");
+                  }}
+                >
+                  <PhonelinkIcon />
+                  <p>Products</p>
+                </div>
+              </div>
+              <div
+                style={{ position: "relative", height: "2rem", width: "2rem" }}
+              >
+                <div
+                  className="LeftSection-mids-ele"
+                  onClick={() => {
+                    navigate("/profile");
+                  }}
+                >
+                  <PersonIcon />
+                  <p>Profile</p>
+                </div>
+              </div>
             </div>
           </LeftSection>
           <RightSection>
             <HeadBar>
               <div>
-              <motion.button
-                initial={{ boxShadow: "0 0px 11px rgba(0, 0, 0, 0.05)" }}
-                transition={{ duration: 0.2 }}
-                whileTap={{
-                  boxShadow: "0 0px 11px rgba(0, 0, 0, 0.0)",
-                  rotate: "0deg",
-                }}
-                whileHover={{
-                  boxShadow: " 0 0px 21px rgba(0, 0, 0, 0.1) ",
-                  rotate: "-360deg",
-                }}
-              >
-                <ArrowBackIcon />
-              </motion.button>
-              <p>Your Cart</p>
+                <motion.button
+                  initial={{ boxShadow: "0 0px 11px rgba(0, 0, 0, 0.05)" }}
+                  transition={{ duration: 0.2 }}
+                  whileTap={{
+                    boxShadow: "0 0px 11px rgba(0, 0, 0, 0.0)",
+                    rotate: "0deg",
+                  }}
+                  whileHover={{
+                    boxShadow: " 0 0px 21px rgba(0, 0, 0, 0.1) ",
+                    rotate: "-360deg",
+                  }}
+                  onClick={()=>{
+                    navigate(-1)
+                  }}
+                >
+                  <ArrowBackIcon />
+                </motion.button>
+                <p>Your Cart</p>
               </div>
-              <motion.button
-              className="cart-delete-all-btn"
-              >
-                <DeleteIcon />
-              </motion.button>
+              {cartItems.length !== 0 ? (
+                <motion.button
+                  className="cart-delete-all-btn"
+                  onClick={() => {
+                    dispatch(DeleteCart());
+                  }}
+                >
+                  <DeleteIcon />
+                  <p>delete cart</p>
+                </motion.button>
+              ) : null}
             </HeadBar>
             <Body>
-
-                <CartViewLayout />
-
+              <CartViewLayout />
             </Body>
             <Footer>
               <p>Total </p>
               <CheckOut variant="contained">check out</CheckOut>
             </Footer>
           </RightSection>
-          <ExtraSpacs>
-            <div className="ExtraSpacs-header">
-              <p>Spacs</p>
-            </div>
-          </ExtraSpacs>
+          <AnimatePresence mode="wait">
+            <ExtraSpacs />
+          </AnimatePresence>
         </Container>
       </Wrapper>
     </motion.div>

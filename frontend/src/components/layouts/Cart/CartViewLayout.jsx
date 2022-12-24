@@ -2,37 +2,42 @@ import React from "react";
 import CartCardView from "../../components/CartCardView";
 import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
+import { AnimatePresence, motion } from "framer-motion";
 
 const CartViewLayout = () => {
   const { cartItems } = useSelector((state) => state.cart);
   return (
     <Wrapper>
-      <Header>
-        <div className="cart-layout-header-left">
-          <p>Product</p>
-        </div>
-        <div className="cart-layout-header-right">
-          <div className="cart-layout-header-right-ele">
-            <p>Quantiy</p>
+      {cartItems.length !== 0 ? (
+        <Header>
+          <div className="cart-layout-header-left">
+            <p>Product</p>
           </div>
-          <div className="cart-layout-header-right-ele">
-            <p>Total Cost</p>
+          <div className="cart-layout-header-right">
+            <div className="cart-layout-header-right-ele">
+              <p>Quantiy</p>
+            </div>
+            <div className="cart-layout-header-right-ele">
+              <p>Total Cost</p>
+            </div>
           </div>
-        </div>
-      </Header>
+        </Header>
+      ) : null}
 
-      <div className="CartViewLayout-List">
-        {cartItems.length ? (
-          cartItems.map((data, index) => (
-            <CartCardView data={data} key={index} index={index} />
-          ))
-        ) : (
-          <div className="CartViewLayout-emptyCart">
-            {" "}
-            <p>Your Cart is Empty!</p>{" "}
-          </div>
-        )}
-      </div>
+      <AnimatePresence mode="wait">
+        <motion.div className="CartViewLayout-List" layout>
+          {cartItems.length ? (
+            cartItems.map((data, index) => (
+              <CartCardView data={data} key={index} index={index} />
+            ))
+          ) : (
+            <div className="CartViewLayout-emptyCart">
+              {" "}
+              <p>Your Cart is Empty!</p>{" "}
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </Wrapper>
   );
 };
@@ -59,7 +64,7 @@ const Wrapper = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
   }
 `;
 const Header = styled.div`
