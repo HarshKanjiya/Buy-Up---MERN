@@ -55,31 +55,34 @@ export const LeftSection = styled.div`
     gap: 1rem;
     color: #2bb594;
   }
-  .LeftSection-mids-ele{
-    border-radius: 3px;
+  .LeftSection-mids-ele {
+    border-radius: 2rem;
     padding: 0.4rem;
     border: 1px solid white;
-    transition:100ms ;
+    transition: 100ms;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    p{
+    p {
       display: none;
     }
-    
-    &:hover{
+
+    &:hover {
+      padding-left: 0.8rem;
+      padding-right: 0.8rem;
       position: absolute;
       z-index: 100;
       top: 0;
-      left: -0.2rem;
+      left: -0.5rem;
       background-color: white;
       border: 1px solid #2bb594;
-      box-shadow: 0 0 10px rgba(0,0,0,0.15);
-      p{
+      color:white;
+      background-color: #2bb594;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+      p {
         display: block;
       }
-
     }
   }
 `;
@@ -134,11 +137,12 @@ export const HeadBar = styled.div`
         font-size: 1rem;
         animation: animDlt 300ms;
         @keyframes animDlt {
-          0%,50%{
+          0%,
+          50% {
             opacity: 0;
             margin-top: 5rem;
           }
-          100%{
+          100% {
             opacity: 1;
             margin-top: 0;
           }
@@ -154,11 +158,9 @@ export const Body = styled.div`
   overflow-x: hidden;
   overflow-y: scroll;
 
-  
   ::-webkit-scrollbar {
-  width: 2px;
-  
-}
+    width: 2px;
+  }
 `;
 export const Footer = styled.div`
   width: 100%;
@@ -170,6 +172,14 @@ export const Footer = styled.div`
 
   display: flex;
   justify-content: space-between;
+
+  p{
+    color:#b6b6b6;
+
+    span{
+      color:#454545;
+    }
+  }
 `;
 
 export const CheckOut = styled(Button)`

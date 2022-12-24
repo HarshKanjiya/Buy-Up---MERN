@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addIntoQuantity,
   addQuantityFromSpacs,
+  getTotalCost,
   removeIntoQuantity,
   removeItemFromCart,
   removeQuantityFromSpacs,
@@ -21,9 +22,9 @@ const ExtraSpacs = () => {
   );
   const [addBtndisi, setAddBtnDisi] = useState(false); // for disiblity of add btn
 
-//   console.log("spacsInfo.stock :>> ", spacsInfo && spacsInfo.stock);
-//   console.log("PRODUCT_QUANTITY :>> ", PRODUCT_QUANTITY);
-
+  // console.log("spacsInfo.stock :>> ", spacsInfo && spacsInfo.stock);
+  // console.log("PRODUCT_QUANTITY :>> ", PRODUCT_QUANTITY);
+  
   useEffect(() => {
     if (!spacsInfo) {
       if (cartItems.length !== 0) {
@@ -33,6 +34,7 @@ const ExtraSpacs = () => {
     if (cartItems.length === 0) {
       dispatch(setSpacsInfo(null));
     }
+    dispatch(getTotalCost())
   }, [spacsInfo, cartItems]);
 
   useEffect(() => {

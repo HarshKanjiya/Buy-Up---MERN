@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../../assets/images/logo.png";
 import {
@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   DeleteCart,
+  getTotalCost,
   setCartFromLocalStorage,
 } from "../../../redux/slices/cartPageSlice";
 import ExtraSpacs from "../../layouts/Extra Spacs -- cart page/ExtraSpacs";
@@ -28,9 +29,12 @@ import ExtraSpacs from "../../layouts/Extra Spacs -- cart page/ExtraSpacs";
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartItems } = useSelector((state) => state.cart);
+  const { cartItems, totalCost } = useSelector((state) => state.cart);
+  const [checkOutDisi, setCheckOutDisi] = useState(false);
+
   useEffect(() => {
     dispatch(setCartFromLocalStorage());
+    dispatch(getTotalCost());
   }, []);
 
   return (
@@ -62,7 +66,7 @@ const Cart = () => {
                 </div>
               </div>
               <div
-                style={{ position: "relative", height: "2rem", width: "2rem", }}
+                style={{ position: "relative", height: "2rem", width: "2rem" }}
               >
                 <div
                   className="LeftSection-mids-ele"
@@ -103,8 +107,8 @@ const Cart = () => {
                     boxShadow: " 0 0px 21px rgba(0, 0, 0, 0.1) ",
                     rotate: "-360deg",
                   }}
-                  onClick={()=>{
-                    navigate(-1)
+                  onClick={() => {
+                    navigate(-1);
                   }}
                 >
                   <ArrowBackIcon />
@@ -126,10 +130,12 @@ const Cart = () => {
             <Body>
               <CartViewLayout />
             </Body>
-            <Footer>
-              <p>Total </p>
-              <CheckOut variant="contained">check out</CheckOut>
-            </Footer>
+            {cartItems.length !== 0 ? (
+              <Footer>
+                <p>Total : <span>₹ {totalCost}</span> </p>
+                <CheckOut variant="contained">check out</CheckOut>
+              </Footer>
+            ) : null}
           </RightSection>
           <AnimatePresence mode="wait">
             <ExtraSpacs />

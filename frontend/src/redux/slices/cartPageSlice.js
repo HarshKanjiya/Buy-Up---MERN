@@ -37,6 +37,7 @@ const cartPageSlice = createSlice({
     error: null,
     spacsInfo: null,
     PRODUCT_QUANTITY:1,
+    totalCost:0
   },
   reducers: {
     clearErrors: (state) => {
@@ -118,6 +119,13 @@ const cartPageSlice = createSlice({
     },
     removeIntoQuantity:(state) => {
       state.PRODUCT_QUANTITY = state.PRODUCT_QUANTITY - 1
+    },
+    getTotalCost:(state)=>{
+      let cost = 0
+      state.cartItems.map((i) => {
+        cost = cost + ( i.price * i.quantity)
+      })
+      state.totalCost = cost
     }
   },
 
@@ -141,5 +149,6 @@ export const {
   removeQuantityFromSpacs,
   addIntoQuantity,
   removeIntoQuantity,
+  getTotalCost,
 } = cartPageSlice.actions;
 export default cartPageSlice.reducer;
