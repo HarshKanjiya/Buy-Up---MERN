@@ -92,7 +92,7 @@ export const Form = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding: 0 1rem;
-  margin: 1rem;
+  /* margin: 1rem; */
   justify-content: center;
 `;
 export const AddressWrapper = styled.div`

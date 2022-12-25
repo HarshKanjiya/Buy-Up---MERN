@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../assets/images/logo.png";
 import { Country, State } from "country-state-city";
-
+import { Alert } from "../../components/Alert";
 import {
   AddressWrapper,
   Container,
@@ -16,17 +16,47 @@ import {
   TextInput,
   Wrapper,
 } from "./Shipping.styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SaveIcon from "@mui/icons-material/Save";
 import Steps from "../../layouts/Stepper -- checkout page/Stepper";
+import { SAVE_SHIPPING_INFO } from "../../../redux/slices/cartPageSlice";
 
 const Shipping = () => {
+  const dispatch = useDispatch()
   const { SHIPPING_INFO } = useSelector((state) => state.cart);
   const [shippingInfo, setShippingInfo] = useState(SHIPPING_INFO);
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
+
+
+  const HelperShippingSubmit = () => {
+
+    let checker = true;
+
+
+    shippingInfo.address.trim() ? (checker = false) : true;
+    shippingInfo.city.trim() ? (checker = false) : true;
+    shippingInfo.country.trim() ? (checker = false) : true;
+    shippingInfo.state.trim() ? (checker = false) : true;
+    shippingInfo.phoneNo.trim() ? (checker = false) : true;
+    shippingInfo.pinCode.trim() ? (checker = false) : true;
+
+    if (checker) {
+      Alert({
+        icon: "error",
+        text: "Please Fill all the details",
+        title: "Oops!",
+      });
+      return;
+    }
+    // save info
+    dispatch( SAVE_SHIPPING_INFO(shippingInfo) )
+    
+
+  };
 
   return (
     <Wrapper>
+
       <Container>
         <LeftSection>
           <img src={Logo} alt="Buy Up" />
@@ -35,7 +65,7 @@ const Shipping = () => {
           </div>
         </LeftSection>
         <RightSection>
-          <Steps activeStep={1} />
+          <Steps activeStep={activeStep} />
           <Form>
             <RightSectionHeader>
               <p>Add Your Location</p>
@@ -46,7 +76,7 @@ const Shipping = () => {
                 label="address"
                 multiline
                 maxRows={4}
-                value={shippingInfo.address ? shippingInfo.address : ""}
+                value={shippingInfo ? shippingInfo.address : ""}
                 onChange={(event) => {
                   setShippingInfo({
                     ...shippingInfo,
@@ -58,23 +88,23 @@ const Shipping = () => {
                 <TextInput
                   variant="standard"
                   label="city"
-                  value={shippingInfo.city ? shippingInfo.city : ""}
+                  value={shippingInfo ? shippingInfo.city : ""}
                   onChange={(event) => {
                     setShippingInfo({
                       ...shippingInfo,
-                      address: event.target.value,
+                      city: event.target.value,
                     });
                   }}
                 />
                 <TextInput
                   variant="standard"
                   label="pin code"
-                  value={shippingInfo.pinCode ? shippingInfo.pinCode : ""}
+                  value={shippingInfo ? shippingInfo.pinCode : ""}
                   onChange={(event) => {
                     if (event.target.value.trim().split("").length <= 6) {
                       setShippingInfo({
                         ...shippingInfo,
-                        address: event.target.value,
+                        pinCode: event.target.value,
                       });
                     }
                   }}
@@ -85,7 +115,7 @@ const Shipping = () => {
             <LocationWrapper>
               <Locationselector
                 required
-                value={shippingInfo.country ? shippingInfo.country : ""}
+                value={shippingInfo ? shippingInfo.country : ""}
                 onChange={(event) =>
                   setShippingInfo({
                     ...shippingInfo,
@@ -104,8 +134,10 @@ const Shipping = () => {
 
               <Locationselector
                 required
-                disabled={shippingInfo.country === "" ? true : false}
-                value={shippingInfo.state ? shippingInfo.state : ""}
+                disabled={
+                  shippingInfo && shippingInfo.country === "" ? true : false
+                }
+                value={shippingInfo ? shippingInfo.state : ""}
                 onChange={(event) =>
                   setShippingInfo({
                     ...shippingInfo,
@@ -115,7 +147,9 @@ const Shipping = () => {
               >
                 <option value="">state</option>
                 {State &&
-                  State.getStatesOfCountry(shippingInfo.country).map((i) => (
+                  State.getStatesOfCountry(
+                    shippingInfo ? shippingInfo.country : "in"
+                  ).map((i) => (
                     <option value={i.isoCode} key={i.isoCode}>
                       {i.name}
                     </option>
@@ -128,7 +162,7 @@ const Shipping = () => {
                 variant="standard"
                 label="phone number"
                 type="text"
-                value={shippingInfo.phoneNo ? shippingInfo.phoneNo : ""}
+                value={shippingInfo ? shippingInfo.phoneNo : ""}
                 onChange={(event) => {
                   if (event.target.value.trim().split("").length <= 10) {
                     setShippingInfo({
@@ -141,7 +175,7 @@ const Shipping = () => {
             </LocationWrapper>
           </Form>
           <Footer>
-            <SaveBtn variant="contained">
+            <SaveBtn variant="contained" onClick={HelperShippingSubmit}>
               <SaveIcon fontSize="small" />
               &nbsp; save & continue
             </SaveBtn>

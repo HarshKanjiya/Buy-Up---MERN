@@ -139,10 +139,12 @@ const cartPageSlice = createSlice({
     // shipping infooo
     SAVE_SHIPPING_INFO: (state, { payload }) => {
       state.SHIPPING_INFO = payload;
-      localStorage.setItem("shippingInfo", JSON.stringify(state.SHIPPING_INFO));
+      localStorage.setItem("shippingInfo", JSON.stringify(payload));
+      console.log('done :>> ',payload );
     },
     GET_SHIPPING_INFO_FROM_LOCALSTORAGE: (state) => {
       state.SHIPPING_INFO = JSON.parse(localStorage.getItem("shippingInfo"));
+      console.log('state.SHIPPING_INFO :>> ', state.SHIPPING_INFO);
     },
   },
 

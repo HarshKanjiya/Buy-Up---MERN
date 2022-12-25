@@ -139,7 +139,7 @@ export default ExtraSpacs;
 
 const Wrapper = styled(motion.div)`
   height: 100%;
-  flex: 0.45;
+  width: 320px;
   background-color: #fafffe;
   display: flex;
   flex-direction: column;
@@ -198,7 +198,7 @@ const Body = styled.div`
 
   .ExtraSpacs-img-wrapper {
     width: calc(100% - 2rem);
-    height: 50%;
+    height: 256px;
     margin: 0 1rem;
     border-radius: 6px;
     overflow: hidden;

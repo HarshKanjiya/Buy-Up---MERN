@@ -27,14 +27,14 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 800px) {
+  /* @media (max-width: 800px) {
     width: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     gap: 2rem;
   }
-    box-shadow:4px 4px 22px rgba(0,0,0,0.3), -4px -4px 22px rgba(255,255,255,0.4);
+    box-shadow:4px 4px 22px rgba(0,0,0,0.3), -4px -4px 22px rgba(255,255,255,0.4); */
 
 `;
 
@@ -155,7 +155,7 @@ export const HeadBar = styled.div`
 `;
 export const Body = styled.div`
   width: 100%;
-  margin: 0.5rem 0;
+  /* margin: 0.5rem 0; */
   flex: 1;
   overflow-x: hidden;
   overflow-y: scroll;
