@@ -69,6 +69,8 @@ const Login = () => {
   const [fileName, setFileName] = useState("Upload Avatar");
   const [EmailReco, setEmailReco] = useState("");
 
+  const redirect = location.search ? location.search.split('=')[1] : '/profile'
+
   useEffect(() => {
     if (error) {
       Alert({
@@ -79,7 +81,7 @@ const Login = () => {
       dispatch(clearErrors());
     }
     if (isAuthenticated) {
-      navigate("/profile");
+      navigate(redirect);
     }
     if (message) {
       Alert({

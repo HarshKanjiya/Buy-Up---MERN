@@ -37,6 +37,10 @@ const Cart = () => {
     dispatch(getTotalCost());
   }, []);
 
+  const HelperCheckOut = () => {
+navigate('/login?redirect=shipping')
+  }
+
   return (
     <motion.div
       key="cart"
@@ -133,7 +137,7 @@ const Cart = () => {
             {cartItems.length !== 0 ? (
               <Footer>
                 <p>Total : <span>₹ {totalCost}</span> </p>
-                <CheckOut variant="contained">check out</CheckOut>
+                <CheckOut variant="contained" onClick={HelperCheckOut}>check out</CheckOut>
               </Footer>
             ) : null}
           </RightSection>

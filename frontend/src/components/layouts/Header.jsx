@@ -5,7 +5,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import logo from "../../assets/images/logoBtn.png";
 import { useState } from "react";
-import { Button, Divider, Drawer, IconButton } from "@mui/material";
+import { Badge, Button, Divider, Drawer, IconButton } from "@mui/material";
 import styled from "@emotion/styled";
 import LogOut from "../components/LogOut";
 
@@ -22,6 +22,8 @@ const Header = () => {
   const navigate = useNavigate();
   const [sideBarVisibility, setSideBarVisibility] = useState(false);
   const { isAuthenticated, userInfo } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
+
   return (
     <div className="border-b py-3 flex align-middle justify-between backdrop-blur sticky ">
       <div
@@ -44,7 +46,14 @@ const Header = () => {
       </Link>
       <div className=" flex align-middle justify-center mr-8  gap-4 text-gray-500 ">
         <Link to="/cart" style={{ padding: 2 }}>
-          <ShoppingCartIcon style={{ height: "1.3rem" }} />
+          <StyledBadge badgeContent={cartItems.length}>
+            <ShoppingCartIcon
+              style={{
+                height: "1.3rem",
+                color: cartItems.length !== 0 ? "#2bb594" : null,
+              }}
+            />
+          </StyledBadge>
         </Link>
       </div>
 
@@ -105,14 +114,24 @@ const Header = () => {
                         <p>dashboard</p>
                       </SideBarEle>
                     ) : null}
-                    <SideBarEle
-                      onClick={() => {
-                        navigate("/cart");
-                      }}
-                    >
-                      <ShoppingCartIcon />
-                      <p>cart</p>
-                    </SideBarEle>
+                      <SideBarEle
+                        onClick={() => {
+                          navigate("/cart");
+                        }}
+                      >
+                        <ShoppingCartIcon
+                          style={{
+                            color: cartItems.length !== 0 ? "#2bb594" : null,
+                          }}
+                        />
+                        <p
+                          style={{
+                            color: cartItems.length !== 0 ? "#2bb594" : null,
+                          }}
+                        >
+                          cart
+                        </p>
+                      </SideBarEle>
                   </SideBarElements>
                   <Divider />
                 </motion.div>
@@ -291,3 +310,13 @@ const SideBarElePROFILE = styled(Button)`
     background-color: white;
   }
 `;
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    border: "1px solid white",
+    backgroundColor: "#01b277",
+    color: "white",
+    fontSize: "0.7rem",
+    right: 0,
+    top: 0,
+  },
+}));

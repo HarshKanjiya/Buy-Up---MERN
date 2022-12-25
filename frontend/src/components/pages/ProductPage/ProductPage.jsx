@@ -40,11 +40,18 @@ import {
 } from "./ProductPage.styles";
 import ReviewList from "../../layouts/reviews/reviewList";
 import LoadingScreen from "../../components/LoadingScreen";
-import { Divider } from "@mui/material";
+import {
+  Divider,
+  IconButton,
+  Snackbar,
+  Alert as MuiAlert,
+  Slide,
+} from "@mui/material";
 import Footer from "../../layouts/Footer";
 import Header from "../../layouts/Header";
 import { Alert } from "../../components/Alert";
 import { addItemToCart } from "../../../redux/slices/cartPageSlice";
+import CloseIcon from "@mui/icons-material/Close";
 
 const ProductPage = () => {
   const params = useParams();
@@ -57,6 +64,8 @@ const ProductPage = () => {
   const [ReviewBoxVisibility, setReviewBoxVisibility] = useState(false);
   const [userReviewRatings, setUserReviewRatings] = useState(0);
   const [userReviewComment, setUserReviewComment] = useState("");
+  const [snackBar, setSnackBar] = useState(false);
+  const [SnackTxt,setSnackTxt] = useState('')
 
   useEffect(() => {
     if (error) {
@@ -83,13 +92,39 @@ const ProductPage = () => {
         rating: userReviewRatings,
       })
     );
+    setSnackTxt('Review added')
+    setSnackBar(true)
     setReviewBoxVisibility(false);
   };
 
   const HelperAddItemToCart = () => {
     dispatch(addItemToCart({ id: params.id, quantity }));
+    HelperSnackBarOpen();
   };
 
+  const HelperSnackBarOpen = () => {
+    setSnackTxt('Item added to cart')
+    setSnackBar(true);
+  };
+  const HelperSnackBarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSnackBar(false);
+  };
+  const snackBarAction = (
+    <>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={HelperSnackBarClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </>
+  );
   return (
     <>
       {loading ? (
@@ -239,8 +274,29 @@ const ProductPage = () => {
           <Footer />
         </motion.div>
       )}
+
+      <Snackbar
+        open={snackBar}
+        autoHideDuration={1500}
+        onClose={HelperSnackBarClose}
+        action={snackBarAction}
+        TransitionComponent={Transition}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <MuiAlert
+          onClose={HelperSnackBarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          { SnackTxt }
+        </MuiAlert>
+      </Snackbar>
     </>
   );
 };
 
 export default ProductPage;
+
+function Transition(props) {
+  return <Slide {...props} direction="left" />;
+}

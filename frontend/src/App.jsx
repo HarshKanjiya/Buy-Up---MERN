@@ -1,8 +1,8 @@
 import { createTheme } from "@mui/system";
 import { AnimatePresence } from "framer-motion";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Route, Routes, useLocation } from "react-router-dom";
 import AboutMe from "./components/pages/about/AboutMe";
 import Cart from "./components/pages/cart/Cart";
 import AllProducts from "./components/pages/AllProducts/AllProducts";
@@ -15,6 +15,7 @@ import Dashboard from "./components/pages/dashboard/Dashboard";
 import { UpdateProfile } from "./components/pages/update Profile/UpdateProfile";
 import UpdatePassword from "./components/pages/update Password/UpdatePassword";
 import ResetPassword from "./components/pages/ResetPassword/ResetPassword";
+import Shipping from "./components/pages/shipping/Shipping";
 
 const lightTheme = {
   body: "#fff",
@@ -51,8 +52,10 @@ function App() {
           <Route exact path="/profile/password" element={<UpdatePassword />} />
           <Route exact path="/password/reset/:token" element={<ResetPassword />} />
 
+
           <Route exact path="/dashboard" element={<Dashboard/>} />
           <Route exact path="/cart" element={<Cart />} />
+          <Route exact path="/login/shipping" element={<Shipping />} />
          
          
         </Routes>

@@ -29,10 +29,9 @@ export const submitReview = createAsyncThunk(
         }
       );
       if (res.data.success === true) {
-        const res = await axios.get(`${getSingleProductAPI}${id}`);
         return res.data;
       } else {
-        return res.data;
+        return rejectWithValue(res.data)
       }
     } catch (error) {
       console.log('error :>> ', error.response.data.message);
@@ -73,6 +72,8 @@ const productPageSlice = createSlice({
     }),
       builder.addCase(submitReview.fulfilled, (state, action) => {
         state.loading = false;
+        state.productInfo = action.payload;
+
       }),
       builder.addCase(submitReview.rejected, (state, action) => {
         state.loading = false;
