@@ -16,6 +16,7 @@ import { UpdateProfile } from "./components/pages/update Profile/UpdateProfile";
 import UpdatePassword from "./components/pages/update Password/UpdatePassword";
 import ResetPassword from "./components/pages/ResetPassword/ResetPassword";
 import Shipping from "./components/pages/shipping/Shipping";
+import { GET_SHIPPING_INFO_FROM_LOCALSTORAGE, setCartFromLocalStorage } from "./redux/slices/cartPageSlice";
 
 const lightTheme = {
   body: "#fff",
@@ -34,6 +35,9 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(loadUser({}));
+    dispatch(setCartFromLocalStorage());
+    dispatch(GET_SHIPPING_INFO_FROM_LOCALSTORAGE())
+
   }, []);
   return (
     <div className="App">

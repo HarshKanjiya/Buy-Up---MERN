@@ -140,7 +140,7 @@ export default ExtraSpacs;
 const Wrapper = styled(motion.div)`
   height: 100%;
   flex: 0.45;
-  background-color: #fdfdfd;
+  background-color: #fafffe;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -232,7 +232,6 @@ const Footer = styled.div`
   margin: 2rem;
   margin-bottom: 0.5rem;
   display: flex;
-  background-color: white;
   justify-content: space-between;
   position: absolute;
   width: 83%;

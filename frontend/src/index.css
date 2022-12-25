@@ -69,3 +69,17 @@
   background-image:linear-gradient(180deg, #2bb594, #01b277) ;
   border-radius: 8px; 
  }  
+
+ .MuiStepConnector-line{
+  display: none !important;
+ }
+ .MuiStepConnector-root{
+  height: 1px ;
+  background-color: #d1d1d1;
+ }
+ .MuiStepConnector-active,
+ .MuiStepConnector-completed{
+  background-color: #01b277;
+ }
+ 
+ 

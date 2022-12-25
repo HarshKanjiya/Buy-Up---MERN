@@ -36,8 +36,16 @@ const cartPageSlice = createSlice({
     cartItems: [],
     error: null,
     spacsInfo: null,
-    PRODUCT_QUANTITY:1,
-    totalCost:0
+    PRODUCT_QUANTITY: 1,
+    totalCost: 0,
+    SHIPPING_INFO: {
+      address:'',
+      country:'',
+      state:'',
+      city:'',
+      pinCode:'',
+      phoneNo:'',
+    },
   },
   reducers: {
     clearErrors: (state) => {
@@ -94,8 +102,8 @@ const cartPageSlice = createSlice({
       state.cartItems.map((i) => {
         if (i.id === id) {
           temp.push({ ...i, quantity: i.quantity + 1 });
-        }else{
-          temp.push(i)
+        } else {
+          temp.push(i);
         }
       });
       state.cartItems = temp;
@@ -107,26 +115,35 @@ const cartPageSlice = createSlice({
       state.cartItems.map((i) => {
         if (i.id === id) {
           temp.push({ ...i, quantity: i.quantity - 1 });
-        }else{
-          temp.push(i)
+        } else {
+          temp.push(i);
         }
       });
       state.cartItems = temp;
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
-    addIntoQuantity:(state) => {
-      state.PRODUCT_QUANTITY = state.PRODUCT_QUANTITY + 1
+    addIntoQuantity: (state) => {
+      state.PRODUCT_QUANTITY = state.PRODUCT_QUANTITY + 1;
     },
-    removeIntoQuantity:(state) => {
-      state.PRODUCT_QUANTITY = state.PRODUCT_QUANTITY - 1
+    removeIntoQuantity: (state) => {
+      state.PRODUCT_QUANTITY = state.PRODUCT_QUANTITY - 1;
     },
-    getTotalCost:(state)=>{
-      let cost = 0
+    getTotalCost: (state) => {
+      let cost = 0;
       state.cartItems.map((i) => {
-        cost = cost + ( i.price * i.quantity)
-      })
-      state.totalCost = cost
-    }
+        cost = cost + i.price * i.quantity;
+      });
+      state.totalCost = cost;
+    },
+
+    // shipping infooo
+    SAVE_SHIPPING_INFO: (state, { payload }) => {
+      state.SHIPPING_INFO = payload;
+      localStorage.setItem("shippingInfo", JSON.stringify(state.SHIPPING_INFO));
+    },
+    GET_SHIPPING_INFO_FROM_LOCALSTORAGE: (state) => {
+      state.SHIPPING_INFO = JSON.parse(localStorage.getItem("shippingInfo"));
+    },
   },
 
   extraReducers: (builder) => {
@@ -150,5 +167,8 @@ export const {
   addIntoQuantity,
   removeIntoQuantity,
   getTotalCost,
+  SAVE_SHIPPING_INFO,
+  GET_SHIPPING_INFO_FROM_LOCALSTORAGE,
 } = cartPageSlice.actions;
+
 export default cartPageSlice.reducer;

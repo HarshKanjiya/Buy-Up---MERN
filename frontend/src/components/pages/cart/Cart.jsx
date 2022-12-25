@@ -25,21 +25,19 @@ import {
   setCartFromLocalStorage,
 } from "../../../redux/slices/cartPageSlice";
 import ExtraSpacs from "../../layouts/Extra Spacs -- cart page/ExtraSpacs";
-
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cartItems, totalCost } = useSelector((state) => state.cart);
-  const [checkOutDisi, setCheckOutDisi] = useState(false);
 
   useEffect(() => {
-    dispatch(setCartFromLocalStorage());
     dispatch(getTotalCost());
   }, []);
 
   const HelperCheckOut = () => {
-navigate('/login?redirect=shipping')
-  }
+    navigate("/login?redirect=shipping");
+  };
 
   return (
     <motion.div
@@ -136,8 +134,12 @@ navigate('/login?redirect=shipping')
             </Body>
             {cartItems.length !== 0 ? (
               <Footer>
-                <p>Total : <span>₹ {totalCost}</span> </p>
-                <CheckOut variant="contained" onClick={HelperCheckOut}>check out</CheckOut>
+                <p>
+                  Total : <span>₹ {totalCost}</span>{" "}
+                </p>
+                <CheckOut variant="contained" onClick={HelperCheckOut}>
+                  <ShoppingCartCheckoutIcon fontSize="small" />&nbsp; check out
+                </CheckOut>
               </Footer>
             ) : null}
           </RightSection>

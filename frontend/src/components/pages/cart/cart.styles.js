@@ -34,6 +34,8 @@ export const Container = styled.div`
     justify-content: flex-start;
     gap: 2rem;
   }
+    box-shadow:4px 4px 22px rgba(0,0,0,0.3), -4px -4px 22px rgba(255,255,255,0.4);
+
 `;
 
 export const LeftSection = styled.div`
@@ -183,7 +185,12 @@ export const Footer = styled.div`
 `;
 
 export const CheckOut = styled(Button)`
-  background-image: linear-gradient(-90deg, #2bb594, #01b277);
-  font-weight: 700;
-  letter-spacing: 2px;
+  background-color: #2bb594;
+color:#0c3324;
+font-weight: 700;
+letter-spacing: 2px;
+&:hover{
+    background-color: #2bb594;
+    color:white;
+}
 `;
