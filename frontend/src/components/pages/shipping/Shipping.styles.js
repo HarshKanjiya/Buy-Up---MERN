@@ -87,15 +87,12 @@ export const RightSectionHeader = styled.div`
   font-weight: 500;
   color: #b6b6b6;
   width: 100%;
-  /* padding: 1rem; */
-  /* margin: 1rem; */
 `;
 export const Form = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 0 1rem;
-  /* margin: 1rem; */
   justify-content: center;
 `;
 export const AddressWrapper = styled.div`
@@ -106,12 +103,27 @@ export const AddressWrapper = styled.div`
   border-radius: 7px;
   width: 100%;
   padding: 1rem;
-  /* margin: 1rem; */
   box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.06);
 
   div {
     display: flex;
     gap: 2rem;
+  }
+
+  .order-user-info{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+
+    p{
+      margin: 0.5rem 0;
+      color:#565656;
+      font-weight: 500;
+    }
+    div{
+      display: flex;
+      gap: 1rem;
+    }
   }
 `;
 export const TextInput = styled(TextField)`
@@ -149,7 +161,7 @@ export const Locationselector = styled.select`
     color: #d1d1d1;
   }
 `;
-export const Footer = styled.div`
+export const Footer = styled(motion.div)`
   margin: 1rem;
   margin-top: 0;
   padding: 1rem;
@@ -176,3 +188,31 @@ height: 36.5px;
 }
 
 `
+
+export const Form2 = styled.div`
+  display: flex;
+  min-height: 100%;
+  padding-bottom: 20rem;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 1rem;
+  overflow-y: auto;
+  justify-content: start ;
+  overflow-y: scroll;
+`;
+
+export const Footer2 = styled(motion.div)`
+  margin: 1rem;
+  margin-top: 0;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 7px;
+  /* background-image: linear-gradient(45deg,rgba(255,255,255,0.4),rgba(255,255,255,0.2)); */
+  backdrop-filter: blur(4px);
+  width: calc(100% - 2rem);
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.06);
+  display: flex;
+  justify-content: end;
+  position: sticky;
+  bottom: 1rem;
+`;

@@ -7,51 +7,85 @@ import {
   setSpacsInfo,
 } from "../../redux/slices/cartPageSlice";
 
-const CartCardView = ({ data, index }) => {
+const CartCardView = ({ data, index, page }) => {
   const dispatch = useDispatch();
-  return (
-    <Wrapper
-      key={data.id}
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ duration: 0.3, delay: (index + 1) * 0.1 }}
-      layout
-      onClick={() => {
-        dispatch(setSpacsInfo(data));
-      }}
-    >
-      <Container
-        initial={{ boxShadow: "none" }}
-        whileHover={{
-          boxShadow: "0 8px 11px rgba(0, 0, 0, 0.1)",
-          border: " 1px solid white",
-        }}
-        whileTap={{ boxShadow: "none" }}
-        transition={{ duration: 0.3 }}
-      >
-        <Left>
-          <div className="CartCardView-img-wrapper">
-            {" "}
-            <img src={data.image} alt={data.name} />
-          </div>
-          <p> {data.name} </p>
-        </Left>
-        <Right>
-          <Count>{data.quantity}</Count>
-          <TotalCost>₹{data.price * data.quantity}</TotalCost>
-        </Right>
-      </Container>
-
-      <CloseBtnWrapper
+  if(page === "confirm-order"){
+    return (
+      <Wrapper
+        key={data.id}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{ duration: 0.3, delay: (index + 1) * 0.1 }}
+        layout
         onClick={() => {
-          dispatch(removeItemFromCart(data.id));
+          dispatch(setSpacsInfo(data));
         }}
       >
-        <p>&times;</p>
-      </CloseBtnWrapper>
-    </Wrapper>
-  );
+        <ContainerForConfirmOrder
+         
+        >
+          <Left>
+            <div className="CartCardView-img-wrapper">
+              {" "}
+              <img src={data.image} alt={data.name} />
+            </div>
+            <p> {data.name} </p>
+          </Left>
+          <Right>
+            <Count>{data.quantity}</Count>
+            <TotalCost>₹{data.price * data.quantity}</TotalCost>
+          </Right>
+        </ContainerForConfirmOrder>
+      </Wrapper>
+    );
+  }else{
+    return (
+      <Wrapper
+        key={data.id}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
+        transition={{ duration: 0.3, delay: (index + 1) * 0.1 }}
+        layout
+        onClick={() => {
+          dispatch(setSpacsInfo(data));
+        }}
+      >
+        <Container
+          initial={{ boxShadow: "none" }}
+          whileHover={{
+            boxShadow: "0 8px 11px rgba(0, 0, 0, 0.1)",
+            border: " 1px solid white",
+          }}
+          whileTap={{ boxShadow: "none" }}
+          transition={{ duration: 0.3 }}
+        >
+          <Left>
+            <div className="CartCardView-img-wrapper">
+              {" "}
+              <img src={data.image} alt={data.name} />
+            </div>
+            <p> {data.name} </p>
+          </Left>
+          <Right>
+            <Count>{data.quantity}</Count>
+            <TotalCost>₹{data.price * data.quantity}</TotalCost>
+          </Right>
+        </Container>
+  
+        {page && page !== "confirm-order" ? (
+          <CloseBtnWrapper
+            onClick={() => {
+              dispatch(removeItemFromCart(data.id));
+            }}
+          >
+            <p>&times;</p>
+          </CloseBtnWrapper>
+        ) : null}
+      </Wrapper>
+    );
+  }
 };
 
 export default CartCardView;
@@ -86,6 +120,18 @@ const Container = styled(motion.div)`
   background-color: white;
   border: 1px solid #f0f0f0;
   border-radius: 6px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+const ContainerForConfirmOrder = styled(motion.div)`
+  width: 100%;
+  display: flex;
+  padding: 0.8rem;
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.06);
 
   display: flex;
   justify-content: space-between;

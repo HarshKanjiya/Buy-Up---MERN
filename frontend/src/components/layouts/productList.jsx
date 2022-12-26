@@ -16,7 +16,9 @@ const ProductList = () => {
   const [sliderForPhone,setSliderForPhone] = useState(true)
 
   useEffect(()=>{
-    setProducts(productInfo.products)
+    if(productInfo){
+      setProducts(productInfo.products)
+    }
   },[productInfo])
 
   if(products){

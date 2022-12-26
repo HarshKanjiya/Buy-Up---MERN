@@ -4,11 +4,11 @@ import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { AnimatePresence, motion } from "framer-motion";
 
-const CartViewLayout = () => {
+const CartViewLayout = ({ page = "cart" }) => {
   const { cartItems } = useSelector((state) => state.cart);
   return (
     <Wrapper>
-      {cartItems.length !== 0 ? (
+      {cartItems.length !== 0 && page === "cart" ? (
         <Header>
           <div className="cart-layout-header-left">
             <p>Product</p>
@@ -24,16 +24,31 @@ const CartViewLayout = () => {
         </Header>
       ) : null}
 
+      {cartItems.length !== 0 && page !== "cart" ? (
+        <HeaderForCart>
+          <div className="cart-layout-header-left">
+            <p>Product</p>
+          </div>
+          <div className="cart-layout-header-right">
+            <div className="cart-layout-header-right-ele">
+              <p>Quantiy</p>
+            </div>
+            <div className="cart-layout-header-right-ele">
+              <p>Total Cost</p>
+            </div>
+          </div>
+        </HeaderForCart>
+      ) : null}
+
       <AnimatePresence mode="wait">
         <motion.div className="CartViewLayout-List" layout>
           {cartItems.length ? (
             cartItems.map((data, index) => (
-              <CartCardView data={data} key={index} index={index} />
+              <CartCardView data={data} page={page} key={index} index={index} />
             ))
           ) : (
             <div className="CartViewLayout-emptyCart">
-              {" "}
-              <p>Your Cart is Empty!</p>{" "}
+              <p>Your Cart is Empty!</p>
             </div>
           )}
         </motion.div>
@@ -69,6 +84,31 @@ const Wrapper = styled.div`
 `;
 const Header = styled.div`
   width: 80%;
+  display: flex;
+  border-bottom: 1px solid #f5f5f5;
+  padding: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #b6b6b6;
+
+  .cart-layout-header-left {
+    flex: 1;
+  }
+  .cart-layout-header-right {
+    flex: 1;
+
+    display: flex;
+    justify-content: flex-end;
+    text-align: center;
+  }
+  .cart-layout-header-right-ele {
+    flex: 1;
+  }
+`;
+const HeaderForCart = styled.div`
+  width: 100%;
   display: flex;
   border-bottom: 1px solid #f5f5f5;
   padding: 0.8rem;

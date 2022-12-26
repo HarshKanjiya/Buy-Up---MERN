@@ -6,7 +6,9 @@ import {
   AddressWrapper,
   Container,
   Footer,
+  Footer2,
   Form,
+  Form2,
   LeftSection,
   Locationselector,
   LocationWrapper,
@@ -19,18 +21,54 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import SaveIcon from "@mui/icons-material/Save";
 import Steps from "../../layouts/Stepper -- checkout page/Stepper";
-import { SAVE_SHIPPING_INFO } from "../../../redux/slices/cartPageSlice";
+import {
+  clearErrors,
+  SAVE_SHIPPING_INFO,
+} from "../../../redux/slices/cartPageSlice";
 import { AnimatePresence, motion } from "framer-motion";
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import CartViewLayout from "../../layouts/Cart/CartViewLayout";
 
 const Shipping = () => {
   const dispatch = useDispatch();
-  const { SHIPPING_INFO } = useSelector((state) => state.cart);
-  const [shippingInfo, setShippingInfo] = useState(SHIPPING_INFO);
+  const { SHIPPING_INFO, error, cartItems } = useSelector(
+    (state) => state.cart
+  );
+  const { userInfo } = useSelector((state) => state.user);
+  const [shippingInfo, setShippingInfo] = useState({
+    address: "",
+    country: "",
+    city: "",
+    pinCode: "",
+    phoneNo: "",
+    state: "",
+  });
   const [activeStep, setActiveStep] = useState(0);
-  const [Delta, setDelta] = useState(0);
+  const [Delta, setDelta] = useState(1);
+
+  useEffect(() => {
+    if (error) {
+      Alert({
+        icon: "error",
+        text: error,
+        title: "Oops!",
+      });
+      dispatch(clearErrors);
+    }
+    if (!SHIPPING_INFO) return;
+
+    setShippingInfo(SHIPPING_INFO);
+
+    if (SHIPPING_INFO.address.trim() === "") return;
+    if (SHIPPING_INFO.country.trim() === "") return;
+    if (SHIPPING_INFO.state.trim() === "") return;
+    if (SHIPPING_INFO.city.trim() === "") return;
+    if (SHIPPING_INFO.pinCode.trim() === "") return;
+    if (SHIPPING_INFO.phoneNo.trim() === "") return;
+
+    setActiveStep(1);
+  }, [error, SHIPPING_INFO]);
 
   const CHANGEActiveStep = (newStep) => {
     setActiveStep(newStep);
@@ -113,10 +151,15 @@ const Shipping = () => {
                 initial={{
                   opacity: ` ${Delta >= 0 ? 0 : 1}`,
                   x: `${Delta >= 0 ? "0%" : "-100%"}`,
+                  scale: 0.8,
                 }}
-                animate={{ opacity: 1, x: "0%" }}
-                exit={{ x: "-100%" }}
-                transition={{ duration: 0.3, type: "tween", ease: "easeInOut" }}
+                animate={{ opacity: 1, x: "0%", scale: 1 }}
+                exit={{ x: "-100%", scale: 0.8 }}
+                transition={{
+                  duration: 0.25,
+                  type: "tween",
+                  ease: "easeInOut",
+                }}
               >
                 <Form>
                   <RightSectionHeader>
@@ -234,77 +277,97 @@ const Shipping = () => {
             {activeStep === 1 ? (
               <motion.div
                 key="confirm-order"
-                initial={{ x: `${Delta > 0 ? "100%" : "-100%"}` }}
-                animate={{ x: 0 }}
+                initial={{ x: `${Delta > 0 ? "100%" : "-100%"}`, scale: 0.8 }}
+                animate={{ x: 0, scale: 1 }}
                 exit={{ x: `${Delta > 0 ? "100%" : "-100%"}` }}
-                transition={{ duration: 0.3, type: "tween", ease: "easeInOut" }}
+                transition={{
+                  duration: 0.25,
+                  type: "tween",
+                  ease: "easeInOut",
+                }}
               >
-                qaz
+                <Form2>
+                  <RightSectionHeader>Order Info</RightSectionHeader>
+                  <AddressWrapper>
+                    <div className="order-user-info">
+                      <p>user info</p>
+                      <div> {userInfo && userInfo.name} </div>
+                      <div> {SHIPPING_INFO.phoneNo} </div>
+                      <div>
+                        {SHIPPING_INFO.address}, {SHIPPING_INFO.city}
+                      </div>
+                      <div>
+                        {SHIPPING_INFO.state}, {SHIPPING_INFO.country} -{" "}
+                        {SHIPPING_INFO.pinCode}
+                      </div>
+                    </div>
+                  </AddressWrapper>
+                  <CartViewLayout page="confirm-order" />
+                </Form2>
               </motion.div>
             ) : null}
           </AnimatePresence>
 
           {/* footer zone */}
-          <Footer>
-            <AnimatePresence mode="wait">
-              {activeStep === 0 ? (
-                <motion.div
-                  key="Shipping-details-footer"
-                  initial={{
-                    x: `${Delta >= 0 ? "0%" : "-450%"}`,
+          <AnimatePresence mode="wait">
+            {activeStep === 0 ? (
+              <Footer
+                key="Shipping-details-footer"
+                initial={{
+                  x: `${Delta >= 0 ? "0%" : "-450%"}`,
+                }}
+                animate={{ x: "0%" }}
+                transition={{
+                  duration: 0.25,
+                  type: "tween",
+                  ease: "easeInOut",
+                }}
+                exit={{ x: "-500%" }}
+              >
+                <SaveBtn variant="contained" onClick={HelperShippingSubmit}>
+                  <SaveIcon fontSize="small" />
+                  &nbsp; save & continue
+                </SaveBtn>
+              </Footer>
+            ) : null}
+
+            {activeStep === 1 ? (
+              <Footer2
+                key="confirm-order"
+                initial={{ x: `${Delta > 0 ? "500%" : "-500%"}` }}
+                animate={{ x: 0 }}
+                transition={{
+                  duration: 0.25,
+                  type: "tween",
+                  ease: "easeInOut",
+                }}
+                exit={{ x: `${Delta > 0 ? "500%" : "-500%"}` }}
+                style={{
+                  display: "flex",
+                  gap: "2rem",
+                }}
+              >
+                <SaveBtn
+                  variant="contained"
+                  onClick={() => {
+                    CHANGEActiveStep(0);
                   }}
-                  animate={{ x: "0%" }}
-                  transition={{
-                    duration: 0.3,
-                    type: "tween",
-                    ease: "easeInOut",
-                  }}
-                  exit={{ x: "-500%" }}
                 >
-                  <SaveBtn variant="contained" onClick={HelperShippingSubmit}>
-                    <SaveIcon fontSize="small" />
-                    &nbsp; save & continue
-                  </SaveBtn>
-                </motion.div>
-              ) : null}
-              {activeStep === 1 ? (
-                <motion.div
-                  key="confirm-order"
-                  initial={{ x: `${Delta > 0 ? "500%" : "-500%"}` }}
-                  animate={{ x: 0 }}
-                  transition={{
-                    duration: 0.3,
-                    type: "tween",
-                    ease: "easeInOut",
-                  }}
-                  exit={{ x: `${Delta > 0 ? "500%" : "-500%"}` }}
-                  style={{
-                    display:"flex",
-                    gap:"2rem"
+                  <NavigateBeforeIcon fontSize="small" />
+                  <p>back</p>
+                </SaveBtn>
+                <SaveBtn
+                  variant="contained"
+                  onClick={() => {
+                    CHANGEActiveStep(0);
                   }}
                 >
-                  <SaveBtn
-                    variant="contained"
-                    onClick={() => {
-                      CHANGEActiveStep(0);
-                    }}
-                  >
-                    <NavigateBeforeIcon fontSize="small" />
-                    <p>back</p>
-                  </SaveBtn>
-                  <SaveBtn
-                    variant="contained"
-                    onClick={() => {
-                      CHANGEActiveStep(0);
-                    }}
-                  >
-                    <p>next</p>
-                    <NavigateNextIcon fontSize="small" />
-                  </SaveBtn>
-                </motion.div>
-              ) : null}
-            </AnimatePresence>
-          </Footer>
+                  <p>next</p>
+                  <NavigateNextIcon fontSize="small" />
+                </SaveBtn>
+              </Footer2>
+            ) : null}
+          </AnimatePresence>
         </RightSection>
       </Container>
     </Wrapper>
