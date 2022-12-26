@@ -209,6 +209,7 @@ const Shipping = () => {
         setPayLoading(false);
         return;
       }
+      console.log('CardNumberElement :>> ', elements.getElement(CardNumberElement));
 
       const result = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
@@ -228,7 +229,6 @@ const Shipping = () => {
       });
 
       if (result.error) {
-        setPayLoading(false);
         setPayLoading(false);
         payBtn.current.disabled = false;
         Alert({
@@ -253,8 +253,8 @@ const Shipping = () => {
         });
       }
     } catch (error) {
+      setPayLoading(false)
       console.log("error :>> ", error);
-      payBtn.current.disabled = false;
       Alert({
         text: error,
         icon: "error",
