@@ -144,7 +144,7 @@ const cartPageSlice = createSlice({
     },
     GET_SHIPPING_INFO_FROM_LOCALSTORAGE: (state) => {
       state.SHIPPING_INFO = JSON.parse(localStorage.getItem("shippingInfo"));
-      console.log('state.SHIPPING_INFO :>> ', state.SHIPPING_INFO);
+      // console.log('state.SHIPPING_INFO :>> ', state.SHIPPING_INFO);
     },
   },
 

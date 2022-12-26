@@ -24,6 +24,8 @@ export const Container = styled.div`
   min-height: 50vh;
   overflow: hidden;
 
+  max-width: 1200px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,6 +36,7 @@ export const Container = styled.div`
   .width50 {
     width: 50%;
   }
+  
 `;
 
 export const LeftSection = styled.div`
@@ -163,8 +166,13 @@ background-color: #2bb594;
 color:#0c3324;
 font-weight: 700;
 letter-spacing: 2px;
+height: 36.5px;
+
 &:hover{
     background-color: #2bb594;
     color:white;
+
+    transition: 300ms;
 }
+
 `
