@@ -38,6 +38,7 @@ const cartPageSlice = createSlice({
     spacsInfo: null,
     PRODUCT_QUANTITY: 1,
     totalCost: 0,
+    finalAmount:0,
     SHIPPING_INFO: {
       address:'',
       country:'',
@@ -135,6 +136,9 @@ const cartPageSlice = createSlice({
       });
       state.totalCost = cost;
     },
+    setfinalAmountForPayment:(state,{payload}) => {
+      state.finalAmount = payload
+    },
 
     // shipping infooo
     SAVE_SHIPPING_INFO: (state, { payload }) => {
@@ -171,6 +175,7 @@ export const {
   getTotalCost,
   SAVE_SHIPPING_INFO,
   GET_SHIPPING_INFO_FROM_LOCALSTORAGE,
+  setfinalAmountForPayment,
 } = cartPageSlice.actions;
 
 export default cartPageSlice.reducer;

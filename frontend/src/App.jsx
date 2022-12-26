@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/system";
 import { AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
 import AboutMe from "./components/pages/about/AboutMe";
@@ -16,7 +16,13 @@ import { UpdateProfile } from "./components/pages/update Profile/UpdateProfile";
 import UpdatePassword from "./components/pages/update Password/UpdatePassword";
 import ResetPassword from "./components/pages/ResetPassword/ResetPassword";
 import Shipping from "./components/pages/shipping/Shipping";
-import { GET_SHIPPING_INFO_FROM_LOCALSTORAGE, setCartFromLocalStorage } from "./redux/slices/cartPageSlice";
+import {
+  GET_SHIPPING_INFO_FROM_LOCALSTORAGE,
+  setCartFromLocalStorage,
+} from "./redux/slices/cartPageSlice";
+import axios from "axios";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 const lightTheme = {
   body: "#fff",
@@ -33,12 +39,20 @@ const themez = createTheme({
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
   useEffect(() => {
     dispatch(loadUser({}));
     dispatch(setCartFromLocalStorage());
-    dispatch(GET_SHIPPING_INFO_FROM_LOCALSTORAGE())
-
+    dispatch(GET_SHIPPING_INFO_FROM_LOCALSTORAGE());
+    getStripeApiKey();
   }, []);
+
+  const getStripeApiKey = async () => {
+    const { data } = await axios.get("/api/v1/payment/stripeapikey");
+    setStripeApiKey(data.stripeApiKey);
+  };
+
   return (
     <div className="App">
       <AnimatePresence mode="wait">
@@ -49,20 +63,27 @@ function App() {
           <Route path="/products/:keyword" element={<AllProducts />} />
           <Route path="/login" element={<Login />} />
           <Route path="/aboutme" element={<AboutMe />} />
-         
-          
+
           <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/profile/update" element={<UpdateProfile />} />
           <Route exact path="/profile/password" element={<UpdatePassword />} />
-          <Route exact path="/password/reset/:token" element={<ResetPassword />} />
+          <Route
+            exact
+            path="/password/reset/:token"
+            element={<ResetPassword />}
+          />
 
-
-          <Route exact path="/dashboard" element={<Dashboard/>} />
+          <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/cart" element={<Cart />} />
-          <Route exact path="/login/shipping" element={<Shipping />} />
-         
-         
         </Routes>
+
+        {stripeApiKey && (
+          <Elements stripe={loadStripe(stripeApiKey)}>
+            <Routes key={location.pathname} location={location}>
+              <Route exact path="/login/shipping" element={<Shipping />} />
+            </Routes>
+          </Elements>
+        )}
       </AnimatePresence>
     </div>
   );
