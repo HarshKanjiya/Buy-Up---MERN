@@ -48,6 +48,8 @@ import {
 } from "@stripe/react-stripe-js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import LoadingScreen from "../../components/LoadingScreen";
+import { clearErrorsInOrder, CreateOrderRequest } from "../../../redux/slices/OrderSlice";
 
 const Shipping = () => {
   const dispatch = useDispatch();
@@ -59,6 +61,7 @@ const Shipping = () => {
   const { SHIPPING_INFO, error, totalCost, cartItems } = useSelector(
     (state) => state.cart
   );
+  const { errorInOrder } = useSelector((state) => state.order);
   const { userInfo } = useSelector((state) => state.user);
   const [shippingInfo, setShippingInfo] = useState({
     address: "",
@@ -103,6 +106,16 @@ const Shipping = () => {
 
     setActiveStep(1);
   }, [error, SHIPPING_INFO]);
+
+  useEffect(() => {
+    if (errorInOrder) {
+      Alert({
+        icon: "error",
+        text: error,
+      });
+      dispatch(clearErrorsInOrder());
+    }
+  }, [errorInOrder]);
 
   const CHANGEActiveStep = (newStep) => {
     setActiveStep(newStep);
@@ -166,6 +179,15 @@ const Shipping = () => {
     dispatch(SAVE_SHIPPING_INFO(shippingInfo));
   };
 
+  const order = {
+    shippingInfo,
+    orderItems: cartItems,
+    itemsPrice: totalCost,
+    taxPrice: Math.round(totalCost * 0.18),
+    shippingPrice: totalCost > 2000 ? 0 : 400,
+    totalPrice: finalAmount,
+  };
+
   const HelperPayment = async () => {
     setPayLoading(true);
     payBtn.current.disabled = true;
@@ -206,7 +228,7 @@ const Shipping = () => {
       });
 
       if (result.error) {
-        setPayLoading(false)
+        setPayLoading(false);
         setPayLoading(false);
         payBtn.current.disabled = false;
         Alert({
@@ -215,10 +237,15 @@ const Shipping = () => {
         });
       }
       if (result.paymentIntent.status === "succeeded") {
-        setPayLoading(false)
+        setPayLoading(false);
+        order.paymentInfo = {
+          id: result.paymentIntent.id,
+          status: result.paymentIntent.status
+        }
+        dispatch(CreateOrderRequest(order))
         navigate("/success");
       } else {
-        setPayLoading(false)
+        setPayLoading(false);
         Alert({
           title: "Sorry for inconviance",
           text: "There's some issue while processing Payment!",
@@ -493,32 +520,38 @@ const Shipping = () => {
                 <Form>
                   <RightSectionHeader>Card Info</RightSectionHeader>
                   <PaymentWrapper>
-                    <p className="PaymentWrapper-header-line">
-                      Add your card Details
-                    </p>
-                    <PaymentCont>
-                      <div className="PaymentCont-ele">
-                        <CreditCardIcon />{" "}
-                        <CardNumberElement className="CardNumberElement" />{" "}
-                      </div>
-                      <div className="PaymentCont-ele">
-                        <EventIcon />{" "}
-                        <CardExpiryElement className="CardExpiryElement" />{" "}
-                      </div>
-                      <div className="PaymentCont-ele">
-                        <VpnKeyIcon />{" "}
-                        <CardCvcElement className="CardCvcElement" />{" "}
-                      </div>
-                      <div>
-                        <SaveBtn
-                          variant="contained"
-                          onClick={HelperPayment}
-                          ref={payBtn}
-                        >
-                          {`pay ₹${finalAmount}`}
-                        </SaveBtn>
-                      </div>
-                    </PaymentCont>
+                    {payLoading ? (
+                      <LoadingScreen size="small" />
+                    ) : (
+                      <>
+                        <p className="PaymentWrapper-header-line">
+                          Add your card Details
+                        </p>
+                        <PaymentCont>
+                          <div className="PaymentCont-ele">
+                            <CreditCardIcon />{" "}
+                            <CardNumberElement className="CardNumberElement" />{" "}
+                          </div>
+                          <div className="PaymentCont-ele">
+                            <EventIcon />{" "}
+                            <CardExpiryElement className="CardExpiryElement" />{" "}
+                          </div>
+                          <div className="PaymentCont-ele">
+                            <VpnKeyIcon />{" "}
+                            <CardCvcElement className="CardCvcElement" />{" "}
+                          </div>
+                          <div>
+                            <SaveBtn
+                              variant="contained"
+                              onClick={HelperPayment}
+                              ref={payBtn}
+                            >
+                              {`pay ₹${finalAmount}`}
+                            </SaveBtn>
+                          </div>
+                        </PaymentCont>
+                      </>
+                    )}
                   </PaymentWrapper>
                 </Form>
               </motion.div>
