@@ -80,7 +80,7 @@ const Login = () => {
       });
       dispatch(clearErrors());
     }
-    if (isAuthenticated) {
+    if (isAuthenticated === true) {
       navigate(redirect);
     }
     if (message) {

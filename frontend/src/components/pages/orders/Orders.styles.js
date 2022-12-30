@@ -42,12 +42,12 @@ p{
 }
 `
 export const Body = styled.div`
-background-color: white;
 width: 100%;
 min-height: 100%;
 padding: 1rem;
-margin: 1rem auto;
+margin: 0 auto;
+
 border-radius: 8px;
-box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.06);
+/* box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.06); */
 
 `
