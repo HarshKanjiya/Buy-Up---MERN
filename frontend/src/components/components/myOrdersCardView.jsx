@@ -50,7 +50,7 @@ const MyOrdersCardView = ({Helper}) => {
                 </ImgWrapper>
                 <p>
                   {order.orderItems.length !== 1
-                    ? `+${order.orderItems.length}`
+                    ? `+${order.orderItems.length - 1}`
                     : null}
                 </p>
               </Left>
@@ -84,6 +84,7 @@ const MyOrdersCardView = ({Helper}) => {
 export default MyOrdersCardView;
 
 const Wrapper = styled(motion.div)`
+user-select: none;
   width: 100%;
   display: flex;
   gap: 2.5rem;

@@ -4,12 +4,15 @@ import { motion } from "framer-motion";
 
 export const Wrapper = styled(motion.div)`
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   overflow-x: hidden;
   padding: 2rem;
   display: flex;
   justify-content: center;
   background-image: linear-gradient(-90deg, #2bb594, #01b277);
+
+  
 
   @media (max-width: 555px) {
     padding: 0.5rem;
@@ -41,7 +44,7 @@ p{
   border-color: white !important;
 }
 `
-export const Body = styled.div`
+export const Body = styled(motion.div)`
 width: 100%;
 min-height: 100%;
 padding: 1rem;
