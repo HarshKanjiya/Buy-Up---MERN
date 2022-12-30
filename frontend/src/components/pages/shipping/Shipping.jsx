@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Logo from "../../../assets/images/logo.png";
 import { Country, State } from "country-state-city";
 import { Alert } from "../../components/Alert";
+import "../../../index.css";
 import {
   AddressWrapper,
   Container,
@@ -11,6 +12,7 @@ import {
   Footer3,
   Form,
   Form2,
+  Form3,
   LeftSection,
   Locationselector,
   LocationWrapper,
@@ -43,13 +45,17 @@ import {
   CardNumberElement,
   CardCvcElement,
   CardExpiryElement,
-  useStripe,
-  useElements,
+  CardElement,
 } from "@stripe/react-stripe-js";
+import { useStripe, useElements } from "@stripe/react-stripe-js";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../../components/LoadingScreen";
-import { clearErrorsInOrder, CreateOrderRequest } from "../../../redux/slices/OrderSlice";
+import {
+  clearErrorsInOrder,
+  CreateOrderRequest,
+} from "../../../redux/slices/OrderSlice";
 
 const Shipping = () => {
   const dispatch = useDispatch();
@@ -61,8 +67,8 @@ const Shipping = () => {
   const { SHIPPING_INFO, error, totalCost, cartItems } = useSelector(
     (state) => state.cart
   );
-  const { errorInOrder } = useSelector((state) => state.order);
-  const { userInfo } = useSelector((state) => state.user);
+  const { errorInOrder, orderInfo } = useSelector((state) => state.order);
+  const { userInfo, isAuthenticated } = useSelector((state) => state.user);
   const [shippingInfo, setShippingInfo] = useState({
     address: "",
     country: "",
@@ -74,15 +80,33 @@ const Shipping = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [Delta, setDelta] = useState(1);
   const [finalAmount, setfinalAmount] = useState(0);
-  const [payLoading, setPayLoading] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
+  const [errorPay, setErrorPay] = useState(null);
+  const [processing, setProcessing] = useState("");
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    if (isAuthenticated === false) {
+      navigate("/login?redirect=/shipping");
+    }
+    if (orderInfo) {
+      Alert({
+        icon: "success",
+        text: "Order Added Successfully",
+        title: "success!",
+      });
+    }
+  }, [isAuthenticated, orderInfo]);
 
   useEffect(() => {
     dispatch(getTotalCost());
     let temp = totalCost;
-    if (totalCost > 2000) temp = temp + 400;
+    if (totalCost < 2000) {
+      temp = temp + 400;
+    }
     temp = temp + Math.floor(totalCost * 0.18);
     setfinalAmount(temp);
-  }, [cartItems, totalCost]);
+  }, [cartItems, totalCost, finalAmount]);
 
   useEffect(() => {
     if (error) {
@@ -91,7 +115,15 @@ const Shipping = () => {
         text: error,
         title: "Oops!",
       });
-      dispatch(clearErrors);
+      dispatch(clearErrors());
+    }
+    if (errorInOrder) {
+      Alert({
+        icon: "error",
+        text: errorInOrder,
+        title: "Oops!",
+      });
+      dispatch(clearErrorsInOrder());
     }
     if (!SHIPPING_INFO) return;
 
@@ -105,7 +137,7 @@ const Shipping = () => {
     if (SHIPPING_INFO.phoneNo.trim() === "") return;
 
     setActiveStep(1);
-  }, [error, SHIPPING_INFO]);
+  }, [error, SHIPPING_INFO, errorInOrder]);
 
   useEffect(() => {
     if (errorInOrder) {
@@ -179,88 +211,92 @@ const Shipping = () => {
     dispatch(SAVE_SHIPPING_INFO(shippingInfo));
   };
 
-  const order = {
-    shippingInfo,
-    orderItems: cartItems,
-    itemsPrice: totalCost,
-    taxPrice: Math.round(totalCost * 0.18),
-    shippingPrice: totalCost > 2000 ? 0 : 400,
-    totalPrice: finalAmount,
-  };
+  const handleSubmit = async (ev) => {
+    ev.preventDefault();
+    setProcessing(true);
 
-  const HelperPayment = async () => {
-    setPayLoading(true);
-    payBtn.current.disabled = true;
-    try {
-      const config = {
-        Headers: {
-          "Content-Type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "/api/v1/payment/process",
-        { amount: Math.round(finalAmount * 100) },
-        config
-      );
-      console.log("data :>> ", data);
-      const client_secret = data.client_secret;
+    const config = {
+      Headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-      if (!stripe || !elements) {
-        setPayLoading(false);
-        return;
-      }
-      console.log('CardNumberElement :>> ', elements.getElement(CardNumberElement));
+    const { data } = await axios.post(
+      "/api/v1/payment/process",
+      { amount: Math.round(finalAmount * 100) },
+      config
+    );
+    const clientSecret = data.client_secret;
 
-      const result = await stripe.confirmCardPayment(client_secret, {
-        payment_method: {
-          card: elements.getElement(CardNumberElement),
-          billing_details: {
-            name: userInfo.name,
-            email: userInfo.email,
-            address: {
-              line1: shippingInfo.address,
-              city: shippingInfo.city,
-              state: shippingInfo.state,
-              postal_code: shippingInfo.pinCode,
-              country: shippingInfo.country,
-            },
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: userInfo.name,
+          email: userInfo.email,
+          address: {
+            line1: shippingInfo.address,
+            city: shippingInfo.city,
+            state: shippingInfo.state,
+            postal_code: shippingInfo.pinCode,
+            country: shippingInfo.country,
           },
         },
-      });
+      },
+    });
 
-      if (result.error) {
-        setPayLoading(false);
-        payBtn.current.disabled = false;
-        Alert({
-          text: error,
-          icon: "error",
-        });
-      }
-      if (result.paymentIntent.status === "succeeded") {
-        setPayLoading(false);
-        order.paymentInfo = {
-          id: result.paymentIntent.id,
-          status: result.paymentIntent.status
-        }
-        dispatch(CreateOrderRequest(order))
-        navigate("/success");
-      } else {
-        setPayLoading(false);
-        Alert({
-          title: "Sorry for inconviance",
-          text: "There's some issue while processing Payment!",
-          icon: "error",
-        });
-      }
-    } catch (error) {
-      setPayLoading(false)
-      console.log("error :>> ", error);
-      Alert({
-        text: error,
-        icon: "error",
-      });
+    if (payload.error) {
+      setErrorPay(`Payment failed ${payload.error.message}`);
+      setProcessing(false);
+    } else {
+      setErrorPay(null);
+      setProcessing(false);
+      setSucceeded(true);
+
+      const order = {
+        shippingInfo,
+        orderItems: cartItems,
+        itemPrice: totalCost,
+        taxPrice: Math.floor(totalCost * 0.18),
+        shippingPrice: totalCost > 2000 ? 0 : 400,
+        totalPrice: finalAmount,
+        paymentInfo: {
+          id: payload.paymentIntent.id,
+          status: payload.paymentIntent.status,
+        },
+      };
+
+      dispatch(CreateOrderRequest(order));
+      navigate("/orders");
     }
   };
+
+  const handleChange = async (event) => {
+    // Listen for changes in the CardElement
+    // and display any errors as the customer types their card details
+    setDisabled(event.empty);
+    setErrorPay(event.error ? event.error.message : "");
+  };
+
+  const cardStyle = {
+    style: {
+      base: {
+        color: "#32325d",
+        fontFamily: "Arial, sans-serif",
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#32325d",
+        },
+      },
+      invalid: {
+        fontFamily: "Arial, sans-serif",
+        color: "#fa755a",
+        iconColor: "#fa755a",
+      },
+    },
+  };
+
   return (
     <Wrapper>
       <Container>
@@ -517,43 +553,49 @@ const Shipping = () => {
                 }}
                 exit={{ x: "100%" }}
               >
-                <Form>
+                <Form3>
                   <RightSectionHeader>Card Info</RightSectionHeader>
+                  <p className="for-3-sub">
+                    user <b>4242 4242 4242 4242</b> as Card Number and{" "}
+                    <b>any random Details for other Fields</b> for Demo Purchase
+                  </p>
                   <PaymentWrapper>
-                    {payLoading ? (
-                      <LoadingScreen size="small" />
-                    ) : (
-                      <>
-                        <p className="PaymentWrapper-header-line">
-                          Add your card Details
-                        </p>
-                        <PaymentCont>
-                          <div className="PaymentCont-ele">
-                            <CreditCardIcon />{" "}
-                            <CardNumberElement className="CardNumberElement" />{" "}
-                          </div>
-                          <div className="PaymentCont-ele">
-                            <EventIcon />{" "}
-                            <CardExpiryElement className="CardExpiryElement" />{" "}
-                          </div>
-                          <div className="PaymentCont-ele">
-                            <VpnKeyIcon />{" "}
-                            <CardCvcElement className="CardCvcElement" />{" "}
-                          </div>
-                          <div>
-                            <SaveBtn
-                              variant="contained"
-                              onClick={HelperPayment}
-                              ref={payBtn}
-                            >
-                              {`pay ₹${finalAmount}`}
-                            </SaveBtn>
-                          </div>
-                        </PaymentCont>
-                      </>
-                    )}
+                    <form id="payment-form" onSubmit={handleSubmit}>
+                      <CardElement
+                        id="card-element"
+                        options={cardStyle}
+                        onChange={handleChange}
+                      />
+                      <button
+                        disabled={processing || disabled || succeeded}
+                        id="submit"
+                        className="payment-btn"
+                      >
+                        <span id="button-text">
+                          {processing ? (
+                            <div className="spinner" id="spinner"></div>
+                          ) : (
+                            `Pay  ₹ ${finalAmount}`
+                          )}
+                        </span>
+                      </button>
+                      {/* Show any error that happens when processing the payment */}
+                      {error && (
+                        <div className="card-error" role="alert">
+                          {error}
+                        </div>
+                      )}
+                      {/* Show a success message upon completion */}
+                      <p
+                        className={
+                          succeeded ? "result-message" : "result-message hidden"
+                        }
+                      >
+                        Payment succeeded
+                      </p>
+                    </form>
                   </PaymentWrapper>
-                </Form>
+                </Form3>
               </motion.div>
             ) : null}
           </AnimatePresence>

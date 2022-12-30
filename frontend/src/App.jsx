@@ -23,6 +23,7 @@ import {
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import Orders from "./components/pages/orders/Orders";
 
 const lightTheme = {
   body: "#fff",
@@ -75,12 +76,14 @@ function App() {
 
           <Route exact path="/dashboard" element={<Dashboard />} />
           <Route exact path="/cart" element={<Cart />} />
+
+          <Route exact path="/orders" element={<Orders/>} />
         </Routes>
 
         {stripeApiKey && (
-          <Elements stripe={loadStripe(stripeApiKey)}>
+          <Elements stripe={loadStripe(stripeApiKey)} >
             <Routes key={location.pathname} location={location}>
-              <Route exact path="/login/shipping" element={<Shipping />} />
+              <Route exact path="/shipping" element={<Shipping />} />
             </Routes>
           </Elements>
         )}

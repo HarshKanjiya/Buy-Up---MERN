@@ -30,13 +30,19 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { cartItems, totalCost } = useSelector((state) => state.cart);
+  const { isAuthenticated } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(getTotalCost());
   }, []);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated]);
 
   const HelperCheckOut = () => {
-    navigate("/login?redirect=shipping");
+    navigate("/login?redirect=/shipping");
   };
 
   return (
@@ -138,7 +144,8 @@ const Cart = () => {
                   Total : <span>₹ {totalCost}</span>{" "}
                 </p>
                 <CheckOut variant="contained" onClick={HelperCheckOut}>
-                  <ShoppingCartCheckoutIcon fontSize="small" />&nbsp; check out
+                  <ShoppingCartCheckoutIcon fontSize="small" />
+                  &nbsp; check out
                 </CheckOut>
               </Footer>
             ) : null}

@@ -17,6 +17,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { motion } from "framer-motion";
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ const Header = () => {
                       <p>{userInfo ? userInfo.name : null}</p>
                     </SideBarElePROFILE>
                   </SideBarElements>
-                  <Divider />
+                  <Divider sx={{ paddingTop:1,marginBottom:1 }} />
                   {/* user s */}
                   <SideBarElements
                     layout
@@ -132,8 +133,26 @@ const Header = () => {
                           cart
                         </p>
                       </SideBarEle>
+                      <SideBarEle
+                        onClick={() => {
+                          navigate("/orders");
+                        }}
+                      >
+                        <LocalShippingIcon
+                          // style={{
+                          //   color: cartItems.length !== 0 ? "#2bb594" : null,
+                          // }}
+                        />
+                        <p
+                          // style={{
+                          //   color: cartItems.length !== 0 ? "#2bb594" : null,
+                          // }}
+                        >
+                          orders
+                        </p>
+                      </SideBarEle>
                   </SideBarElements>
-                  <Divider />
+                  <Divider sx={{ paddingTop:1 }} />
                 </motion.div>
               ) : null}
             </>

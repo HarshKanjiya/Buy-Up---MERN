@@ -26,6 +26,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paidAt: Date.now(),
     user: req.user._id,
   });
+  console.log('wqwq');
 
   res.status(201).json({
     success: true,
@@ -35,7 +36,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
 
 // get single order
 exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
-  const order = await Order.findById(req.params.id).populate(
+  const order = await Order.findById(req.body.id).populate(
     "user",
     "name email"
   );

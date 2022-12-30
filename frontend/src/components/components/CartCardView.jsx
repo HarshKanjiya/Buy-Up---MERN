@@ -22,9 +22,7 @@ const CartCardView = ({ data, index, page }) => {
           dispatch(setSpacsInfo(data));
         }}
       >
-        <ContainerForConfirmOrder
-         
-        >
+        <ContainerForConfirmOrder>
           <Left>
             <div className="CartCardView-img-wrapper">
               {" "}
