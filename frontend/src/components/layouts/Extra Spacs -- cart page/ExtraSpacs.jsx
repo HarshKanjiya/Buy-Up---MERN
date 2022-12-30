@@ -138,13 +138,16 @@ const ExtraSpacs = () => {
 export default ExtraSpacs;
 
 const Wrapper = styled(motion.div)`
-  height: 100%;
+  height: calc(100% - 2rem);
   width: 320px;
-  background-color: #fafffe;
+  background-color: white;
+  margin: 1rem;
   display: flex;
   flex-direction: column;
   position: relative;
   justify-content: space-between;
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.06);
+border-radius: 7px;
 
   button {
     height: 2.5rem;
@@ -184,7 +187,8 @@ const Wrapper = styled(motion.div)`
 `;
 const Header = styled.div`
   flex: 1;
-  padding: 1rem;
+  padding-top: 0.5rem;
+  padding-right: 1rem;
   font-size: 1.3rem;
   font-weight: 700;
   text-align: right;

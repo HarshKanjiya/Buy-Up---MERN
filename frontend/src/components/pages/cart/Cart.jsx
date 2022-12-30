@@ -36,8 +36,8 @@ const Cart = () => {
     dispatch(getTotalCost());
   }, []);
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
+    if (isAuthenticated === false) {
+      navigate("/login?redirect=/cart");
     }
   }, [isAuthenticated]);
 
@@ -58,6 +58,9 @@ const Cart = () => {
       <Wrapper>
         <Container>
           <LeftSection>
+            <div className="LeftSection-midszz">
+              <p className="Cart-sidetext">CART</p>
+            </div>
             <img src={Logo} alt="Buy Up" />
             <div className="LeftSection-mids">
               <div

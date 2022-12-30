@@ -51,10 +51,8 @@ const CartCardView = ({ data, index, page }) => {
         }}
       >
         <Container
-          initial={{ boxShadow: "none" }}
           whileHover={{
             boxShadow: "0 8px 11px rgba(0, 0, 0, 0.1)",
-            border: " 1px solid white",
           }}
           whileTap={{ boxShadow: "none" }}
           transition={{ duration: 0.3 }}
@@ -93,6 +91,7 @@ const Wrapper = styled(motion.div)`
   display: flex;
   align-items: center;
   margin: 0.3rem 0;
+  
 `;
 const CloseBtnWrapper = styled.div`
   width: 20%;
@@ -116,8 +115,10 @@ const Container = styled(motion.div)`
   display: flex;
   padding: 0.8rem;
   background-color: white;
-  border: 1px solid #f0f0f0;
   border-radius: 6px;
+  
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.04);
+
 
   display: flex;
   justify-content: space-between;

@@ -33,6 +33,7 @@ import {
   SAVE_SHIPPING_INFO,
   getTotalCost,
   setfinalAmountForPayment,
+  DeleteCart,
 } from "../../../redux/slices/cartPageSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
@@ -267,6 +268,7 @@ const Shipping = () => {
       };
 
       dispatch(CreateOrderRequest(order));
+      dispatch(DeleteCart())
       navigate("/orders");
     }
   };

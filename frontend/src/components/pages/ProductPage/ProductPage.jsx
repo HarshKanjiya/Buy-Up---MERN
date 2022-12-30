@@ -17,6 +17,7 @@ import {
 import {
   AddToCartWrapper,
   CartButton,
+  Categories,
   Container,
   Description,
   Left,
@@ -65,7 +66,8 @@ const ProductPage = () => {
   const [userReviewRatings, setUserReviewRatings] = useState(0);
   const [userReviewComment, setUserReviewComment] = useState("");
   const [snackBar, setSnackBar] = useState(false);
-  const [SnackTxt,setSnackTxt] = useState('')
+  const [SnackTxt, setSnackTxt] = useState("");
+
 
   useEffect(() => {
     if (error) {
@@ -75,14 +77,12 @@ const ProductPage = () => {
         title: "Oops!",
       });
       dispatch(clearErrors());
-      dispatch(fetchProductInfo(params.id));
     }
   }, [dispatch, error]);
 
   useEffect(() => {
     dispatch(fetchProductInfo(params.id));
   }, []);
-  // console.log("productInfo :>> ", productInfo);
 
   const HelperReviewSubmit = () => {
     dispatch(
@@ -92,8 +92,8 @@ const ProductPage = () => {
         rating: userReviewRatings,
       })
     );
-    setSnackTxt('Review added')
-    setSnackBar(true)
+    setSnackTxt("Review added");
+    setSnackBar(true);
     setReviewBoxVisibility(false);
   };
 
@@ -103,7 +103,7 @@ const ProductPage = () => {
   };
 
   const HelperSnackBarOpen = () => {
-    setSnackTxt('Item added to cart')
+    setSnackTxt("Item added to cart");
     setSnackBar(true);
   };
   const HelperSnackBarClose = (event, reason) => {
@@ -125,6 +125,7 @@ const ProductPage = () => {
       </IconButton>
     </>
   );
+
   return (
     <>
       {loading ? (
@@ -157,6 +158,28 @@ const ProductPage = () => {
                   <Right>
                     <ProductName>{productInfo.product.name}</ProductName>
                     <Description>{productInfo.product.description}</Description>
+                    <Categories>
+                      <p className="productpage-category">
+                        {productInfo.product.category}
+                      </p>
+                    </Categories>
+                    <Categories>
+                      <p>
+                        status :{" "}
+                        <span
+                          className={
+                            productInfo.product.stock < 1
+                              ? "productpage-stock-out"
+                              : "productpage-stock-in"
+                          }
+                        >
+                          {" "}
+                          {productInfo.product.stock < 1
+                            ? "out of stock"
+                            : "in stock"}{" "}
+                        </span>
+                      </p>
+                    </Categories>
 
                     <RatingsWrapper>
                       <ReactStars
@@ -195,6 +218,7 @@ const ProductPage = () => {
                       <CartButton
                         variant="contained"
                         onClick={HelperAddItemToCart}
+                        disabled={productInfo.product.stock < 1 ? true : false}
                       >
                         <span>
                           <ShoppingCartIcon /> &nbsp;&nbsp;add to Cart{" "}
@@ -288,7 +312,7 @@ const ProductPage = () => {
           severity="success"
           sx={{ width: "100%" }}
         >
-          { SnackTxt }
+          {SnackTxt}
         </MuiAlert>
       </Snackbar>
     </>

@@ -35,7 +35,7 @@ const OrderPageSlice = createSlice({
   name: "orderPage",
   initialState: {
     loading: false,
-    orderList: null,
+    orderList: [],
     orderInfo:null,
     errorInOrder: null,
     message:null,

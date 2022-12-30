@@ -24,6 +24,7 @@ import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Orders from "./components/pages/orders/Orders";
+import { getUserOrders } from "./redux/slices/OrderSlice";
 
 const lightTheme = {
   body: "#fff",
@@ -44,6 +45,7 @@ function App() {
 
   useEffect(() => {
     dispatch(loadUser({}));
+    dispatch(getUserOrders({}));
     dispatch(setCartFromLocalStorage());
     dispatch(GET_SHIPPING_INFO_FROM_LOCALSTORAGE());
     getStripeApiKey();

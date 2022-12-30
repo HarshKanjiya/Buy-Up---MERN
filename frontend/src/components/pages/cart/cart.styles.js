@@ -18,7 +18,7 @@ export const Wrapper = styled(motion.div)`
 
 export const Container = styled.div`
   width: 100%;
-  background-color: white;
+  background-color: #fafffe;
   border-radius: 9px;
   min-height: 50vh;
   overflow: hidden;
@@ -35,15 +35,37 @@ export const Container = styled.div`
     gap: 2rem;
   }
     box-shadow:4px 4px 22px rgba(0,0,0,0.3), -4px -4px 22px rgba(255,255,255,0.4); */
-
 `;
 
 export const LeftSection = styled.div`
   height: 100%;
-  border-right: 1px solid #f1f1f1;
+  /* border-right: 1px solid #f1f1f1; */
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.06);
+
   padding: 1rem;
+  background-color: white;
   display: flex;
   flex-direction: column;
+  position: relative;
+
+  .LeftSection-midszz {
+    position: absolute;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    p {
+      color: #f1f1f1;
+      font-weight: 800;
+      font-size: 3.7rem;
+      position: absolute;
+      width: max-content;
+
+      transform: rotate(90deg);
+    }
+  }
+
   img {
     height: auto;
     width: 2.3rem;
@@ -79,7 +101,7 @@ export const LeftSection = styled.div`
       left: -0.5rem;
       background-color: white;
       border: 1px solid #2bb594;
-      color:white;
+      color: white;
       background-color: #2bb594;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
       p {
@@ -95,7 +117,10 @@ export const RightSection = styled.div`
   flex-direction: column;
 `;
 export const HeadBar = styled.div`
-  width: 100%;
+  border-radius: 2rem;
+  margin: 1rem;
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.05);
+  background-color: white;
   padding: 1rem;
   border-bottom: 1px solid #f5f5f5;
   font-size: 1.3rem;
@@ -165,32 +190,36 @@ export const Body = styled.div`
   }
 `;
 export const Footer = styled.div`
-  width: 100%;
+  /* width: 100%; */
+  margin: 1rem;
   padding: 1rem;
-  border-top: 1px solid #f5f5f5;
+  background-color: white;
   font-size: 1.3rem;
+  border-radius: 7px;
+
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.06);
   font-weight: 700;
   color: #454545;
 
   display: flex;
   justify-content: space-between;
 
-  p{
-    color:#b6b6b6;
+  p {
+    color: #b6b6b6;
 
-    span{
-      color:#454545;
+    span {
+      color: #454545;
     }
   }
 `;
 
 export const CheckOut = styled(Button)`
   background-color: #2bb594;
-color:#0c3324;
-font-weight: 700;
-letter-spacing: 2px;
-&:hover{
+  color: #0c3324;
+  font-weight: 700;
+  letter-spacing: 2px;
+  &:hover {
     background-color: #2bb594;
-    color:white;
-}
+    color: white;
+  }
 `;

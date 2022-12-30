@@ -160,6 +160,9 @@ export const CartButton = styled(Button)`
     width: 100%;
   }
 
+  &:disabled {
+    opacity: 0.5;
+  }
   @media (max-width: 480px) {
     width: 100% !important ;
     border-radius: 0px !important;
@@ -209,7 +212,7 @@ export const MakeReviewContent = styled(DialogContent)`
   }
 `;
 export const ReviewInputText = styled(TextField)`
- & label.Mui-focused {
+  & label.Mui-focused {
     color: #2bb594;
   }
 
@@ -228,4 +231,29 @@ export const ReviewFooterButton = styled(Button)`
   gap: 1rem;
 
   background-image: linear-gradient(90deg, #2bb594, #01b277);
+`;
+export const Categories = styled.div`
+  margin: 0.5rem 0;
+  .productpage-category {
+    color: white;
+    width: max-content;
+    border-radius: 7px;
+    background-color: #2bb594;
+    padding: 0.3rem 0.6rem;
+  }
+  p {
+    color: #909090;
+  }
+  span {
+    border-radius: 4px;
+    padding: 0.3rem 0.4rem;
+  }
+  .productpage-stock-in {
+    border: 1px solid #2bb594;
+    color: #2bb594;
+  }
+  .productpage-stock-out {
+    border: 1px solid tomato;
+    color: tomato;
+  }
 `;

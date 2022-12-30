@@ -10,13 +10,15 @@ import {
   LeftFoot,
   LeftFootItem,
   LeftFootItemDlt,
+  OrdersBtn,
   Right,
   RightItem,
   Wrapper,
 } from "./profile.styles";
-import KeyIcon from '@mui/icons-material/Key';
+import KeyIcon from "@mui/icons-material/Key";
 import EditIcon from "@mui/icons-material/Edit";
 import { loadUser, setUnderUpdate } from "../../../redux/slices/userSlice";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -26,7 +28,7 @@ const Profile = () => {
   );
 
   useEffect(() => {
-    dispatch(loadUser({}))
+    dispatch(loadUser({}));
     if (!isAuthenticated) {
       navigate("/login");
     }
@@ -75,23 +77,32 @@ const Profile = () => {
                 <img src={userInfo.avatar.url} alt={userInfo.name} />
               </div>
               <LeftFoot>
-                <LeftFootItem variant="contained"
-                onClick={()=>{
-                  dispatch(setUnderUpdate())
-                  navigate('/profile/update')
+                <LeftFootItem
+                  variant="contained"
+                  onClick={() => {
+                    dispatch(setUnderUpdate());
+                    navigate("/profile/update");
                   }}
                 >
-                  <EditIcon /> update 
+                  <EditIcon fontSize="small" /> update
                 </LeftFootItem>
-                <LeftFootItemDlt variant="contained"
-                 onClick={()=>{
-                  dispatch(setUnderUpdate())
-                  navigate('/profile/password')
+                <LeftFootItemDlt
+                  variant="contained"
+                  onClick={() => {
+                    dispatch(setUnderUpdate());
+                    navigate("/profile/password");
                   }}
                 >
-                    <KeyIcon/> Change Password
+                  <KeyIcon fontSize="small" /> Change Password
                 </LeftFootItemDlt>
               </LeftFoot>
+              <OrdersBtn
+                onClick={() => {
+                  navigate("/orders");
+                }}
+              >
+                <LocalShippingIcon fontSize="small" /> Orders
+              </OrdersBtn>
             </Left>
             <Right>
               <RightItem

@@ -17,12 +17,13 @@ import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { motion } from "framer-motion";
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
 const Header = () => {
   const navigate = useNavigate();
   const [sideBarVisibility, setSideBarVisibility] = useState(false);
   const { isAuthenticated, userInfo } = useSelector((state) => state.user);
+  const { orderList } = useSelector((state) => state.order);
   const { cartItems } = useSelector((state) => state.cart);
 
   return (
@@ -87,7 +88,7 @@ const Header = () => {
                       <p>{userInfo ? userInfo.name : null}</p>
                     </SideBarElePROFILE>
                   </SideBarElements>
-                  <Divider sx={{ paddingTop:1,marginBottom:1 }} />
+                  <Divider sx={{ paddingTop: 1, marginBottom: 1 }} />
                   {/* user s */}
                   <SideBarElements
                     layout
@@ -115,44 +116,44 @@ const Header = () => {
                         <p>dashboard</p>
                       </SideBarEle>
                     ) : null}
-                      <SideBarEle
-                        onClick={() => {
-                          navigate("/cart");
+                    <SideBarEle
+                      onClick={() => {
+                        navigate("/cart");
+                      }}
+                    >
+                      <ShoppingCartIcon
+                        style={{
+                          color: cartItems.length !== 0 ? "#2bb594" : null,
+                        }}
+                      />
+                      <p
+                        style={{
+                          color: cartItems.length !== 0 ? "#2bb594" : null,
                         }}
                       >
-                        <ShoppingCartIcon
-                          style={{
-                            color: cartItems.length !== 0 ? "#2bb594" : null,
-                          }}
-                        />
-                        <p
-                          style={{
-                            color: cartItems.length !== 0 ? "#2bb594" : null,
-                          }}
-                        >
-                          cart
-                        </p>
-                      </SideBarEle>
-                      <SideBarEle
-                        onClick={() => {
-                          navigate("/orders");
-                        }}
+                        cart
+                      </p>
+                    </SideBarEle>
+                    <SideBarEle
+                      onClick={() => {
+                        navigate("/orders");
+                      }}
+                    >
+                      <LocalShippingIcon
+                      style={{
+                        color: orderList.length !== 0 ? "#2bb594" : null,
+                      }}
+                      />
+                      <p
+                      style={{
+                        color: orderList.length !== 0 ? "#2bb594" : null,
+                      }}
                       >
-                        <LocalShippingIcon
-                          // style={{
-                          //   color: cartItems.length !== 0 ? "#2bb594" : null,
-                          // }}
-                        />
-                        <p
-                          // style={{
-                          //   color: cartItems.length !== 0 ? "#2bb594" : null,
-                          // }}
-                        >
-                          orders
-                        </p>
-                      </SideBarEle>
+                        orders
+                      </p>
+                    </SideBarEle>
                   </SideBarElements>
-                  <Divider sx={{ paddingTop:1 }} />
+                  <Divider sx={{ paddingTop: 1 }} />
                 </motion.div>
               ) : null}
             </>
