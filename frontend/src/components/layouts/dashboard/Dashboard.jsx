@@ -11,7 +11,7 @@ import {
   LineGraphWrapper,
 } from "./Dashboard.styles";
 import ProfitImg from "../../../assets/images/money.png";
-import userImg from "../../../assets/images/user.png";
+import userImg from "../../../assets/images/user (1).png";
 import ProductImg from "../../../assets/images/box.png";
 import ordersImg from "../../../assets/images/package-box.png";
 
