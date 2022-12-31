@@ -140,14 +140,14 @@ const Header = () => {
                       }}
                     >
                       <LocalShippingIcon
-                      style={{
-                        color: orderList.length !== 0 ? "#2bb594" : null,
-                      }}
+                        style={{
+                          color: orderList.length !== 0 ? "#2bb594" : null,
+                        }}
                       />
                       <p
-                      style={{
-                        color: orderList.length !== 0 ? "#2bb594" : null,
-                      }}
+                        style={{
+                          color: orderList.length !== 0 ? "#2bb594" : null,
+                        }}
                       >
                         orders
                       </p>
@@ -218,7 +218,13 @@ const Header = () => {
 
           <>
             <Divider />
-            <SideBarElements>
+            <SideBarElements
+            layout
+            key="logout Btn"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            >
               <LogOut />
             </SideBarElements>
           </>
