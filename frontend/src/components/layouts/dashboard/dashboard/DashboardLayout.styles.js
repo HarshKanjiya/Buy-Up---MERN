@@ -4,7 +4,6 @@ export const HeadLine = styled.p`
   font-weight: 700;
   font-size: 2rem;
   color: #d1d1d1;
-  margin-bottom: 1rem;
 `;
 export const HeadLineBeta = styled.p`
   font-weight: 500;
@@ -16,6 +15,7 @@ export const HeadLineBeta = styled.p`
 export const HeaderElementsWrapper = styled.div`
   display: flex;
   gap: 1rem;
+  align-items: center;
   margin: 1rem 0;
   flex-wrap: wrap;
 

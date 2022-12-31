@@ -14,15 +14,32 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { AnimatePresence, motion } from "framer-motion";
 import NewProduct from "../../../components/admin/newProduct";
+import {
+  clearErrorsInAdmin,
+  clearSuccessInAdmin,
+  getAdminProducts,
+} from "../../../../redux/slices/AdminSlice";
+import { Alert } from "../../../components/Alert";
 
 const ProductsLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo, isAuthenticated } = useSelector((state) => state.user);
-  const { errorInAdmin, loading, adminProducts } = useSelector(
+  const { errorInAdmin, loading, adminProducts, success } = useSelector(
     (state) => state.admin
   );
   const [layerSelector, setLayerSelector] = useState("main"); // main // edit // new
+
+  useEffect(() => {
+    if (success) {
+      Alert({
+        text: "Product Uploaded / Updated !",
+      });
+      dispatch(getAdminProducts({}));
+      dispatch(clearSuccessInAdmin());
+      setLayerSelector("main");
+    }
+  }, [errorInAdmin, success]);
 
   return (
     <Wrapper>
@@ -84,7 +101,7 @@ const ProductsLayout = () => {
             exit={{ opacity: 0, x: -200 }}
             transition={{ duration: 0.3, type: "tween" }}
           >
-           <NewProduct setLayerSelector={setLayerSelector} />
+            <NewProduct setLayerSelector={setLayerSelector} />
           </div>
         )}
         {layerSelector === "edit" && (

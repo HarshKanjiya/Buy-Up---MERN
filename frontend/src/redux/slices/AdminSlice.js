@@ -25,7 +25,6 @@ export const createProduct = createAsyncThunk(
   async (details, { rejectWithValue }) => {
     try {
       const { data } = await axios.post(newProductAPI, details, config);
-      console.log("data :>> ", data);
       return data;
     } catch (error) {
       rejectWithValue(error.response.data.message);
@@ -37,7 +36,7 @@ const AdminSlice = createSlice({
   name: "admin",
   initialState: {
     loading: false,
-    success: null,
+    success: false,
     adminProducts: [],
     errorInAdmin: null,
     product: null,
@@ -47,7 +46,7 @@ const AdminSlice = createSlice({
       state.errorInOrder = null;
     },
     clearSuccessInAdmin: (state) => {
-      state.success = null;
+      state.success = false;
     },
   },
 
