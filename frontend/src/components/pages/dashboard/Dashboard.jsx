@@ -24,15 +24,15 @@ import {
 import LoadingScreen from "../../components/LoadingScreen";
 import { Alert } from "../../components/Alert";
 import { AnimatePresence, motion } from "framer-motion";
+import ProductsLayout from "../../layouts/dashboard/products/productsLayout";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo, isAuthenticated } = useSelector((state) => state.user);
-  const { errorInAdmin } = useSelector((state) => state.admin);
+  const { errorInAdmin,loading } = useSelector((state) => state.admin);
 
-  const { loading } = useSelector((state) => state.admin);
-  const [layoutSelector, setLayoutSelector] = useState("dashboard-layout");
+  const [layoutSelector, setLayoutSelector] = useState("products-layout");
 
   useEffect(() => {
     if (isAuthenticated === false) {
@@ -154,6 +154,7 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
+                        style={{ width:"100%" }}
                       >
                         <DashboardLayout />
                       </motion.div>
@@ -165,8 +166,9 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
+                        style={{ width:"100%" }}
                       >
-                        <p>2</p>
+                        <ProductsLayout/>
                       </motion.div>
                     )}
                     {layoutSelector === "orders-layout" && (
@@ -176,6 +178,7 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
+                        style={{ width:"100%" }}
                       >
                         <p>3</p>
                       </motion.div>
@@ -187,6 +190,7 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
+                        style={{ width:"100%" }}
                       >
                         <p>4</p>
                       </motion.div>
@@ -198,6 +202,7 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
+                        style={{ width:"100%" }}
                       >
                         <p>5</p>
                       </motion.div>
