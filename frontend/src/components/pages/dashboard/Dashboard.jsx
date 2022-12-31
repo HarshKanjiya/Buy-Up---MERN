@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Header from "../../layouts/Header";
 import {
@@ -16,12 +16,24 @@ import ThumbsUpDownIcon from "@mui/icons-material/ThumbsUpDown";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import Logo from "../../../assets/images/logo.png";
 import CategoryIcon from "@mui/icons-material/Category";
-import DashboardLayout from "../../layouts/dashboard/Dashboard";
+import DashboardLayout from "../../layouts/dashboard/dashboard/DashboardLayout";
+import {
+  clearErrorsInAdmin,
+  getAdminProducts,
+} from "../../../redux/slices/AdminSlice";
+import LoadingScreen from "../../components/LoadingScreen";
+import { Alert } from "../../components/Alert";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { userInfo, isAuthenticated } = useSelector((state) => state.user);
-  const [layoutSelector, setLayoutSelector] = useState("");
+  const { errorInAdmin } = useSelector((state) => state.admin);
+
+  const { loading } = useSelector((state) => state.admin);
+  const [layoutSelector, setLayoutSelector] = useState("dashboard-layout");
+
   useEffect(() => {
     if (isAuthenticated === false) {
       navigate("/");
@@ -29,7 +41,19 @@ const Dashboard = () => {
     if (userInfo && userInfo.role !== "admin") {
       navigate("/");
     }
+    dispatch(getAdminProducts({}));
   }, []);
+
+  useEffect(() => {
+    if (errorInAdmin) {
+      Alert({
+        icon: "error",
+        title: "Oops!",
+        text: errorInAdmin,
+      });
+      dispatch(clearErrorsInAdmin());
+    }
+  }, [errorInAdmin]);
 
   if (userInfo && userInfo.role === "admin") {
     return (
@@ -37,89 +61,151 @@ const Dashboard = () => {
         <Header />
         <Wrapper>
           <Container>
-            <Left>
-              <LeftLogoEle>
-                <img src={Logo} alt="logo" />
-              </LeftLogoEle>
+            {loading ? (
+              <LoadingScreen size="small" />
+            ) : (
+              <>
+                <Left>
+                  <LeftLogoEle>
+                    <img src={Logo} alt="logo" />
+                  </LeftLogoEle>
 
-              <LeftElement
-                onClick={() => {
-                  setLayoutSelector("dashboard-layout");
-                }}
-              >
-                <DashboardIcon
-                  className={
-                    layoutSelector === "dashboard-layout"
-                      ? "dashboard-left-hover-white"
-                      : null
-                  }
-                />
-                <p>Dashboard</p>
-              </LeftElement>
+                  <LeftElement
+                    onClick={() => {
+                      setLayoutSelector("dashboard-layout");
+                    }}
+                  >
+                    <DashboardIcon
+                      className={
+                        layoutSelector === "dashboard-layout"
+                          ? "dashboard-left-hover-white"
+                          : null
+                      }
+                    />
+                    <p>Dashboard</p>
+                  </LeftElement>
 
-              <LeftElement
-                onClick={() => {
-                  setLayoutSelector("products-layout");
-                }}
-              >
-                <CategoryIcon
-                  className={
-                    layoutSelector === "products-layout"
-                      ? "dashboard-left-hover-white"
-                      : null
-                  }
-                />
-                <p>Products</p>
-              </LeftElement>
+                  <LeftElement
+                    onClick={() => {
+                      setLayoutSelector("products-layout");
+                    }}
+                  >
+                    <CategoryIcon
+                      className={
+                        layoutSelector === "products-layout"
+                          ? "dashboard-left-hover-white"
+                          : null
+                      }
+                    />
+                    <p>Products</p>
+                  </LeftElement>
 
-              <LeftElement
-                onClick={() => {
-                  setLayoutSelector("orders-layout");
-                }}
-              >
-                <LocalShippingIcon
-                  className={
-                    layoutSelector === "orders-layout"
-                      ? "dashboard-left-hover-white"
-                      : null
-                  }
-                />
-                <p>Orders</p>
-              </LeftElement>
+                  <LeftElement
+                    onClick={() => {
+                      setLayoutSelector("orders-layout");
+                    }}
+                  >
+                    <LocalShippingIcon
+                      className={
+                        layoutSelector === "orders-layout"
+                          ? "dashboard-left-hover-white"
+                          : null
+                      }
+                    />
+                    <p>Orders</p>
+                  </LeftElement>
 
-              <LeftElement
-                onClick={() => {
-                  setLayoutSelector("users-layout");
-                }}
-              >
-                <PeopleIcon
-                  className={
-                    layoutSelector === "users-layout"
-                      ? "dashboard-left-hover-white"
-                      : null
-                  }
-                />
-                <p>Users</p>
-              </LeftElement>
+                  <LeftElement
+                    onClick={() => {
+                      setLayoutSelector("users-layout");
+                    }}
+                  >
+                    <PeopleIcon
+                      className={
+                        layoutSelector === "users-layout"
+                          ? "dashboard-left-hover-white"
+                          : null
+                      }
+                    />
+                    <p>Users</p>
+                  </LeftElement>
 
-              <LeftElement
-                onClick={() => {
-                  setLayoutSelector("reviews-layout");
-                }}
-              >
-                <ThumbsUpDownIcon
-                  className={
-                    layoutSelector === "reviews-layout"
-                      ? "dashboard-left-hover-white"
-                      : null
-                  }
-                />
-                <p>Reviews</p>
-              </LeftElement>
-            </Left>
-            <Right>
-              <DashboardLayout />
-            </Right>
+                  <LeftElement
+                    onClick={() => {
+                      setLayoutSelector("reviews-layout");
+                    }}
+                  >
+                    <ThumbsUpDownIcon
+                      className={
+                        layoutSelector === "reviews-layout"
+                          ? "dashboard-left-hover-white"
+                          : null
+                      }
+                    />
+                    <p>Reviews</p>
+                  </LeftElement>
+                </Left>
+                <Right>
+                  <AnimatePresence mode="wait">
+                    {layoutSelector === "dashboard-layout" && (
+                      <motion.div
+                        key="dashboard-layout"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3, type: "tween" }}
+                      >
+                        <DashboardLayout />
+                      </motion.div>
+                    )}
+                    {layoutSelector === "products-layout" && (
+                      <motion.div
+                        key="products-layout"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3, type: "tween" }}
+                      >
+                        <p>2</p>
+                      </motion.div>
+                    )}
+                    {layoutSelector === "orders-layout" && (
+                      <motion.div
+                        key="orders-layout"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3, type: "tween" }}
+                      >
+                        <p>3</p>
+                      </motion.div>
+                    )}
+                    {layoutSelector === "users-layout" && (
+                      <motion.div
+                        key="users-layout"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3, type: "tween" }}
+                      >
+                        <p>4</p>
+                      </motion.div>
+                    )}
+                    {layoutSelector === "reviews-layout" && (
+                      <motion.div
+                        key="reviews-layout"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3, type: "tween" }}
+                      >
+                        <p>5</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </Right>
+              </>
+            )}
           </Container>
         </Wrapper>
       </>

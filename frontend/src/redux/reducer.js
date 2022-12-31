@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
+import AdminSlice from "./slices/AdminSlice";
 import cartPageSlice from "./slices/cartPageSlice";
 import OrderSlice from "./slices/OrderSlice";
 import productPageSlice from "./slices/productPageSlice";
@@ -25,6 +26,7 @@ const reducer = combineReducers({
   user: userSlice,
   cart: cartPageSlice,
   order: OrderSlice,
+  admin: AdminSlice
 });
 
 const store = configureStore({

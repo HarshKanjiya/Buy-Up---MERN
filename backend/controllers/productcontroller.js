@@ -31,7 +31,7 @@ exports.getAllProduct = catchAsyncErrors(async (req, res, next) => {
     success: true,
     productCount,
     products,
-    resultPerPage
+    resultPerPage,
   });
 });
 
@@ -45,6 +45,18 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     product,
+  });
+});
+
+// get admin products --admin
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const productCount = await Product.countDocuments();
+
+  const products = await Product.find();
+  res.status(200).json({
+    success: true,
+    productCount,
+    products,
   });
 });
 
@@ -119,7 +131,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    product
+    product,
   });
 });
 
@@ -139,39 +151,37 @@ exports.getAllReviewOfSingleProduct = catchAsyncErrors(
 );
 
 // dlt review
-exports.deleteReview = catchAsyncErrors(
-  async (req, res, next) => {
-    const product = await Product.findById(req.query.productID);
+exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.query.productID);
 
-    if (!product) {
-      return next(new ErrorHandler("product not Found", 400));
-    }
-
-    const reviews = product.reviews.filter(
-      (rev) => rev._id.toString() !== req.query.id.toString()
-    );
-
-    let avg = 0;
-    reviews.forEach((rev) => {
-      avg = avg + rev.rating;
-    });
-
-    const ratings = avg / product.reviews.length;
-
-    const numOfReviews = reviews.length;
-
-    await Product.findByIdAndUpdate(
-      req.query.productID,
-      {
-        reviews,
-        ratings,
-        numOfReviews,
-      },
-      { new: true, runValidators: true }
-    );
-
-    res.status(200).json({
-      success: true,
-    });
+  if (!product) {
+    return next(new ErrorHandler("product not Found", 400));
   }
-);
+
+  const reviews = product.reviews.filter(
+    (rev) => rev._id.toString() !== req.query.id.toString()
+  );
+
+  let avg = 0;
+  reviews.forEach((rev) => {
+    avg = avg + rev.rating;
+  });
+
+  const ratings = avg / product.reviews.length;
+
+  const numOfReviews = reviews.length;
+
+  await Product.findByIdAndUpdate(
+    req.query.productID,
+    {
+      reviews,
+      ratings,
+      numOfReviews,
+    },
+    { new: true, runValidators: true }
+  );
+
+  res.status(200).json({
+    success: true,
+  });
+});

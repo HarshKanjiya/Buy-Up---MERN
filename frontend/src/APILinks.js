@@ -30,6 +30,7 @@ export const getSingleOrderAPI = "/api/v1/order/"
 // admin APIs
 
 // product --admin
+export const getAdminProductsAPI = "/api/v1/admin/products"
 export const newProductAPI = "/api/v1/admin/product/new"
 export const updateProductAPI = "/api/v1/admin/product/"
 export const deleteProductAPI = "/api/v1/admin/product/"

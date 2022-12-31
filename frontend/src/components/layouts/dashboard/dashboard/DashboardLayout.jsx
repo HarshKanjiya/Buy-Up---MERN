@@ -9,16 +9,27 @@ import {
   HeadLine,
   HeadLineBeta,
   LineGraphWrapper,
-} from "./Dashboard.styles";
-import ProfitImg from "../../../assets/images/money.png";
-import userImg from "../../../assets/images/user (1).png";
-import ProductImg from "../../../assets/images/box.png";
-import ordersImg from "../../../assets/images/package-box.png";
+} from "./DashboardLayout.styles";
+import ProfitImg from "../../../../assets/images/money.png";
+import userImg from "../../../../assets/images/user (1).png";
+import ProductImg from "../../../../assets/images/box.png";
+import ordersImg from "../../../../assets/images/package-box.png";
 
 import { Chart as ChartJS, registerables } from "chart.js";
+import { useSelector } from "react-redux";
 ChartJS.register(...registerables);
 
 const DashboardLayout = () => {
+  const { adminProducts } = useSelector((state) => state.admin);
+
+  let OutOfStockProducts = 0;
+
+  adminProducts.map((product) => {
+    if (product.stock === 0) {
+      OutOfStockProducts += 1;
+    }
+  });
+
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
     datasets: [
@@ -34,9 +45,9 @@ const DashboardLayout = () => {
     labels: ["out of Stock", "in Stock"],
     datasets: [
       {
-        backgroundColor: ["#2bb594", "#0c3324"],
-        hoverBackgroundColor: ["#34ffcf", "#00a968"],
-        data: [2, 20],
+        backgroundColor: ["tomato", "#2bb594"],
+        hoverBackgroundColor: ["red", "#00a968"],
+        data: [OutOfStockProducts, adminProducts.length - OutOfStockProducts],
       },
     ],
   };
@@ -58,7 +69,10 @@ const DashboardLayout = () => {
       <HeaderElementsWrapper>
         <HeaderElement className="dashboardlayout-overview-products">
           <p className="dashboardlayout-header-ele-subtext">Products</p>
-          <p className="dashboardlayout-header-ele-text">34</p>
+          <p className="dashboardlayout-header-ele-text">
+            {" "}
+            {adminProducts.length}{" "}
+          </p>
           <img src={ProductImg} alt="img" />
         </HeaderElement>
         <HeaderElement className="dashboardlayout-overview-orders">
