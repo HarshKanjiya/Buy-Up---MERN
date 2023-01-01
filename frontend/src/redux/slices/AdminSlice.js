@@ -5,6 +5,7 @@ import {
   deleteProductAPI,
   getAdminProductsAPI,
   newProductAPI,
+  updateProductAPI,
 } from "../../APILinks";
 
 const config = {
@@ -13,6 +14,7 @@ const config = {
   },
 };
 
+// crud on product
 export const getAdminProducts = createAsyncThunk(
   "Admin/getAdminProducts",
   async ({}, { rejectWithValue }) => {
@@ -35,17 +37,29 @@ export const createProduct = createAsyncThunk(
     }
   }
 );
-export const deleteProduct = createAsyncThunk(
-  "admin/deleteProduct",
-  async (id, { rejectWithValue }) => {
+export const updateProduct = createAsyncThunk(
+  "admin/updateProduct",
+  async ({ id, newDetails }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.delete(`${deleteProductAPI}/${id}`);
-      return data
+      const { data } = await axios.put(`${updateProductAPI}/${id}`, newDetails);
+      return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
     }
   }
 );
+export const deleteProduct = createAsyncThunk(
+  "admin/deleteProduct",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete(`${deleteProductAPI}/${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const AdminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -109,6 +123,19 @@ const AdminSlice = createSlice({
       state.deletedSuccess = payload.success;
     });
     builder.addCase(deleteProduct.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    });
+
+    // update product
+    builder.addCase(updateProduct.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(updateProduct.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.editedSuccess = payload.success;
+    });
+    builder.addCase(updateProduct.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
     });

@@ -2,11 +2,9 @@ import styled from "@emotion/styled";
 import { TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   clearErrorsInAdmin,
-  createProduct,
-  getAdminProducts,
+  updateProduct,
 } from "../../../redux/slices/AdminSlice";
 import {
   HeaderElementsWrapper,
@@ -24,10 +22,9 @@ import { motion } from "framer-motion";
 
 const CATEGORIES = ["smartphone", "laptop", "camera", "earbud", "smartwatch"];
 
-const NewProduct = ({ setLayerSelector }) => {
-  const navigate = useNavigate();
+const EditProduct = ({ setLayerSelector, product }) => {
   const dispatch = useDispatch();
-  const { errorInAdmin, loading, createdSuccess } = useSelector(
+  const { errorInAdmin, loading, editedSuccess } = useSelector(
     (state) => state.admin
   );
 
@@ -40,32 +37,39 @@ const NewProduct = ({ setLayerSelector }) => {
       });
       dispatch(clearErrorsInAdmin());
     }
-    if (createdSuccess) {
+    if (editedSuccess) {
       setLayerSelector("main");
     }
   }, [errorInAdmin]);
 
-  const [details, setDetails] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    stock: "",
+  let oldImgSet = [];
+  product.images.map((i) => {
+    oldImgSet.push(i.url);
   });
-  const [imgPreview, setImgPreview] = useState([]);
-  const [images, setimages] = useState([]);
+
+  const [name, setName] = useState(product.name);
+  const [price, setPrice] = useState(product.price);
+  const [description, setDescription] = useState(product.description);
+  const [category, setCategory] = useState(product.category);
+  const [Stock, setStock] = useState(product.stock);
+  const [images, setImages] = useState([]);
+  const [oldImages, setOldImages] = useState(oldImgSet);
+  const [imagesPreview, setImagesPreview] = useState([]);
+
+  
 
   const Imghandler = (e) => {
     const files = Array.from(e.target.files);
-    setimages([]);
-    setImgPreview([]);
+    setImages([]);
+    setImagesPreview([]);
+    setOldImages([]);
 
     files.forEach((i) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setImgPreview((old) => [...old, reader.result]);
-          setimages((old) => [...old, reader.result]);
+            setImagesPreview((old) => [...old, reader.result]);
+            setImages((old) => [...old, reader.result]);
         }
       };
 
@@ -75,19 +79,22 @@ const NewProduct = ({ setLayerSelector }) => {
 
   const submitHandler = () => {
     const myForm = new FormData();
-    myForm.set("name", details.name);
-    myForm.set("description", details.description);
-    myForm.set("category", details.category);
-    myForm.set("stock", details.stock);
-    myForm.set("price", details.price);
 
-    images.forEach((img) => myForm.append("images", img));
-    dispatch(createProduct(myForm));
+    myForm.set("name", name);
+    myForm.set("price", price);
+    myForm.set("description", description);
+    myForm.set("category", category);
+    myForm.set("stock", Stock);
+
+    images.forEach((image) => {
+      myForm.append("images", image);
+    });
+    dispatch(updateProduct({ id: product._id, newDetails: myForm }));
   };
 
   return (
     <motion.div
-      key="new"
+      key="edit"
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
@@ -101,7 +108,7 @@ const NewProduct = ({ setLayerSelector }) => {
         >
           <ArrowBackIcon />
         </BackBtn>
-        <HeadLine> New Product</HeadLine>
+        <HeadLine> Edit Product</HeadLine>
       </HeaderElementsWrapper>
       {loading ? (
         <LoadingScreen size="small" />
@@ -114,9 +121,9 @@ const NewProduct = ({ setLayerSelector }) => {
                 <InputText
                   variant="standard"
                   label="Product Name"
-                  value={details.name}
+                  value={name}
                   onChange={(e) => {
-                    setDetails({ ...details, name: e.target.value });
+                    setName(e.target.value);
                   }}
                 />
               </FormEle>
@@ -127,9 +134,9 @@ const NewProduct = ({ setLayerSelector }) => {
                   maxRows={4}
                   variant="standard"
                   label="Description"
-                  value={details.description}
+                  value={description}
                   onChange={(e) => {
-                    setDetails({ ...details, description: e.target.value });
+                    setDescription(e.target.value);
                   }}
                 />
               </FormEle>
@@ -138,9 +145,9 @@ const NewProduct = ({ setLayerSelector }) => {
                 <InputText
                   variant="standard"
                   label="Price"
-                  value={details.price}
+                  value={price}
                   onChange={(e) => {
-                    setDetails({ ...details, price: e.target.value });
+                    setPrice(e.target.value);
                   }}
                 />
               </FormEle>
@@ -149,17 +156,18 @@ const NewProduct = ({ setLayerSelector }) => {
                 <InputText
                   variant="standard"
                   label="Stock"
-                  value={details.stock}
+                  value={Stock}
                   onChange={(e) => {
-                    setDetails({ ...details, stock: e.target.value });
+                    setStock(e.target.value);
                   }}
                 />
               </FormEle>
               <FormEle>
                 <ClassIcon fontSize="small" />
                 <select
+                  value={category}
                   onChange={(e) => {
-                    setDetails({ ...details, category: e.target.value });
+                    setCategory(e.target.value);
                   }}
                 >
                   <option value="">Select Category</option>
@@ -182,7 +190,10 @@ const NewProduct = ({ setLayerSelector }) => {
               </FormEle>
               <FormEle>
                 <div className="admin-product-img-prev">
-                  {imgPreview.map((i, index) => (
+                  {oldImages.map((i, index) => (
+                    <img key={index} src={i} alt="img" />
+                  ))}
+                  {imagesPreview.map((i, index) => (
                     <img key={index} src={i} alt="img" />
                   ))}
                 </div>
@@ -197,7 +208,7 @@ const NewProduct = ({ setLayerSelector }) => {
   );
 };
 
-export default NewProduct;
+export default EditProduct;
 
 const BackBtn = styled.div`
   background-color: white;

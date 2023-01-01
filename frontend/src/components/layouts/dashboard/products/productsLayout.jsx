@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HeadLine } from "../dashboard/DashboardLayout.styles";
@@ -12,7 +12,7 @@ import {
 } from "./productsLayout.styles";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import NewProduct from "../../../components/admin/newProduct";
 import {
   clearCreateSuccessInAdmin,
@@ -23,6 +23,7 @@ import {
   getAdminProducts,
 } from "../../../../redux/slices/AdminSlice";
 import { Alert } from "../../../components/Alert";
+import EditProduct from "../../../components/admin/editProduct";
 
 const ProductsLayout = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const ProductsLayout = () => {
     deletedSuccess,
   } = useSelector((state) => state.admin);
   const [layerSelector, setLayerSelector] = useState("main"); // main // edit // new
+  const [productToEdit, setProductToEdit] = useState(null);
 
   useEffect(() => {
     if (errorInAdmin) {
@@ -99,67 +101,56 @@ const ProductsLayout = () => {
               </AdminBtn>
             </Header>
 
-            {adminProducts.map((product, index) => (
-              <CardWrapper key={index}>
-                <Left>
-                  <p className="admin-CardWrapper-index">{index + 1}</p>
-                  <p>
-                    Name : <span>{product.name}</span>
-                  </p>
-                  <p>
-                    &nbsp;Stock : <span>{product.stock}</span>
-                  </p>
-                </Left>
-                <Right>
-                  <button
-                    className="admin-products-edit"
-                    onClick={() => {
-                      setLayerSelector("edit");
-                    }}
-                  >
-                    <EditIcon />
-                  </button>
-                  <button
-                    className="admin-products-delete"
-                    onClick={() => {
-                      dispatch(deleteProduct(product._id));
-                    }}
-                  >
-                    <DeleteIcon />
-                  </button>
-                </Right>
-              </CardWrapper>
-            ))}
+            {adminProducts.map((product, index) => {
+              return (
+                <CardWrapper
+                  key={index}
+                  layout
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.1 + index * 0.1, duration: 0.3 }}
+                >
+                  <Left>
+                    <p className="admin-CardWrapper-index">{index + 1}</p>
+                    <p>
+                      Name : <span>{product.name}</span>
+                    </p>
+                    <p>
+                      &nbsp;Stock : <span>{product.stock}</span>
+                    </p>
+                  </Left>
+                  <Right>
+                    <button
+                      className="admin-products-edit"
+                      onClick={() => {
+                        setProductToEdit(product);
+                        setLayerSelector("edit");
+                      }}
+                    >
+                      <EditIcon />
+                    </button>
+                    <button
+                      className="admin-products-delete"
+                      onClick={() => {
+                        dispatch(deleteProduct(product._id));
+                      }}
+                    >
+                      <DeleteIcon />
+                    </button>
+                  </Right>
+                </CardWrapper>
+              );
+            })}
           </motion.div>
         )}
         {layerSelector === "new" && (
-          <div
-            key="new"
-            initial={{ opacity: 0, x: -200 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -200 }}
-            transition={{ duration: 0.3, type: "tween" }}
-          >
-            <NewProduct setLayerSelector={setLayerSelector} />
-          </div>
+          <NewProduct setLayerSelector={setLayerSelector} />
         )}
         {layerSelector === "edit" && (
-          <div
-            key="edit"
-            initial={{ opacity: 0, x: -200 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -200 }}
-            transition={{ duration: 0.3, type: "tween" }}
-          >
-            <>edit</>
-            <div
-              onClick={() => {
-                setLayerSelector("main");
-              }}
-            >
-              go back
-            </div>
-          </div>
+          <EditProduct
+            setLayerSelector={setLayerSelector}
+            product={productToEdit}
+          />
         )}
       </AnimatePresence>
     </Wrapper>

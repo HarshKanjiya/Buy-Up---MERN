@@ -49,7 +49,7 @@ export const AdminBtn = styled(motion.button)`
     }
   }
 `;
-export const CardWrapper = styled.div`
+export const CardWrapper = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: space-between;

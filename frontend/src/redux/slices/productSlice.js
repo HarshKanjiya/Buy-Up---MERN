@@ -5,9 +5,12 @@ import { getProductsAPI } from "../../APILinks";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async ({ keyword, page, price = [0, 150000], category, ratings },{dispatch, getState, rejectWithValue, fulfillWithValue}) => {
+  async (
+    { keyword, page, price = [0, 150000], category, ratings },
+    { rejectWithValue }
+  ) => {
     let link = `${getProductsAPI}?keyword=${keyword ? keyword : ""}&page=${
-      page ? page : "1"
+      page ? page : "0"
     }&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${
       ratings ? ratings : "0"
     }`;
@@ -24,7 +27,7 @@ export const fetchProducts = createAsyncThunk(
       const res = await axios.get(link);
       return res.data;
     } catch (error) {
-      return rejectWithValue(error.response.data.message)
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
