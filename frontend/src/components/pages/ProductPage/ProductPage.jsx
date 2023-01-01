@@ -53,6 +53,15 @@ import Header from "../../layouts/Header";
 import { Alert } from "../../components/Alert";
 import { addItemToCart } from "../../../redux/slices/cartPageSlice";
 import CloseIcon from "@mui/icons-material/Close";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation, Thumbs } from "swiper";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/navigation";
+import "swiper/css/thumbs";
+import "swiper/css/bundle";
+
+import "../../../index.css";
 
 const ProductPage = () => {
   const params = useParams();
@@ -60,14 +69,13 @@ const ProductPage = () => {
   const { productInfo, loading, error } = useSelector(
     (state) => state.productPage
   );
-
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [ReviewBoxVisibility, setReviewBoxVisibility] = useState(false);
   const [userReviewRatings, setUserReviewRatings] = useState(0);
   const [userReviewComment, setUserReviewComment] = useState("");
   const [snackBar, setSnackBar] = useState(false);
   const [SnackTxt, setSnackTxt] = useState("");
-
 
   useEffect(() => {
     if (error) {
@@ -150,10 +158,24 @@ const ProductPage = () => {
               <>
                 <Container>
                   <Left>
-                    <img
-                      src={productInfo.product.images[0].url}
-                      alt={productInfo.name}
-                    />
+                    <Swiper
+                      style={{
+                        "--swiper-navigation-color": "#fff",
+                        "--swiper-pagination-color": "#fff",
+                      }}
+                      loop={true}
+                      spaceBetween={10}
+                      navigation={true}
+                      thumbs={{ swiper: thumbsSwiper }}
+                      modules={[FreeMode, Navigation, Thumbs]}
+                      className="mySwiper2"
+                    >
+                      {productInfo.product.images.map((i, index) => (
+                        <SwiperSlide key={index}>
+                          <img src={i.url} alt="product img" />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
                   </Left>
                   <Right>
                     <ProductName>{productInfo.product.name}</ProductName>

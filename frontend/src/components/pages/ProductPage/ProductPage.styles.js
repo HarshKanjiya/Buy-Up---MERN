@@ -32,9 +32,18 @@ export const Container = styled.div`
 `;
 export const Left = styled.div`
   flex: 0.55;
+  max-width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  img{
+    height: auto;
+    margin: auto auto;
+    width: 30%;
+  }
+
+
+
 `;
 export const Right = styled.div`
   flex: 0.45;
