@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   clearErrorsInAdmin,
-  clearSuccessInAdmin,
   createProduct,
   getAdminProducts,
 } from "../../../redux/slices/AdminSlice";
@@ -27,7 +26,7 @@ const CATEGORIES = ["smartphone", "laptop", "camera", "earbud", "smartwatch"];
 const NewProduct = ({ setLayerSelector }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { errorInAdmin, loading, success } = useSelector(
+  const { errorInAdmin, loading, createdSuccess } = useSelector(
     (state) => state.admin
   );
 
@@ -40,15 +39,10 @@ const NewProduct = ({ setLayerSelector }) => {
       });
       dispatch(clearErrorsInAdmin());
     }
-    if (success) {
-      Alert({
-        text: "Product created!",
-      });
-      dispatch(getAdminProducts({}));
-      dispatch(clearSuccessInAdmin());
+    if (createdSuccess) {
       setLayerSelector("main");
     }
-  }, [errorInAdmin, success]);
+  }, [errorInAdmin, ]);
 
   const [details, setDetails] = useState({
     name: "",

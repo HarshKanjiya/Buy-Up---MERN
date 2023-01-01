@@ -15,8 +15,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import { AnimatePresence, motion } from "framer-motion";
 import NewProduct from "../../../components/admin/newProduct";
 import {
+  clearCreateSuccessInAdmin,
+  clearDeleteSuccessInAdmin,
+  clearEditSuccessInAdmin,
   clearErrorsInAdmin,
-  clearSuccessInAdmin,
+  deleteProduct,
   getAdminProducts,
 } from "../../../../redux/slices/AdminSlice";
 import { Alert } from "../../../components/Alert";
@@ -24,21 +27,53 @@ import { Alert } from "../../../components/Alert";
 const ProductsLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { errorInAdmin, loading, adminProducts, success } = useSelector(
-    (state) => state.admin
-  );
+  const {
+    errorInAdmin,
+    loading,
+    adminProducts,
+    createdSuccess,
+    editedSuccess,
+    deletedSuccess,
+  } = useSelector((state) => state.admin);
   const [layerSelector, setLayerSelector] = useState("main"); // main // edit // new
 
   useEffect(() => {
-    if (success) {
+    if (errorInAdmin) {
       Alert({
-        text: "Product Uploaded / Updated !",
+        icon: "error",
+        title: "Oops!",
+        text: errorInAdmin,
       });
+      dispatch(clearErrorsInAdmin());
       dispatch(getAdminProducts({}));
-      dispatch(clearSuccessInAdmin());
       setLayerSelector("main");
     }
-  }, [ success]);
+
+    if (createdSuccess) {
+      Alert({
+        text: "Product Created !",
+      });
+      dispatch(clearCreateSuccessInAdmin());
+      dispatch(getAdminProducts({}));
+      setLayerSelector("main");
+    }
+    if (editedSuccess) {
+      Alert({
+        text: "Product Updated !",
+      });
+      dispatch(clearEditSuccessInAdmin());
+      dispatch(getAdminProducts({}));
+      setLayerSelector("main");
+    }
+    if (deletedSuccess) {
+      Alert({
+        text: "Product Deleted !",
+      });
+      dispatch(clearDeleteSuccessInAdmin());
+      dispatch(getAdminProducts({}));
+      setLayerSelector("main");
+    }
+  }, [errorInAdmin, createdSuccess, editedSuccess, deletedSuccess]);
 
   return (
     <Wrapper>
@@ -84,7 +119,12 @@ const ProductsLayout = () => {
                   >
                     <EditIcon />
                   </button>
-                  <button className="admin-products-delete">
+                  <button
+                    className="admin-products-delete"
+                    onClick={() => {
+                      dispatch(deleteProduct(product._id));
+                    }}
+                  >
                     <DeleteIcon />
                   </button>
                 </Right>
