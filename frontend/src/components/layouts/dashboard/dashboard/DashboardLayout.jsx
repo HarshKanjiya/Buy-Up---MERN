@@ -88,13 +88,13 @@ const DashboardLayout = () => {
       </HeaderElementsWrapper>
 
       <ChartWrapper>
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 0.35 }}>
           <HeadLineBeta>Stock Details</HeadLineBeta>
           <DoughnutChartWrapper>
             <Doughnut data={doughnutState} />
           </DoughnutChartWrapper>
         </div>
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 0.65 }}>
           <HeadLineBeta>Money Earned</HeadLineBeta>
           <LineGraphWrapper>
             <Line

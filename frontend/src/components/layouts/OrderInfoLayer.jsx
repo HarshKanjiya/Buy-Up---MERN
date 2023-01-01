@@ -30,7 +30,7 @@ const OrderInfoLayer = ({ orderInfo,exitOrderInfo }) => {
   };
   const EstimatedDate = (date) => {
     let DateList = date.slice(0, 10).split("-").reverse();
-    let newDate = eval(DateList[0]) + 15;
+    let newDate = Number(DateList[0]) + 15;
     let monthListcount = 0;
     if (newDate > 29) {
       newDate = newDate % 29;
@@ -56,6 +56,7 @@ const OrderInfoLayer = ({ orderInfo,exitOrderInfo }) => {
     return DateString;
   };
 
+
   return (
     <Wrapper
       layout
@@ -76,7 +77,7 @@ const OrderInfoLayer = ({ orderInfo,exitOrderInfo }) => {
             Order Date : <span>{ChangeFormat(orderInfo.paidAt)}</span>
           </p>
           <div className="order-orderinfo-estimation">
-            <FlightIcon fontSize="small" /> Estimated Delivery :{" "}
+            <FlightIcon fontSize="small" /> Estimated Delivery :
             {EstimatedDate(orderInfo.paidAt)}
           </div>
         </div>

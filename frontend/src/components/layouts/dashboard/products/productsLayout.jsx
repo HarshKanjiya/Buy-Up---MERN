@@ -24,7 +24,6 @@ import { Alert } from "../../../components/Alert";
 const ProductsLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userInfo, isAuthenticated } = useSelector((state) => state.user);
   const { errorInAdmin, loading, adminProducts, success } = useSelector(
     (state) => state.admin
   );
@@ -39,7 +38,7 @@ const ProductsLayout = () => {
       dispatch(clearSuccessInAdmin());
       setLayerSelector("main");
     }
-  }, [errorInAdmin, success]);
+  }, [ success]);
 
   return (
     <Wrapper>
