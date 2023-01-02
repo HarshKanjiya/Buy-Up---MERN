@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import {
   clearErrorsInAdmin,
   createProduct,
-  getAdminProducts,
 } from "../../../redux/slices/AdminSlice";
 import {
   HeaderElementsWrapper,

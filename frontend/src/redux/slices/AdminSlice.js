@@ -2,9 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import {
+  deleteOrderAPI,
   deleteProductAPI,
   getAdminProductsAPI,
+  getAllOrdersAPI,
   newProductAPI,
+  updateOrderStatusAPI,
   updateProductAPI,
 } from "../../APILinks";
 
@@ -41,7 +44,7 @@ export const updateProduct = createAsyncThunk(
   "admin/updateProduct",
   async ({ id, newDetails }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.put(`${updateProductAPI}/${id}`, newDetails);
+      const { data } = await axios.put(`${updateProductAPI}${id}`, newDetails);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -60,6 +63,48 @@ export const deleteProduct = createAsyncThunk(
   }
 );
 
+// order oprations
+export const getAdminOrders = createAsyncThunk(
+  "admin/getOrders",
+  async ({}, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(getAllOrdersAPI);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const updateOrderStatus = createAsyncThunk(
+  "admin/updateOrders",
+  async (id, order, { rejectWithValue }) => {
+    console.log('id,order :>> ', id,order);
+    try {
+      const { data } = await axios.put(
+        `${updateOrderStatusAPI}${id}`,
+        order,
+        config
+      );
+      console.log("update :>> ", data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const deleteOrder = createAsyncThunk(
+  "admin/deleteOrders",
+  async (id, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete(`${deleteOrderAPI}${id}`);
+      console.log("dlt :>> ", data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const AdminSlice = createSlice({
   name: "admin",
   initialState: {
@@ -70,10 +115,12 @@ const AdminSlice = createSlice({
     product: null,
     editedSuccess: false,
     deletedSuccess: false,
+    adminOrders: [],
+    profit: 0,
   },
   reducers: {
     clearErrorsInAdmin: (state) => {
-      state.errorInOrder = null;
+      state.errorInOrderInOrder = null;
     },
     clearCreateSuccessInAdmin: (state) => {
       state.success = false;
@@ -97,7 +144,7 @@ const AdminSlice = createSlice({
     });
     builder.addCase(getAdminProducts.rejected, (state, { payload }) => {
       state.loading = false;
-      state.error = payload;
+      state.errorInOrder = payload;
     });
 
     // create product
@@ -111,7 +158,7 @@ const AdminSlice = createSlice({
     });
     builder.addCase(createProduct.rejected, (state, { payload }) => {
       state.loading = false;
-      state.error = payload;
+      state.errorInOrder = payload;
     });
 
     // delete product
@@ -124,7 +171,7 @@ const AdminSlice = createSlice({
     });
     builder.addCase(deleteProduct.rejected, (state, { payload }) => {
       state.loading = false;
-      state.error = payload;
+      state.errorInOrder = payload;
     });
 
     // update product
@@ -137,7 +184,47 @@ const AdminSlice = createSlice({
     });
     builder.addCase(updateProduct.rejected, (state, { payload }) => {
       state.loading = false;
-      state.error = payload;
+      state.errorInOrder = payload;
+    });
+
+    // get orders
+    builder.addCase(getAdminOrders.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(getAdminOrders.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.adminOrders = payload.orders;
+      state.profit = payload.totalAmmount;
+    });
+    builder.addCase(getAdminOrders.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
+    });
+
+    // update Order Status
+    builder.addCase(updateOrderStatus.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(updateOrderStatus.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.editedSuccess = true;
+    });
+    builder.addCase(updateOrderStatus.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
+    });
+
+    // delete order
+    builder.addCase(deleteOrder.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteOrder.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      // state.adminOrders = payload.orders;
+    });
+    builder.addCase(deleteOrder.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
     });
   },
 });

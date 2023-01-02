@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { motion } from "framer-motion";
 
 export const HeadLine = styled.p`
   font-weight: 700;
@@ -6,13 +7,14 @@ export const HeadLine = styled.p`
   color: #d1d1d1;
 `;
 export const HeadLineBeta = styled.p`
+width: max-content;
   font-weight: 500;
   font-size: 1.3;
   color: #d1d1d1;
   margin-top: 0.5rem;
 `;
 
-export const HeaderElementsWrapper = styled.div`
+export const HeaderElementsWrapper = styled(motion.div)`
   display: flex;
   gap: 1rem;
   align-items: center;

@@ -19,12 +19,14 @@ import CategoryIcon from "@mui/icons-material/Category";
 import DashboardLayout from "../../layouts/dashboard/dashboard/DashboardLayout";
 import {
   clearErrorsInAdmin,
+  getAdminOrders,
   getAdminProducts,
 } from "../../../redux/slices/AdminSlice";
 import LoadingScreen from "../../components/LoadingScreen";
 import { Alert } from "../../components/Alert";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductsLayout from "../../layouts/dashboard/products/productsLayout";
+import OrdersLayout from "../../layouts/dashboard/orders/OrdersLayout";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ const Dashboard = () => {
   const { userInfo, isAuthenticated } = useSelector((state) => state.user);
   const { errorInAdmin,loading } = useSelector((state) => state.admin);
 
-  const [layoutSelector, setLayoutSelector] = useState("products-layout");
+  const [layoutSelector, setLayoutSelector] = useState("orders-layout");
 
   useEffect(() => {
     if (isAuthenticated === false) {
@@ -42,6 +44,7 @@ const Dashboard = () => {
       navigate("/");
     }
     dispatch(getAdminProducts({}));
+    dispatch(getAdminOrders({}))
   }, []);
 
   useEffect(() => {
@@ -180,7 +183,7 @@ const Dashboard = () => {
                         transition={{ duration: 0.3, type: "tween" }}
                         style={{ width:"100%" }}
                       >
-                        <p>3</p>
+                        <OrdersLayout />
                       </motion.div>
                     )}
                     {layoutSelector === "users-layout" && (

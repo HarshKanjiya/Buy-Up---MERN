@@ -20,7 +20,9 @@ import { useSelector } from "react-redux";
 ChartJS.register(...registerables);
 
 const DashboardLayout = () => {
-  const { adminProducts } = useSelector((state) => state.admin);
+  const { adminProducts, profit, adminOrders } = useSelector(
+    (state) => state.admin
+  );
 
   let OutOfStockProducts = 0;
 
@@ -60,7 +62,7 @@ const DashboardLayout = () => {
       <HeaderElementsWrapper>
         <HeaderElement className="dashboardlayout-overview-profit">
           <p className="dashboardlayout-header-ele-subtext">Total GAIN</p>
-          <p className="dashboardlayout-header-ele-text">₹ 2000</p>
+          <p className="dashboardlayout-header-ele-text">₹ {profit}</p>
           <img src={ProfitImg} alt="img" />
         </HeaderElement>
       </HeaderElementsWrapper>
@@ -70,14 +72,15 @@ const DashboardLayout = () => {
         <HeaderElement className="dashboardlayout-overview-products">
           <p className="dashboardlayout-header-ele-subtext">Products</p>
           <p className="dashboardlayout-header-ele-text">
-            {" "}
-            {adminProducts.length}{" "}
+            {adminProducts.length}
           </p>
           <img src={ProductImg} alt="img" />
         </HeaderElement>
         <HeaderElement className="dashboardlayout-overview-orders">
           <p className="dashboardlayout-header-ele-subtext">Orders</p>
-          <p className="dashboardlayout-header-ele-text">21</p>
+          <p className="dashboardlayout-header-ele-text">
+            {adminOrders.length}
+          </p>
           <img src={ordersImg} alt="img" />
         </HeaderElement>
         <HeaderElement className="dashboardlayout-overview-users">
