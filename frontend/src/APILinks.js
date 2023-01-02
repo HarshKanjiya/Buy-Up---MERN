@@ -43,5 +43,5 @@ export const getSingleUserAPI = "/api/v1/admin/user/"
 
 // order APIs
 export const getAllOrdersAPI = "/api/v1/admin/orders" //done
-export const updateOrderStatusAPI = "/api/v1/admin/order/"
-export const deleteOrderAPI = "/api/v1/admin/order/"
+export const updateOrderStatusAPI = "/api/v1/admin/order/" //done
+export const deleteOrderAPI = "/api/v1/admin/order/"//done

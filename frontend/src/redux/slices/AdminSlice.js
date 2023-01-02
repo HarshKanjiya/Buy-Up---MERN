@@ -4,11 +4,15 @@ import axios from "axios";
 import {
   deleteOrderAPI,
   deleteProductAPI,
+  deleteUserAPI,
   getAdminProductsAPI,
   getAllOrdersAPI,
+  getAllUsersAPI,
+  getSingleUserAPI,
   newProductAPI,
   updateOrderStatusAPI,
   updateProductAPI,
+  updateUserRoleAPI,
 } from "../../APILinks";
 
 const config = {
@@ -17,7 +21,7 @@ const config = {
   },
 };
 
-// crud on product
+// product oprations
 export const getAdminProducts = createAsyncThunk(
   "Admin/getAdminProducts",
   async ({}, { rejectWithValue }) => {
@@ -104,17 +108,69 @@ export const deleteOrder = createAsyncThunk(
 
 // user oprations
 
+export const getAllUsers = createAsyncThunk(
+  "admin/getAllUsers",
+  async ({}, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(getAllUsersAPI);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const getSingleUser = createAsyncThunk(
+  "admin/getSingleUser",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${getSingleUserAPI}${id}`);
+      console.log("data single user :>> ", data);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const updateUserRole = createAsyncThunk(
+  "admin/updateUserRole",
+  async ({ id, details }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.put(
+        `${updateUserRoleAPI}${id}`,
+        details,
+        config
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const deleteUsers = createAsyncThunk(
+  "admin/deleteUser",
+  async ({ id }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete(`${deleteUserAPI}${id}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const AdminSlice = createSlice({
   name: "admin",
   initialState: {
-    loading: false,
-    createdSuccess: false,
+    adminUsers: [],
+    adminOrders: [],
     adminProducts: [],
+    loading: false,
     errorInAdmin: null,
-    product: null,
+    createdSuccess: false,
     editedSuccess: false,
     deletedSuccess: false,
-    adminOrders: [],
+    product: null,
+    user: null,
     profit: 0,
   },
   reducers: {
@@ -222,6 +278,58 @@ const AdminSlice = createSlice({
       state.deletedSuccess = payload.success;
     });
     builder.addCase(deleteOrder.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
+    });
+
+    // get all users
+    builder.addCase(getAllUsers.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(getAllUsers.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.adminUsers = payload.users;
+    });
+    builder.addCase(getAllUsers.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
+    });
+
+    // get single user
+    builder.addCase(getSingleUser.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(getSingleUser.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.user = payload;
+    });
+    builder.addCase(getSingleUser.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
+    });
+
+    // update user role
+    builder.addCase(updateUserRole.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(updateUserRole.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.editedSuccess = payload.success;
+    });
+    builder.addCase(updateUserRole.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
+    });
+
+    // delete user
+    builder.addCase(deleteUsers.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteUsers.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.deletedSuccess = payload.success;
+    });
+    builder.addCase(deleteUsers.rejected, (state, { payload }) => {
       state.loading = false;
       state.errorInOrder = payload;
     });

@@ -21,18 +21,20 @@ import {
   clearErrorsInAdmin,
   getAdminOrders,
   getAdminProducts,
+  getAllUsers,
 } from "../../../redux/slices/AdminSlice";
 import LoadingScreen from "../../components/LoadingScreen";
 import { Alert } from "../../components/Alert";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductsLayout from "../../layouts/dashboard/products/productsLayout";
 import OrdersLayout from "../../layouts/dashboard/orders/OrdersLayout";
+import UsersLayout from "../../layouts/dashboard/users/UsersLayout";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo, isAuthenticated } = useSelector((state) => state.user);
-  const { errorInAdmin,loading } = useSelector((state) => state.admin);
+  const { errorInAdmin, loading } = useSelector((state) => state.admin);
 
   const [layoutSelector, setLayoutSelector] = useState("users-layout");
 
@@ -44,7 +46,8 @@ const Dashboard = () => {
       navigate("/");
     }
     dispatch(getAdminProducts({}));
-    dispatch(getAdminOrders({}))
+    dispatch(getAllUsers({}))
+    dispatch(getAdminOrders({}));
   }, []);
 
   useEffect(() => {
@@ -157,7 +160,7 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
-                        style={{ width:"100%" }}
+                        style={{ width: "100%" }}
                       >
                         <DashboardLayout />
                       </motion.div>
@@ -169,9 +172,9 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
-                        style={{ width:"100%" }}
+                        style={{ width: "100%" }}
                       >
-                        <ProductsLayout/>
+                        <ProductsLayout />
                       </motion.div>
                     )}
                     {layoutSelector === "orders-layout" && (
@@ -181,23 +184,25 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
-                        style={{ width:"100%" }}
+                        style={{ width: "100%" }}
                       >
                         <OrdersLayout />
                       </motion.div>
                     )}
                     {layoutSelector === "users-layout" && (
                       <motion.div
-                        key="users-layout"
+                        key="orders-layout"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
-                        style={{ width:"100%" }}
+                        style={{ width: "100%" }}
                       >
-                        <p>4</p>
+                        <UsersLayout/>
+                        {/* <OrdersLayout/> */}
                       </motion.div>
                     )}
+                    
                     {layoutSelector === "reviews-layout" && (
                       <motion.div
                         key="reviews-layout"
@@ -205,7 +210,7 @@ const Dashboard = () => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
-                        style={{ width:"100%" }}
+                        style={{ width: "100%" }}
                       >
                         <p>5</p>
                       </motion.div>
