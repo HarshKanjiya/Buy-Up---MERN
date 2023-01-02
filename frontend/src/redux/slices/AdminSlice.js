@@ -95,13 +95,14 @@ export const deleteOrder = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const { data } = await axios.delete(`${deleteOrderAPI}${id}`);
-      console.log("dlt :>> ", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
     }
   }
 );
+
+// user oprations
 
 const AdminSlice = createSlice({
   name: "admin",
@@ -209,8 +210,7 @@ const AdminSlice = createSlice({
     });
     builder.addCase(updateOrderStatus.rejected, (state, { payload }) => {
       state.loading = false;
-      console.log('payload :>> ', payload);
-      state.errorInOrder = payload;
+      state.errorInAdmin = payload;
     });
 
     // delete order
@@ -219,7 +219,7 @@ const AdminSlice = createSlice({
     });
     builder.addCase(deleteOrder.fulfilled, (state, { payload }) => {
       state.loading = false;
-      // state.adminOrders = payload.orders;
+      state.deletedSuccess = payload.success;
     });
     builder.addCase(deleteOrder.rejected, (state, { payload }) => {
       state.loading = false;

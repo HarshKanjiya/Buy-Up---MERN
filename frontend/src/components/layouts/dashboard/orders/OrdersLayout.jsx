@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert } from "../../../components/Alert";
 import {
+  clearDeleteSuccessInAdmin,
   clearEditSuccessInAdmin,
   clearErrorsInAdmin,
   getAdminOrders,
@@ -19,13 +20,11 @@ import styled from "@emotion/styled";
 
 const OrdersLayout = () => {
   const dispatch = useDispatch();
-  const { adminOrders, errorInAdmin, editedSuccess } = useSelector(
-    (state) => state.admin
-  );
+  const { adminOrders, errorInAdmin, editedSuccess, deletedSuccess } =
+    useSelector((state) => state.admin);
   const [orderSelector, setOrderSelector] = useState(false);
   const [order, setOrder] = useState(null);
 
-  console.log('errorInAdmin :>> ', errorInAdmin);
   useEffect(() => {
     if (errorInAdmin) {
       Alert({
@@ -38,13 +37,21 @@ const OrdersLayout = () => {
     if (editedSuccess) {
       Alert({
         text: "Order Status Updated!",
-        title:""
+        title: "",
       });
       dispatch(clearEditSuccessInAdmin());
-      dispatch(getAdminProducts({}))
+      dispatch(getAdminProducts({}));
       dispatch(getAdminOrders({}));
     }
-  }, [errorInAdmin,editedSuccess]);
+    if (deletedSuccess) {
+      Alert({
+        text: "Order Deleted!",
+        title: "",
+      });
+      dispatch(clearDeleteSuccessInAdmin());
+      dispatch(getAdminOrders({}));
+    }
+  }, [errorInAdmin, editedSuccess]);
 
   return (
     <div style={{ overflowX: "hidden" }}>

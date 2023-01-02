@@ -6,25 +6,25 @@ import LoadingScreen from "../LoadingScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert } from "../Alert";
 import {
+  clearDeleteSuccessInAdmin,
   clearErrorsInAdmin,
+  deleteOrder,
+  getAdminOrders,
   updateOrderStatus,
 } from "../../../redux/slices/AdminSlice";
 
 const AdminOrder = ({ setOrderSelector, order }) => {
   const dispatch = useDispatch();
-  const { loading, editedSuccess, errorInOrder, errorInAdmin } = useSelector(
-    (state) => state.admin
-  );
+  const { loading, editedSuccess, deletedSuccess, errorInAdmin } =
+    useSelector((state) => state.admin);
   const [status, setStatus] = useState(order.orderStatus);
   const initStatus = order.orderStatus;
-  console.log('errorInAdmin :>> ', errorInAdmin);
-
 
   useEffect(() => {
-    if (editedSuccess) {
+    if (editedSuccess || deletedSuccess ) {
       setOrderSelector(false);
     }
-  }, [editedSuccess,]);
+  }, [editedSuccess, deletedSuccess]);
 
   const ChangeFormat = (date) => {
     let DateList = date.slice(0, 10).split("-").reverse();
@@ -62,6 +62,11 @@ const AdminOrder = ({ setOrderSelector, order }) => {
     myForm.set("status", status);
     myForm.set("orderItems", order.orderItems);
     dispatch(updateOrderStatus({ id: order._id, order: myForm }));
+  };
+
+
+  const SubmitHandlerDLTFXN = () => {
+    dispatch(deleteOrder(order._id));
   };
 
   return (
@@ -141,6 +146,9 @@ const AdminOrder = ({ setOrderSelector, order }) => {
               <option value="delivered">Delivered</option>
             </select>
             <button onClick={SubmitHandler}>SUBMIT</button>
+            <button className="dlt-btn" onClick={SubmitHandlerDLTFXN}>
+              DELETE
+            </button>
           </Container2>
         </Wrapper>
       )}
@@ -209,6 +217,10 @@ export const Container2 = styled.div`
 
   gap: 0.1rem;
   padding: 1rem;
+
+  .dlt-btn {
+    background-color: red;
+  }
   span {
     color: #a1a1a1;
     font-size: 0.7rem;

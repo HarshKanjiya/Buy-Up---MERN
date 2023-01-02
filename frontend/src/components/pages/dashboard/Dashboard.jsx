@@ -34,7 +34,7 @@ const Dashboard = () => {
   const { userInfo, isAuthenticated } = useSelector((state) => state.user);
   const { errorInAdmin,loading } = useSelector((state) => state.admin);
 
-  const [layoutSelector, setLayoutSelector] = useState("orders-layout");
+  const [layoutSelector, setLayoutSelector] = useState("users-layout");
 
   useEffect(() => {
     if (isAuthenticated === false) {
