@@ -77,15 +77,13 @@ export const getAdminOrders = createAsyncThunk(
 );
 export const updateOrderStatus = createAsyncThunk(
   "admin/updateOrders",
-  async (id, order, { rejectWithValue }) => {
-    console.log('id,order :>> ', id,order);
+  async ({ id, order }, { rejectWithValue }) => {
     try {
       const { data } = await axios.put(
         `${updateOrderStatusAPI}${id}`,
         order,
         config
       );
-      console.log("update :>> ", data);
       return data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -207,10 +205,11 @@ const AdminSlice = createSlice({
     });
     builder.addCase(updateOrderStatus.fulfilled, (state, { payload }) => {
       state.loading = false;
-      state.editedSuccess = true;
+      state.editedSuccess = payload.success;
     });
     builder.addCase(updateOrderStatus.rejected, (state, { payload }) => {
       state.loading = false;
+      console.log('payload :>> ', payload);
       state.errorInOrder = payload;
     });
 

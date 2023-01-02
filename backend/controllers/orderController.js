@@ -26,7 +26,6 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paidAt: Date.now(),
     user: req.user._id,
   });
-  console.log('wqwq');
 
   res.status(201).json({
     success: true,
@@ -83,19 +82,24 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Order not found with this Id", 400));
   }
 
-  if (order.orderStatus === "Delivered") {
+  if (order.orderStatus === "delivered") {
+    console.log('hi Harxh!!!');
     return next(new ErrorHandler("You have already delivered this order", 400));
   }
 
-  order.orderItems.forEach(async (order) => {
-    await updateStock(order.product, order.quantity);
-  });
+  if(order.orderStatus === "Processing"){
+    order.orderItems.forEach(async (order) => {
+      await updateStock(order.id, order.quantity);
+    });
+  }
+  
 
   order.orderStatus = req.body.status;
 
-  if (req.body.status === "Delivered") {
+  if (req.body.status === "delivered") {
     order.deliveredAt = Date.now();
   }
+
   await order.save({ validateBeforeSave: false });
 
   res.status(200).json({
@@ -105,7 +109,6 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
 async function updateStock(id, quantity) {
   const product = await Product.findById(id);
-
   product.stock -= quantity;
 
   product.save({ validateBeforeSave: false });

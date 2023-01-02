@@ -9,26 +9,22 @@ import {
   clearErrorsInAdmin,
   updateOrderStatus,
 } from "../../../redux/slices/AdminSlice";
+
 const AdminOrder = ({ setOrderSelector, order }) => {
   const dispatch = useDispatch();
-  const { loading, editedSuccess, errorInOrder } = useSelector(
+  const { loading, editedSuccess, errorInOrder, errorInAdmin } = useSelector(
     (state) => state.admin
   );
   const [status, setStatus] = useState(order.orderStatus);
+  const initStatus = order.orderStatus;
+  console.log('errorInAdmin :>> ', errorInAdmin);
+
 
   useEffect(() => {
     if (editedSuccess) {
       setOrderSelector(false);
     }
-    if (errorInOrder) {
-      Alert({
-        icon: "error",
-        text: errorInOrder,
-        title: "Oops!",
-      });
-      dispatch(clearErrorsInAdmin());
-    }
-  }, [editedSuccess, errorInOrder]);
+  }, [editedSuccess,]);
 
   const ChangeFormat = (date) => {
     let DateList = date.slice(0, 10).split("-").reverse();
@@ -53,10 +49,19 @@ const AdminOrder = ({ setOrderSelector, order }) => {
   };
 
   const SubmitHandler = () => {
+    if (status === initStatus || status === "") {
+      Alert({
+        icon: "error",
+        text: "Please change the Status",
+        title: "Oops!",
+      });
+      return;
+    }
+
     const myForm = new FormData();
     myForm.set("status", status);
-    console.log('order._id :>> ', order._id);
-    dispatch(updateOrderStatus( order._id,myForm));
+    myForm.set("orderItems", order.orderItems);
+    dispatch(updateOrderStatus({ id: order._id, order: myForm }));
   };
 
   return (
@@ -71,40 +76,40 @@ const AdminOrder = ({ setOrderSelector, order }) => {
           exit={{ opacity: 0, x: 200 }}
           transition={{ duration: 0.3, type: "tween" }}
         >
-         <ContainerWrapper>
-         <div>
-          <HeadLineBeta>Shipping Info</HeadLineBeta>
-          <Container>
-            <p> {order.shippingInfo.phoneNo} </p>
-            <p> {order.shippingInfo.address}, </p>
-            <p> {order.shippingInfo.city}, </p>
-            <p> {order.shippingInfo.state}, </p>
-            <p>
-              {order.shippingInfo.country} - {order.shippingInfo.pinCode}.{" "}
-            </p>
-          </Container>
-          </div>
+          <ContainerWrapper>
+            <div>
+              <HeadLineBeta>Shipping Info</HeadLineBeta>
+              <Container>
+                <p> {order.shippingInfo.phoneNo} </p>
+                <p> {order.shippingInfo.address}, </p>
+                <p> {order.shippingInfo.city}, </p>
+                <p> {order.shippingInfo.state}, </p>
+                <p>
+                  {order.shippingInfo.country} - {order.shippingInfo.pinCode}.{" "}
+                </p>
+              </Container>
+            </div>
 
-         <div>
-         <HeadLineBeta>Payment Info</HeadLineBeta>
-          <Container>
-            <p className="admin-order-date">
-              {" "}
-              Ordered on : <span> {ChangeFormat(order.paidAt)} </span>{" "}
-            </p>
-            <p className="admin-order-itemPrice">
-              &nbsp;&nbsp;Item Price : <span>₹ {order.itemPrice}</span>
-            </p>
-            <p className="admin-order-taxPrice">
-              &nbsp;&nbsp;&nbsp;&nbsp;Tax Price :{" "}
-              <span>₹ {order.taxPrice}</span>
-            </p>
-            <p className="admin-order-totalPrice">
-              &nbsp;Total Price : <span>₹ {order.totalPrice}</span>
-            </p>
-          </Container>
-         </div>
-         </ContainerWrapper>
+            <div>
+              <HeadLineBeta>Payment Info</HeadLineBeta>
+              <Container>
+                <p className="admin-order-date">
+                  {" "}
+                  Ordered on : <span> {ChangeFormat(order.paidAt)} </span>{" "}
+                </p>
+                <p className="admin-order-itemPrice">
+                  &nbsp;&nbsp;Item Price : <span>₹ {order.itemPrice}</span>
+                </p>
+                <p className="admin-order-taxPrice">
+                  &nbsp;&nbsp;&nbsp;&nbsp;Tax Price :{" "}
+                  <span>₹ {order.taxPrice}</span>
+                </p>
+                <p className="admin-order-totalPrice">
+                  &nbsp;Total Price : <span>₹ {order.totalPrice}</span>
+                </p>
+              </Container>
+            </div>
+          </ContainerWrapper>
 
           <HeadLineBeta>Cart Info</HeadLineBeta>
           <Container2>
@@ -126,11 +131,12 @@ const AdminOrder = ({ setOrderSelector, order }) => {
           <Container2>
             <p>orderStatus: </p>
             <select
+              value={status}
               onChange={(e) => {
                 setStatus(e.target.value);
               }}
             >
-              <option value="processing">Pending</option>
+              <option value="">Pending</option>
               <option value="shipped">Shipped</option>
               <option value="delivered">Delivered</option>
             </select>
@@ -260,7 +266,7 @@ const Card = styled.div`
   }
 `;
 const ContainerWrapper = styled.div`
-display: flex;
-gap:1rem;
-flex-wrap: wrap;
-`
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+`;

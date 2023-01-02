@@ -6,7 +6,12 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Alert } from "../../../components/Alert";
-import { clearErrorsInAdmin } from "../../../../redux/slices/AdminSlice";
+import {
+  clearEditSuccessInAdmin,
+  clearErrorsInAdmin,
+  getAdminOrders,
+  getAdminProducts,
+} from "../../../../redux/slices/AdminSlice";
 import { CardWrapper, Left, Right } from "../products/productsLayout.styles";
 import AdminOrder from "../../../components/admin/Order";
 import { AnimatePresence, motion } from "framer-motion";
@@ -14,10 +19,13 @@ import styled from "@emotion/styled";
 
 const OrdersLayout = () => {
   const dispatch = useDispatch();
-  const { adminOrders, errorInAdmin } = useSelector((state) => state.admin);
+  const { adminOrders, errorInAdmin, editedSuccess } = useSelector(
+    (state) => state.admin
+  );
   const [orderSelector, setOrderSelector] = useState(false);
   const [order, setOrder] = useState(null);
 
+  console.log('errorInAdmin :>> ', errorInAdmin);
   useEffect(() => {
     if (errorInAdmin) {
       Alert({
@@ -27,7 +35,16 @@ const OrdersLayout = () => {
       });
       dispatch(clearErrorsInAdmin());
     }
-  }, [errorInAdmin]);
+    if (editedSuccess) {
+      Alert({
+        text: "Order Status Updated!",
+        title:""
+      });
+      dispatch(clearEditSuccessInAdmin());
+      dispatch(getAdminProducts({}))
+      dispatch(getAdminOrders({}));
+    }
+  }, [errorInAdmin,editedSuccess]);
 
   return (
     <div style={{ overflowX: "hidden" }}>
@@ -95,7 +112,7 @@ const OrdersLayout = () => {
                     </span>
                   </p>
                   <p>
-                    &nbsp;Stock : <span>₹ {order.totalPrice}</span>
+                    &nbsp;Price: <span>₹ {order.totalPrice}</span>
                   </p>
                 </Left>
                 <Right>
