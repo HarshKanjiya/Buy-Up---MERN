@@ -29,6 +29,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import ProductsLayout from "../../layouts/dashboard/products/productsLayout";
 import OrdersLayout from "../../layouts/dashboard/orders/OrdersLayout";
 import UsersLayout from "../../layouts/dashboard/users/UsersLayout";
+import ReviewsLayout from "../../layouts/dashboard/reviews/ReviewsLayout";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Dashboard = () => {
   const { userInfo, isAuthenticated } = useSelector((state) => state.user);
   const { errorInAdmin, loading } = useSelector((state) => state.admin);
 
-  const [layoutSelector, setLayoutSelector] = useState("users-layout");
+  const [layoutSelector, setLayoutSelector] = useState("reviews-layout");
 
   useEffect(() => {
     if (isAuthenticated === false) {
@@ -46,7 +47,7 @@ const Dashboard = () => {
       navigate("/");
     }
     dispatch(getAdminProducts({}));
-    dispatch(getAllUsers({}))
+    dispatch(getAllUsers({}));
     dispatch(getAdminOrders({}));
   }, []);
 
@@ -191,18 +192,17 @@ const Dashboard = () => {
                     )}
                     {layoutSelector === "users-layout" && (
                       <motion.div
-                        key="orders-layout"
+                        key="users-layout"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.3, type: "tween" }}
                         style={{ width: "100%" }}
                       >
-                        <UsersLayout/>
-                        {/* <OrdersLayout/> */}
+                        <UsersLayout />
                       </motion.div>
                     )}
-                    
+
                     {layoutSelector === "reviews-layout" && (
                       <motion.div
                         key="reviews-layout"
@@ -212,7 +212,7 @@ const Dashboard = () => {
                         transition={{ duration: 0.3, type: "tween" }}
                         style={{ width: "100%" }}
                       >
-                        <p>5</p>
+                        <ReviewsLayout />
                       </motion.div>
                     )}
                   </AnimatePresence>

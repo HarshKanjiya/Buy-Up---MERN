@@ -36,10 +36,10 @@ export const updateProductAPI = "/api/v1/admin/product/"//done
 export const deleteProductAPI = "/api/v1/admin/product/"//done
 
 // user --admin
-export const deleteUserAPI = "/api/v1/admin/user/"
-export const updateUserRoleAPI = "/api/v1/admin/user/"
-export const getAllUsersAPI = "/api/v1/admin/users"
-export const getSingleUserAPI = "/api/v1/admin/user/"
+export const deleteUserAPI = "/api/v1/admin/user/" //done
+export const updateUserRoleAPI = "/api/v1/admin/user/" //done
+export const getAllUsersAPI = "/api/v1/admin/users" //done
+export const getSingleUserAPI = "/api/v1/admin/user/" //done
 
 // order APIs
 export const getAllOrdersAPI = "/api/v1/admin/orders" //done

@@ -4,9 +4,11 @@ import axios from "axios";
 import {
   deleteOrderAPI,
   deleteProductAPI,
+  deleteReviewAPI,
   deleteUserAPI,
   getAdminProductsAPI,
   getAllOrdersAPI,
+  getAllReviewsAPI,
   getAllUsersAPI,
   getSingleUserAPI,
   newProductAPI,
@@ -107,7 +109,6 @@ export const deleteOrder = createAsyncThunk(
 );
 
 // user oprations
-
 export const getAllUsers = createAsyncThunk(
   "admin/getAllUsers",
   async ({}, { rejectWithValue }) => {
@@ -158,12 +159,39 @@ export const deleteUsers = createAsyncThunk(
   }
 );
 
+// reviews oprations
+export const getAllReviews = createAsyncThunk(
+  "admin/getAllReviews",
+  async ({ productId }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get(`${getAllReviewsAPI}${productId}`);
+      return data;
+    } catch (error) {
+      return rejectWithValue(errorresponse.data.message);
+    }
+  }
+);
+export const deleteReviews = createAsyncThunk(
+  "admin/deleteReviews",
+  async ({ productId, reviewID }, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.delete(
+        `${deleteReviewAPI}id=${reviewID}&productID=${productId}`
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const AdminSlice = createSlice({
   name: "admin",
   initialState: {
     adminUsers: [],
     adminOrders: [],
     adminProducts: [],
+    Reviews: [],
     loading: false,
     errorInAdmin: null,
     createdSuccess: false,
@@ -330,6 +358,32 @@ const AdminSlice = createSlice({
       state.deletedSuccess = payload.success;
     });
     builder.addCase(deleteUsers.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
+    });
+
+    // get all reviews of a single product
+    builder.addCase(getAllReviews.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(getAllReviews.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.Reviews = payload.reviews;
+    });
+    builder.addCase(getAllReviews.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.errorInOrder = payload;
+    });
+
+    // delete reviews
+    builder.addCase(deleteReviews.pending, (state, { payload }) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteReviews.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.deletedSuccess = payload.success;
+    });
+    builder.addCase(deleteReviews.rejected, (state, { payload }) => {
       state.loading = false;
       state.errorInOrder = payload;
     });

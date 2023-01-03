@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 ChartJS.register(...registerables);
 
 const DashboardLayout = () => {
-  const { adminProducts, profit, adminOrders } = useSelector(
+  const { adminProducts, profit, adminOrders,adminUsers } = useSelector(
     (state) => state.admin
   );
 
@@ -85,7 +85,7 @@ const DashboardLayout = () => {
         </HeaderElement>
         <HeaderElement className="dashboardlayout-overview-users">
           <p className="dashboardlayout-header-ele-subtext">Users</p>
-          <p className="dashboardlayout-header-ele-text">2</p>
+          <p className="dashboardlayout-header-ele-text">{adminUsers.length}</p>
           <img src={userImg} alt="img" />
         </HeaderElement>
       </HeaderElementsWrapper>

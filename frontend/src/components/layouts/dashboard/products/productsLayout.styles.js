@@ -57,6 +57,7 @@ export const CardWrapper = styled(motion.div)`
   box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.04);
   padding: 1rem;
   border-radius: 8px;
+  cursor: pointer;
   position: relative;
   overflow: hidden;
   margin: 0.5rem 0;

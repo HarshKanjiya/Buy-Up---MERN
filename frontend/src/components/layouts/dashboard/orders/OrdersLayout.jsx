@@ -54,7 +54,9 @@ const OrdersLayout = () => {
   }, [errorInAdmin, editedSuccess]);
 
   return (
-    <div style={{ overflowX: "hidden" }}>
+    <div style={{ overflowX: "hidden" }}
+    
+    >
       <AnimatePresence mode="wait">
         {orderSelector ? (
           <motion.div
@@ -141,7 +143,7 @@ const Status = styled.p`
   font-weight: 700;
 `;
 
-const BackBtn = styled(motion.div)`
+export const BackBtn = styled(motion.div)`
   background-color: white;
   height: 2.5rem;
   width: 2.5rem;
