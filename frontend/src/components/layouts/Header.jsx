@@ -183,10 +183,10 @@ const Header = () => {
               }}
             >
               <PhonelinkIcon />
-              <p>all</p>
+              <p>all products</p>
             </SideBarEle>
 
-            <SideBarEle onClick={() => {}}>
+            {/* <SideBarEle onClick={() => {}}>
               <SmartphoneIcon />
               <p>phone</p>
             </SideBarEle>
@@ -194,7 +194,7 @@ const Header = () => {
             <SideBarEle onClick={() => {}}>
               <LaptopIcon />
               <p>laptop</p>
-            </SideBarEle>
+            </SideBarEle> */}
           </SideBarElements>
           <Divider />
           <SideBarElements
