@@ -25,6 +25,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Orders from "./components/pages/orders/Orders";
 import { getUserOrders } from "./redux/slices/OrderSlice";
+import HomeV2 from "./components/pages/home/HomeV2";
 
 const lightTheme = {
   body: "#fff",
@@ -60,7 +61,7 @@ function App() {
     <div className="App">
       <AnimatePresence mode="wait">
         <Routes key={location.pathname} location={location}>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<HomeV2 />} />
           <Route exact path="/product/:id" element={<ProductPage />} />
           <Route exact path="/products" element={<AllProducts />} />
           <Route path="/products/:keyword" element={<AllProducts />} />

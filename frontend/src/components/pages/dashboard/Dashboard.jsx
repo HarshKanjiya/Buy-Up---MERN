@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Header from "../../layouts/Header";
+import Header from "../../layouts/NavBar/Header";
 import {
   Container,
   Left,

@@ -7,6 +7,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Poppins", "roboto";
+  scroll-behavior: smooth;
 }
 
 .swiper-button-prev {
@@ -70,3 +71,6 @@
   border-radius: 8px; 
  }  
 
+
+
+ /* class for header v2 */

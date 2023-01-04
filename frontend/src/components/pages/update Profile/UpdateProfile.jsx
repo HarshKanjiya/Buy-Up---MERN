@@ -1,4 +1,4 @@
-import Header from "../../layouts/Header";
+import Header from "../../layouts/NavBar/Header";
 
 import LoadingScreen from "../../components/LoadingScreen";
 import UploadIcon from "@mui/icons-material/Upload";

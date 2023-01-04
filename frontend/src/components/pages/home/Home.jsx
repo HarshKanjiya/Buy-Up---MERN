@@ -5,7 +5,7 @@ import LoadingScreen from "../../components/LoadingScreen";
 import HeadBar from "../../layouts/HeadBar/HeadBar";
 import HeroSectionCarousel from "../../layouts/HeroSectionCarousel";
 import ProductList from "../../layouts/productList";
-import Header from "../../layouts/Header";
+import Header from "../../layouts/NavBar/Header";
 import Footer from "../../layouts/Footer";
 import { Alert } from "../../components/Alert";
 import { motion } from "framer-motion";

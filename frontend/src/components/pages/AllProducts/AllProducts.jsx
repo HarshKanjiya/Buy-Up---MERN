@@ -11,7 +11,7 @@ import LoadingScreen from "../../components/LoadingScreen.jsx";
 import { useParams } from "react-router-dom";
 import HeadBar from "../../layouts/HeadBar/HeadBar";
 import ProductPageProductCardView from "../../components/ProductPageProductCardView";
-import Header from "../../layouts/Header";
+import Header from "../../layouts/NavBar/Header";
 import Footer from "../../layouts/Footer";
 import { Alert } from "../../components/Alert";
 import { motion } from "framer-motion";

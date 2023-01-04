@@ -1,6 +1,6 @@
 import React from "react";
 
-import Header from "../../layouts/Header";
+import Header from "../../layouts/NavBar/Header";
 
 import LoadingScreen from "../../components/LoadingScreen";
 import {

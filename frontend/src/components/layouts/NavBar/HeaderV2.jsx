@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import NotesIcon from "@mui/icons-material/Notes";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-import logo from "../../assets/images/logoBtn.png";
-import { useState } from "react";
+import logo from "../../../assets/images/logoBtn.png";
+import { useEffect, useState } from "react";
 import { Badge, Button, Divider, Drawer, IconButton } from "@mui/material";
 import styled from "@emotion/styled";
-import LogOut from "../components/LogOut";
+import LogOut from "../../components/LogOut";
 
 import HomeIcon from "@mui/icons-material/Home";
 import PhonelinkIcon from "@mui/icons-material/Phonelink";
@@ -16,50 +16,62 @@ import LaptopIcon from "@mui/icons-material/Laptop";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
-const Header = () => {
+const HeaderV2 = () => {
   const navigate = useNavigate();
+  const { scrollYProgress } = useScroll();
   const [sideBarVisibility, setSideBarVisibility] = useState(false);
   const { isAuthenticated, userInfo } = useSelector((state) => state.user);
   const { orderList } = useSelector((state) => state.order);
   const { cartItems } = useSelector((state) => state.cart);
 
+  let clas ="simple"
+ console.log('scrollYProgress :>> ', scrollYProgress);
+
   return (
-    <div className="border-b py-3 flex align-middle justify-between backdrop-blur sticky ">
-      <div
-        className=" ml-8"
-        onClick={() => {
-          setSideBarVisibility(true);
-        }}
-      >
-        <IconButton sx={{ padding: 0.5 }}>
-          <NotesIcon />
-        </IconButton>
-      </div>
-
-      <Link to="/">
-        <div style={{ position: "absolute" }}>
-          <HomeBtn>
-            <img className="HomeBtnImg" src={logo} alt="Buy Up" />
-          </HomeBtn>
+    <>
+      <NavWrapper bg={clas}>
+        <div
+          onClick={() => {
+            setSideBarVisibility(true);
+          }}
+        >
+          <IconButton
+            sx={{
+              padding: "0.5 0",
+              color: "#071b0f",
+              background: "white",
+              borderRadius: "2rem",
+              ":hover": { backgroundColor: "white" },
+            }}
+          >
+            <NotesIcon />
+          </IconButton>
         </div>
-      </Link>
-      <div className=" flex align-middle justify-center mr-8  gap-4 text-gray-500 ">
-        <Link to="/cart" style={{ padding: 2 }}>
-          <StyledBadge badgeContent={cartItems.length}>
-            <ShoppingCartIcon
-              style={{
-                height: "1.3rem",
-                color: cartItems.length !== 0 ? "#2bb594" : null,
-              }}
-            />
-          </StyledBadge>
-        </Link>
-      </div>
 
-      {/* menu bar */}
+        <Link to="/">
+          <div>
+            <HomeBtn>
+              <img className="HomeBtnImg" src={logo} alt="Buy Up" />
+            </HomeBtn>
+          </div>
+        </Link>
+
+        <div className=" flex align-middle justify-center  gap-4 text-[#2b3d32] bg-white rounded-[2rem] p-2 ">
+          <Link to="/cart" style={{ padding: 2 }}>
+            <StyledBadge badgeContent={cartItems.length}>
+              <ShoppingCartIcon
+                style={{
+                  height: "1.3rem",
+                  color: cartItems.length !== 0 ? "#2bb594" : null,
+                }}
+              />
+            </StyledBadge>
+          </Link>
+        </div>
+      </NavWrapper>
       <Drawer
         open={sideBarVisibility}
         onClose={() => {
@@ -219,28 +231,41 @@ const Header = () => {
           <>
             <Divider />
             <SideBarElements
-            layout
-            key="logout Btn"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
+              layout
+              key="logout Btn"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
             >
               <LogOut />
             </SideBarElements>
           </>
         </SideBarContentWrapper>
       </Drawer>
-    </div>
+    </>
   );
 };
 
-export default Header;
+export default HeaderV2;
+
+const NavWrapper = styled.div`
+  width: 100vw;
+  position: fixed;
+  z-index: 99;
+  height: 9vh;
+  background-color: ${(props) =>
+    props.bg === "simple" ? "transparent" : "white"};
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+`;
 
 const HomeBtn = styled.div`
+  position: relative;
   .HomeBtnImg {
     height: 2rem;
     width: auto;
-    position: relative;
   }
 
   &:after {

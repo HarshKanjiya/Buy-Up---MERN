@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Body, Container, Navigators, Wrapper } from "./Orders.styles";
-import Header from "../../layouts/Header";
+import Header from "../../layouts/NavBar/Header";
 import LoadingScreen from "../../components/LoadingScreen";
 import {
   clearErrorsInOrder,

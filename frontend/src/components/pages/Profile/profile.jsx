@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Header from "../../layouts/Header";
+import Header from "../../layouts/NavBar/Header";
 import Footer from "../../layouts/Footer";
 import {
   Container,

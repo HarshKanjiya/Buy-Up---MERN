@@ -49,7 +49,7 @@ import {
   Slide,
 } from "@mui/material";
 import Footer from "../../layouts/Footer";
-import Header from "../../layouts/Header";
+import Header from "../../layouts/NavBar/Header";
 import { Alert } from "../../components/Alert";
 import { addItemToCart } from "../../../redux/slices/cartPageSlice";
 import CloseIcon from "@mui/icons-material/Close";
