@@ -27,6 +27,7 @@
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
+    "react-slick": "^0.29.0",
     "redux": "^4.2.0",
     "sweetalert": "^2.1.2",
     "swiper": "^8.4.4"

@@ -9,7 +9,7 @@ import {
 
 const CartCardView = ({ data, index, page }) => {
   const dispatch = useDispatch();
-  if(page === "confirm-order"){
+  if (page === "confirm-order") {
     return (
       <Wrapper
         key={data.id}
@@ -25,7 +25,6 @@ const CartCardView = ({ data, index, page }) => {
         <ContainerForConfirmOrder>
           <Left>
             <div className="CartCardView-img-wrapper">
-              {" "}
               <img src={data.image} alt={data.name} />
             </div>
             <p> {data.name} </p>
@@ -37,7 +36,7 @@ const CartCardView = ({ data, index, page }) => {
         </ContainerForConfirmOrder>
       </Wrapper>
     );
-  }else{
+  } else {
     return (
       <Wrapper
         key={data.id}
@@ -65,11 +64,17 @@ const CartCardView = ({ data, index, page }) => {
             <p> {data.name} </p>
           </Left>
           <Right>
-            <Count>{data.quantity}</Count>
-            <TotalCost>₹{data.price * data.quantity}</TotalCost>
+            <Count className="large-size">{data.quantity}</Count>
+            <Count className="small-size">Qty : {data.quantity}</Count>
+            <TotalCost className="large-size">
+              ₹{data.price * data.quantity}
+            </TotalCost>
+            <TotalCost className="small-size">
+              cost : ₹{data.price * data.quantity}
+            </TotalCost>
           </Right>
         </Container>
-  
+
         {page && page !== "confirm-order" ? (
           <CloseBtnWrapper
             onClick={() => {
@@ -91,7 +96,6 @@ const Wrapper = styled(motion.div)`
   display: flex;
   align-items: center;
   margin: 0.3rem 0;
-  
 `;
 const CloseBtnWrapper = styled.div`
   width: 20%;
@@ -116,9 +120,13 @@ const Container = styled(motion.div)`
   padding: 0.8rem;
   background-color: white;
   border-radius: 6px;
-  
-  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.04);
 
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
+  
+
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.04);
 
   display: flex;
   justify-content: space-between;
@@ -163,6 +171,22 @@ const Right = styled.div`
   display: flex;
   justify-content: flex-end;
   text-align: center;
+
+  .small-size {
+    display: none;
+  }
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: start;
+    margin-left: 2.5rem;
+    .small-size {
+      display: block;
+    }
+    .large-size {
+      display: none;
+    }
+  }
+
 `;
 
 const Count = styled.div`

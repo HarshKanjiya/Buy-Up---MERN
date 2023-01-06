@@ -28,8 +28,7 @@ const HeaderV2 = () => {
   const { cartItems } = useSelector((state) => state.cart);
 
   let clas ="simple"
- console.log('scrollYProgress :>> ', scrollYProgress);
-
+0
   return (
     <>
       <NavWrapper bg={clas}>

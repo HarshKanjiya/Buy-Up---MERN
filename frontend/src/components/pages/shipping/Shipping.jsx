@@ -16,7 +16,6 @@ import {
   LeftSection,
   Locationselector,
   LocationWrapper,
-  PaymentCont,
   PaymentWrapper,
   RightSection,
   RightSectionHeader,
@@ -38,21 +37,13 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
-import EventIcon from "@mui/icons-material/Event";
-import VpnKeyIcon from "@mui/icons-material/VpnKey";
+
 import CartViewLayout from "../../layouts/Cart/CartViewLayout";
-import {
-  CardNumberElement,
-  CardCvcElement,
-  CardExpiryElement,
-  CardElement,
-} from "@stripe/react-stripe-js";
+import { CardElement } from "@stripe/react-stripe-js";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import LoadingScreen from "../../components/LoadingScreen";
 import {
   clearErrorsInOrder,
   CreateOrderRequest,
@@ -268,7 +259,7 @@ const Shipping = () => {
       };
 
       dispatch(CreateOrderRequest(order));
-      dispatch(DeleteCart())
+      dispatch(DeleteCart());
       navigate("/orders");
     }
   };
@@ -303,7 +294,7 @@ const Shipping = () => {
     <Wrapper>
       <Container>
         <LeftSection>
-          <img src={Logo} alt="Buy Up" />
+          <img style={{ zIndex: 10 }} src={Logo} alt="Buy Up" />
           <div className="LeftSection-mids">
             <AnimatePresence mode="wait">
               {activeStep === 0 && (
@@ -476,6 +467,7 @@ const Shipping = () => {
               </motion.div>
             ) : null}
 
+            {/* confirm order */}
             <WrapperForScroll>
               {activeStep === 1 ? (
                 <motion.div

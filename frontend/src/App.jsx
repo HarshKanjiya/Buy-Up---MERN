@@ -61,7 +61,7 @@ function App() {
     <div className="App">
       <AnimatePresence mode="wait">
         <Routes key={location.pathname} location={location}>
-          <Route exact path="/" element={<HomeV2 />} />
+          <Route exact path="/" element={<Home />} />
           <Route exact path="/product/:id" element={<ProductPage />} />
           <Route exact path="/products" element={<AllProducts />} />
           <Route path="/products/:keyword" element={<AllProducts />} />

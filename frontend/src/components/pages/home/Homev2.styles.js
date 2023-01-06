@@ -31,10 +31,12 @@ export const Text = styled.div`
     font-size: 2rem;
     span {
       font-size: 5rem;
-      background: -webkit-linear-gradient(-50deg,#2bb594, #2b3d32);
+      background: -webkit-linear-gradient(-50deg, #2bb594, #2b3d32);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: 700;
+      position: relative;
     }
   }
 `;
@@ -116,4 +118,29 @@ export const Btn2 = styled.div`
     color: #2b3d32;
     box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.4);
   }
+`;
+
+export const Cartwtapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 33vh;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  background-color: blue;
+
+  img {
+    height: 6rem;
+    width: 6rem;
+  }
+`;
+export const CustomeSlider = styled.div`
+  position: fixed;
+  right: 25vw;
+  width: max-content;
+  z-index: -1;
+  background-color: red;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;

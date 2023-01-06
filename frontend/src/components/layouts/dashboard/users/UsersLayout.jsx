@@ -98,15 +98,17 @@ const UsersLayout = () => {
                       <option value="user">User</option>
                       <option value="admin">Admin</option>
                     </Select>
-                    <Btn disabled={initRole === role} onClick={submitHandler}>
-                      SET
-                    </Btn>
-                    <Btn2
-                      onClick={SubmitDelete}
-                      disabled={userInfo._id === user._id}
-                    >
-                      REMOVE
-                    </Btn2>
+                    <BtnWrapper>
+                      <Btn disabled={initRole === role} onClick={submitHandler}>
+                        SET
+                      </Btn>
+                      <Btn2
+                        onClick={SubmitDelete}
+                        disabled={userInfo._id === user._id}
+                      >
+                        REMOVE
+                      </Btn2>
+                    </BtnWrapper>
                   </Right>
                 </CardWrapper>
               );
@@ -119,6 +121,11 @@ const UsersLayout = () => {
 };
 
 export default UsersLayout;
+
+export const BtnWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
 
 export const Select = styled.select`
   padding: 0 0.5rem;

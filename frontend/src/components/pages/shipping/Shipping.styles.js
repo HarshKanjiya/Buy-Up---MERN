@@ -249,7 +249,7 @@ export const Form = styled.div`
   padding: 0 1rem;
   padding-top: 0.5rem;
   padding-bottom: 1rem;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   justify-content: center;
 `;

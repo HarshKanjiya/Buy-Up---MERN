@@ -184,6 +184,9 @@ border-radius: 7px;
       background-color: red;
     }
   }
+  @media (max-width:960px){
+    display: none;
+  }
 `;
 const Header = styled.div`
   flex: 1;

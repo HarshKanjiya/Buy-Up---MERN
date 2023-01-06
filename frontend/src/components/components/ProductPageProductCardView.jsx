@@ -66,9 +66,9 @@ const Wrapper = styled(motion.div)`
 
 
   .cardView-img-wrapper {
-    img {
+    img{
       height: 111px;
-      width: 170px;
+  width: 170px;
     }
   }
 
@@ -84,8 +84,8 @@ const Wrapper = styled(motion.div)`
       display: grid;
       place-content:center;
       img{
-        width:100%;
-      height: auto;
+        height: 6rem;
+        width: 6rem;
       }
       
     }

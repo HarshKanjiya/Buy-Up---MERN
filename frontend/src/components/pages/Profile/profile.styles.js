@@ -33,6 +33,9 @@ export const Container = styled.div`
     justify-content: flex-start;
     gap: 2rem;
   }
+  @media (max-width: 500px) {
+    gap: 1rem;
+  }
 `;
 
 export const Left = styled.div`
@@ -66,6 +69,9 @@ export const Left = styled.div`
         width: 4rem;
       }
     }
+  }
+  @media (max-width: 500px) {
+    flex-direction: column;
   }
 `;
 export const LeftFoot = styled.div`
@@ -109,6 +115,9 @@ export const OrdersBtn = styled(Button)`
   p {
     flex: 1;
     text-align: left;
+  }
+  @media (max-width: 800px) and (min-width: 500px) {
+    width: max-content;
   }
 `;
 export const Right = styled(motion.div)`

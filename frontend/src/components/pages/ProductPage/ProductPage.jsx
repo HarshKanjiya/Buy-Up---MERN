@@ -160,6 +160,7 @@ const ProductPage = () => {
                   <Left>
                     <Swiper
                       style={{
+                        width:"100%",
                         "--swiper-navigation-color": "#fff",
                         "--swiper-pagination-color": "#fff",
                       }}

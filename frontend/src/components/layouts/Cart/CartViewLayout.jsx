@@ -106,6 +106,10 @@ const Header = styled.div`
   .cart-layout-header-right-ele {
     flex: 1;
   }
+  
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 const HeaderForCart = styled.div`
   width: 100%;

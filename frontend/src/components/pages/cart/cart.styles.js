@@ -110,6 +110,9 @@ export const LeftSection = styled.div`
       }
     }
   }
+  @media (max-width:600px){
+    padding: 0.3rem;
+  }
 `;
 export const RightSection = styled.div`
   height: 100%;
@@ -134,6 +137,11 @@ export const HeadBar = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
+  }
+  @media (max-width:600px){
+    margin: 0.5rem;
+    padding: 0.5rem;
+    font-size: 1.1rem;
   }
 
   button {
@@ -204,13 +212,14 @@ export const Footer = styled.div`
 
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 
   p {
     color: #b6b6b6;
-
     span {
       color: #454545;
     }
+    /* width: max-content; */
   }
 `;
 
@@ -219,8 +228,12 @@ export const CheckOut = styled(Button)`
   color: #0c3324;
   font-weight: 700;
   letter-spacing: 2px;
+  /* width: max-content; */
   &:hover {
     background-color: #2bb594;
     color: white;
   }
+  /* @media (max-width:600px){
+    letter-spacing: 0;
+  } */
 `;

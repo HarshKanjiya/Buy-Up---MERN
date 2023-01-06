@@ -144,7 +144,7 @@ const Cart = () => {
             {cartItems.length !== 0 ? (
               <Footer>
                 <p>
-                  Total : <span>₹ {totalCost}</span>{" "}
+                  Total : <span>₹{totalCost}</span>{" "}
                 </p>
                 <CheckOut variant="contained" onClick={HelperCheckOut}>
                   <ShoppingCartCheckoutIcon fontSize="small" />

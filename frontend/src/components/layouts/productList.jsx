@@ -21,6 +21,10 @@ const ProductList = () => {
     }
   },[productInfo])
 
+  useEffect(() => {
+    setSliderForPhone( Math.floor(window.innerWidth / 150))
+  }, [window.innerWidth]);
+
   if(products){
     return (
       <div className=" mx-8 my-10  ">

@@ -74,3 +74,19 @@
 
 
  /* class for header v2 */
+
+
+
+ .rect{
+  height: 10rem; 
+  width: 10rem;
+  background-color: white;
+  /* display: flex; */
+  /* justify-content: center;align-items: center; */
+  margin: 3rem;
+ }
+
+
+ .swiperrrr{
+  color: aliceblue;
+ }

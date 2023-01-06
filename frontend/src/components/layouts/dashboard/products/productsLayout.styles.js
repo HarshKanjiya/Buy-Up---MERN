@@ -61,6 +61,11 @@ export const CardWrapper = styled(motion.div)`
   position: relative;
   overflow: hidden;
   margin: 0.5rem 0;
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    align-items: start;
+  }
 `;
 export const Left = styled.div`
   margin-left: 3rem;
@@ -78,12 +83,21 @@ export const Left = styled.div`
     font-weight: 600;
   }
   .admin-CardWrapper-index {
+    z-index: 1;
     position: absolute;
     font-weight: 800;
     font-size: 3rem;
     color: #f1f1f1;
     bottom: -1rem;
     left: 0.5rem;
+  }
+  @media (max-width: 700px) {
+    margin: 0;
+    .admin-CardWrapper-index {
+      position: absolute;
+      left: auto;
+      right: 0.5rem;
+    }
   }
 `;
 export const Right = styled.div`
@@ -92,6 +106,7 @@ export const Right = styled.div`
   align-items: center;
 
   button {
+    z-index: 10;
     height: 2rem;
     width: 2rem;
     display: grid;
@@ -101,17 +116,24 @@ export const Right = styled.div`
     border-radius: 50%;
     transition: 300ms;
   }
+  @media (max-width: 700px) {
+    flex-wrap: wrap;
+      button {
+        padding: 1.1rem;
+        margin-top: 0.5rem;
+      }
+    }
+
   .admin-products-edit {
     background-color: #2bb594;
-    &:hover{
-        background-color: #22826b;
+    &:hover {
+      background-color: #22826b;
     }
   }
   .admin-products-delete {
     background-color: tomato;
-    &:hover{
-        background-color: #ff1d1d;
+    &:hover {
+      background-color: #ff1d1d;
     }
   }
-
 `;
