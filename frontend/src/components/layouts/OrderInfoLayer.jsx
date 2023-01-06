@@ -2,11 +2,11 @@ import styled from "@emotion/styled";
 import React from "react";
 import FlightIcon from "@mui/icons-material/Flight";
 import { motion } from "framer-motion";
-import CallMadeOutlinedIcon from '@mui/icons-material/CallMadeOutlined';
+import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
 import { useNavigate } from "react-router-dom";
 
-const OrderInfoLayer = ({ orderInfo,exitOrderInfo }) => {
-  const navigate = useNavigate()
+const OrderInfoLayer = ({ orderInfo, exitOrderInfo }) => {
+  const navigate = useNavigate();
   const ChangeFormat = (date) => {
     let DateList = date.slice(0, 10).split("-").reverse();
     let DateString = "";
@@ -55,7 +55,6 @@ const OrderInfoLayer = ({ orderInfo,exitOrderInfo }) => {
     DateString = "" + newDate + " " + monthList[Month] + " , " + DateList[2];
     return DateString;
   };
-
 
   return (
     <Wrapper
@@ -143,9 +142,27 @@ const OrderInfoLayer = ({ orderInfo,exitOrderInfo }) => {
       >
         <div className="orderInfo-redirects">
           <p className="orderInfo-redirects-summary-header">Redirects</p>
-          <div onClick={()=>{exitOrderInfo()}} >ALL Orders   <CallMadeOutlinedIcon fontSize="small"/></div>
-          <div onClick={()=>{navigate('/profile')}}>Profile   <CallMadeOutlinedIcon fontSize="small"/></div>
-          <div onClick={()=>{navigate('/')}}>Home   <CallMadeOutlinedIcon fontSize="small"/></div>
+          <div
+            onClick={() => {
+              exitOrderInfo();
+            }}
+          >
+            ALL Orders <CallMadeOutlinedIcon fontSize="small" />
+          </div>
+          <div
+            onClick={() => {
+              navigate("/profile");
+            }}
+          >
+            Profile <CallMadeOutlinedIcon fontSize="small" />
+          </div>
+          <div
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Home <CallMadeOutlinedIcon fontSize="small" />
+          </div>
         </div>
         <div className="orderInfo-summary">
           <p className="orderInfo-redirects-summary-header">Order Summary</p>
@@ -201,6 +218,12 @@ const Upper = styled(motion.div)`
     font-size: 1.5rem;
     color: #232323;
     font-weight: 500;
+    @media (max-width: 650px) {
+      font-size: 1.2rem;
+    }
+    @media (max-width: 555px) {
+      font-size: 1rem;
+    }
   }
   .order-orderinfo-date {
     color: #909090;
@@ -234,6 +257,7 @@ const Cart = styled(motion.div)`
   border-bottom: 1px solid #d1d1d1;
   .orderInfo-cart {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     margin: 1rem 0;
   }
@@ -254,6 +278,7 @@ const Cart = styled(motion.div)`
   }
   .orderInfo-cart-right {
     flex: 1;
+
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -271,6 +296,14 @@ const Cart = styled(motion.div)`
     }
     .orderInfo-cart-right-quantity {
       text-align: right;
+    }
+    @media (max-width: 555px) {
+      .orderInfo-cart-right-name {
+        font-size: 1rem;
+      }
+      .orderInfo-cart-right-price {
+        font-size: 1rem;
+      }
     }
   }
 `;
@@ -322,13 +355,13 @@ const Container2 = styled(motion.div)`
   }
   .orderInfo-redirects {
     flex: 1;
-    color:#454545;
+    color: #454545;
 
-    div{
-      width:max-content;
+    div {
+      width: max-content;
       border-bottom: 1px solid white;
       transition: 0.3s;
-      &:hover{
+      &:hover {
         border-color: #454545;
       }
     }

@@ -119,7 +119,6 @@ const HeaderForCart = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   color: #b6b6b6;
 
   .cart-layout-header-left {
@@ -134,5 +133,9 @@ const HeaderForCart = styled.div`
   }
   .cart-layout-header-right-ele {
     flex: 1;
+  }
+
+  @media (max-width: 555px) {
+    display: none;
   }
 `;

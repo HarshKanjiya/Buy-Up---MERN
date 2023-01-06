@@ -354,116 +354,129 @@ const Shipping = () => {
                   ease: "easeInOut",
                 }}
               >
-                <Form>
-                  <RightSectionHeader>
-                    <p>Add Your Location</p>
-                  </RightSectionHeader>
-                  <AddressWrapper>
-                    <TextInput
-                      variant="standard"
-                      label="address"
-                      multiline
-                      maxRows={4}
-                      value={shippingInfo ? shippingInfo.address : ""}
-                      onChange={(event) => {
-                        setShippingInfo({
-                          ...shippingInfo,
-                          address: event.target.value,
-                        });
-                      }}
-                    />
-                    <div>
+                <div
+                  style={{
+                    height: "90%",
+                    width: "100%",
+                    overflowY: "scroll",
+                  }}
+                >
+                  <Form>
+                    <RightSectionHeader>
+                      <p>Add Your Location</p>
+                    </RightSectionHeader>
+
+                    <AddressWrapper>
                       <TextInput
                         variant="standard"
-                        label="city"
-                        value={shippingInfo ? shippingInfo.city : ""}
+                        label="address"
+                        multiline
+                        maxRows={4}
+                        value={shippingInfo ? shippingInfo.address : ""}
                         onChange={(event) => {
                           setShippingInfo({
                             ...shippingInfo,
-                            city: event.target.value,
+                            address: event.target.value,
                           });
                         }}
                       />
-                      <TextInput
-                        variant="standard"
-                        label="pin code"
-                        value={shippingInfo ? shippingInfo.pinCode : ""}
-                        onChange={(event) => {
-                          if (event.target.value.trim().split("").length <= 6) {
+                      <div>
+                        <TextInput
+                          variant="standard"
+                          label="city"
+                          value={shippingInfo ? shippingInfo.city : ""}
+                          onChange={(event) => {
                             setShippingInfo({
                               ...shippingInfo,
-                              pinCode: event.target.value,
+                              city: event.target.value,
+                            });
+                          }}
+                        />
+                        <TextInput
+                          variant="standard"
+                          label="pin code"
+                          value={shippingInfo ? shippingInfo.pinCode : ""}
+                          onChange={(event) => {
+                            if (
+                              event.target.value.trim().split("").length <= 6
+                            ) {
+                              setShippingInfo({
+                                ...shippingInfo,
+                                pinCode: event.target.value,
+                              });
+                            }
+                          }}
+                        />
+                      </div>
+                    </AddressWrapper>
+
+                    <LocationWrapper>
+                      <Locationselector
+                        required
+                        value={shippingInfo ? shippingInfo.country : ""}
+                        onChange={(event) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            country: event.target.value,
+                          })
+                        }
+                      >
+                        <option value="">country</option>
+                        {Country &&
+                          Country.getAllCountries().map((i) => (
+                            <option value={i.isoCode} key={i.isoCode}>
+                              {i.name}
+                            </option>
+                          ))}
+                      </Locationselector>
+
+                      <Locationselector
+                        required
+                        disabled={
+                          shippingInfo && shippingInfo.country === ""
+                            ? true
+                            : false
+                        }
+                        value={shippingInfo ? shippingInfo.state : ""}
+                        onChange={(event) =>
+                          setShippingInfo({
+                            ...shippingInfo,
+                            state: event.target.value,
+                          })
+                        }
+                      >
+                        <option value="">state</option>
+                        {State &&
+                          State.getStatesOfCountry(
+                            shippingInfo ? shippingInfo.country : "in"
+                          ).map((i) => (
+                            <option value={i.isoCode} key={i.isoCode}>
+                              {i.name}
+                            </option>
+                          ))}
+                      </Locationselector>
+                    </LocationWrapper>
+                    <LocationWrapper>
+                      <TextInput
+                        className="width50"
+                        variant="standard"
+                        label="phone number"
+                        type="text"
+                        value={shippingInfo ? shippingInfo.phoneNo : ""}
+                        onChange={(event) => {
+                          if (
+                            event.target.value.trim().split("").length <= 10
+                          ) {
+                            setShippingInfo({
+                              ...shippingInfo,
+                              phoneNo: event.target.value,
                             });
                           }
                         }}
                       />
-                    </div>
-                  </AddressWrapper>
-
-                  <LocationWrapper>
-                    <Locationselector
-                      required
-                      value={shippingInfo ? shippingInfo.country : ""}
-                      onChange={(event) =>
-                        setShippingInfo({
-                          ...shippingInfo,
-                          country: event.target.value,
-                        })
-                      }
-                    >
-                      <option value="">country</option>
-                      {Country &&
-                        Country.getAllCountries().map((i) => (
-                          <option value={i.isoCode} key={i.isoCode}>
-                            {i.name}
-                          </option>
-                        ))}
-                    </Locationselector>
-
-                    <Locationselector
-                      required
-                      disabled={
-                        shippingInfo && shippingInfo.country === ""
-                          ? true
-                          : false
-                      }
-                      value={shippingInfo ? shippingInfo.state : ""}
-                      onChange={(event) =>
-                        setShippingInfo({
-                          ...shippingInfo,
-                          state: event.target.value,
-                        })
-                      }
-                    >
-                      <option value="">state</option>
-                      {State &&
-                        State.getStatesOfCountry(
-                          shippingInfo ? shippingInfo.country : "in"
-                        ).map((i) => (
-                          <option value={i.isoCode} key={i.isoCode}>
-                            {i.name}
-                          </option>
-                        ))}
-                    </Locationselector>
-                  </LocationWrapper>
-                  <LocationWrapper>
-                    <TextInput
-                      className="width50"
-                      variant="standard"
-                      label="phone number"
-                      type="text"
-                      value={shippingInfo ? shippingInfo.phoneNo : ""}
-                      onChange={(event) => {
-                        if (event.target.value.trim().split("").length <= 10) {
-                          setShippingInfo({
-                            ...shippingInfo,
-                            phoneNo: event.target.value,
-                          });
-                        }
-                      }}
-                    />
-                  </LocationWrapper>
-                </Form>
+                    </LocationWrapper>
+                  </Form>
+                </div>
               </motion.div>
             ) : null}
 
@@ -597,7 +610,7 @@ const Shipping = () => {
           {/* footer zone */}
           <AnimatePresence mode="wait">
             {activeStep === 0 ? (
-              <Footer
+              <Footer2
                 key="Shipping-details-footer"
                 initial={{
                   x: `${Delta >= 0 ? "0%" : "-100%"}`,
@@ -614,7 +627,7 @@ const Shipping = () => {
                   <SaveIcon fontSize="small" />
                   &nbsp; save & continue
                 </SaveBtn>
-              </Footer>
+              </Footer2>
             ) : null}
 
             {activeStep === 1 ? (

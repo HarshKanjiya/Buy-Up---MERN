@@ -97,6 +97,10 @@ user-select: none;
   &:hover {
     box-shadow: 0 5px 2rem rgba(0, 0, 0, 0.1);
   }
+
+  @media(max-width:790px){
+    flex-direction: column;
+  }
 `;
 const Left = styled.div`
   display: flex;
@@ -107,7 +111,7 @@ const Left = styled.div`
   p {
     position: absolute;
     bottom: 0;
-    right: -1.7rem;
+    left: 5.5rem;
   }
 `;
 const ImgWrapper = styled.div`
@@ -125,6 +129,7 @@ const Right = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1rem;
 

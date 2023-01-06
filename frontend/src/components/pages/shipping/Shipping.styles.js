@@ -80,11 +80,11 @@ export const RightSection = styled.div`
   flex-direction: column;
 `;
 
-export const WrapperForScroll = styled.div`
+export const WrapperForScroll = styled(motion.div)`
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -252,6 +252,11 @@ export const Form = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   justify-content: center;
+  padding: 3rem 0;
+
+  ::-webkit-scrollbar{
+    display: none;
+  }
 `;
 export const Form2 = styled.div`
   display: flex;
