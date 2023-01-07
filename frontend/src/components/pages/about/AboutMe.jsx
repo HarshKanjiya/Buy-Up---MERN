@@ -142,6 +142,11 @@ const Cont = styled.div`
   border-radius: 9px;
   box-shadow: 8px 8px 1rem rgba(0, 0, 0, 0.2),
     -8px -8px 1rem rgba(255, 255, 255, 0.1);
+
+    @media (max-width: 600px) {
+    padding: 0.5em;
+    margin: 0.5rem;
+  }
 `;
 const Wrapper = styled.div`
   padding: 1rem;
