@@ -62,33 +62,51 @@ const AboutMe = () => {
               </p>
             </motion.div>
             <br />
-            <p>
-              this is my first Full stack project after learning for 5 months
-            </p>
-            <p>
-              i used <span>MERN stack</span> for making this web Application.
-            </p>
-            <p>
-              I also used <span>cloudinary</span> For storing Images of products
-              and profile Pictures.
-            </p>
+            <motion.div
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: 1.2 }}
+            >
+              <p>
+                this is my first Full stack project after learning for 5 months
+              </p>
+              <p>
+                i used <span>MERN stack</span> for making this web Application.
+              </p>
+              <p>
+                I also used <span>cloudinary</span> For storing Images of
+                products and profile Pictures.
+              </p>
+            </motion.div>
             <br />
-            <p>If you want to contect me then,</p>
-            <Links>
-              <a href="https://www.linkedin.com/in/harsh-kanjiya-306aa21b9/">
-                <img src={Linkdin} alt="linkedin" />
-              </a>
-              <a href="https://github.com/HarshKanjiya">
-                <img src={Github} alt="github" />
-              </a>
+            <motion.p
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: 1.5 }}
+            >
+              If you want to contect me then,
+            </motion.p>
+            <motion.div
+            initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: 1.8 }}
+            >
+              <Links>
+                <a href="https://www.linkedin.com/in/harsh-kanjiya-306aa21b9/">
+                  <img src={Linkdin} alt="linkedin" />
+                </a>
+                <a href="https://github.com/HarshKanjiya">
+                  <img src={Github} alt="github" />
+                </a>
 
-              <a href="https://www.instagram.com/harxh_designs/">
-                <img src={Insta} alt="instagram" />
+                <a href="https://www.instagram.com/harxh_designs/">
+                  <img src={Insta} alt="instagram" />
+                </a>
+              </Links>
+              <a href="mailto:harshkanjiya001@gmail.com">
+                <img src={Gmail} alt="email" />
               </a>
-            </Links>
-            <a href="mailto:harshkanjiya001@gmail.com">
-              <img src={Gmail} alt="email" />
-            </a>
+            </motion.div>
           </Left>
           <Right>
             <Player
