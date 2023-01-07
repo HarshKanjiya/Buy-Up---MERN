@@ -12,6 +12,7 @@ import AccesoriesImg from "../../assets/HeroCaro/acc.png";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useNavigate } from "react-router-dom";
 
 const carouselData = [
   {
@@ -21,6 +22,7 @@ const carouselData = [
     feature: "Longest Battery Life | 49% better Perfomance",
     price: "₹ 79,900",
     color: "#C25DDF",
+    link: "/product/63b9937dd39eb432074030f5",
   },
   {
     image: XiomiPhoneImg,
@@ -29,6 +31,7 @@ const carouselData = [
     feature: "1 billion color 90hz AMOLED display",
     price: "₹ 79,900",
     color: "#84FDEB",
+    link: "/product/63b9a51c5ea075534a6177cc",
   },
   {
     image: MacBookImg,
@@ -37,6 +40,7 @@ const carouselData = [
     feature: "13.6 inch display with Liquid Retina Display, 8GB ram, 512GB SSD",
     price: "₹ 1,39,390",
     color: "#4E5460",
+    link: "/product/63b992ced39eb4320740290f",
   },
   {
     image: AccesoriesImg,
@@ -45,10 +49,12 @@ const carouselData = [
     feature: "headsets, smart were, Smart Phone cases end much more... ",
     price: null,
     color: "#111C3A",
+    link: "/product",
   },
 ];
 
 const HeroSectionCarousel = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Swiper
@@ -63,7 +69,12 @@ const HeroSectionCarousel = () => {
         }}
       >
         {carouselData.map((item, index) => (
-          <SwiperSlide key={index}>
+          <SwiperSlide
+            key={index}
+            onClick={() => {
+              navigate(item.link);
+            }}
+          >
             <HeroSectionCarouselComponent item={item} />
           </SwiperSlide>
         ))}

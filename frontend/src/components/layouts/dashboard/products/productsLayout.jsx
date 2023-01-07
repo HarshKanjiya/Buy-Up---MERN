@@ -26,7 +26,6 @@ import { Alert } from "../../../components/Alert";
 import EditProduct from "../../../components/admin/editProduct";
 
 const ProductsLayout = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     errorInAdmin,
@@ -53,6 +52,7 @@ const ProductsLayout = () => {
 
     if (createdSuccess) {
       Alert({
+        title:'',
         text: "Product Created !",
       });
       dispatch(clearCreateSuccessInAdmin());
@@ -61,6 +61,7 @@ const ProductsLayout = () => {
     }
     if (editedSuccess) {
       Alert({
+        title:'',
         text: "Product Updated !",
       });
       dispatch(clearEditSuccessInAdmin());
@@ -69,6 +70,7 @@ const ProductsLayout = () => {
     }
     if (deletedSuccess) {
       Alert({
+        title:'',
         text: "Product Deleted !",
       });
       dispatch(clearDeleteSuccessInAdmin());

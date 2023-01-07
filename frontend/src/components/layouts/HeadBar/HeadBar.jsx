@@ -19,7 +19,7 @@ import {
 import TuneIcon from "@mui/icons-material/Tune";
 import { Link, useNavigate } from "react-router-dom";
 import { Divider } from "@mui/material";
-import SortIcon from '@mui/icons-material/Sort';
+import SortIcon from "@mui/icons-material/Sort";
 
 const HeadBar = ({ page = "home" }) => {
   const dispatch = useDispatch();
@@ -52,27 +52,27 @@ const HeadBar = ({ page = "home" }) => {
       })
     );
   };
- 
+
   const QuickActionHome = (v) => {
     navigate(`products/${v}`);
     dispatch(fetchProducts({ category: v }));
   };
 
-// filter applicationnnnnnnnnnnnn
+  // filter applicationnnnnnnnnnnnn
   const FilterBoxExited = () => {
-    setFilterOpener(false)
-    setFilterRating(null)
-    setSliderValue([0,150000])
-    setcategorySelection('')
-  }
+    setFilterOpener(false);
+    setFilterRating(null);
+    setSliderValue([0, 150000]);
+    setcategorySelection("");
+  };
   const ApplyFilterProductPage = () => {
-    setFilterRating(null)
-    setcategorySelection('')
+    setFilterRating(null);
+    setcategorySelection("");
     dispatch(
       fetchProducts({
         price: sliderValue,
         category: categorySelection,
-        ratings:filterRating
+        ratings: filterRating,
       })
     );
   };
@@ -201,10 +201,7 @@ const HeadBar = ({ page = "home" }) => {
       )}
 
       {/* for  product */}
-      <FilterDialog
-        open={filterOpener}
-        onClose={FilterBoxExited}
-      >
+      <FilterDialog open={filterOpener} onClose={FilterBoxExited}>
         <FilterDialogTitle>Filter</FilterDialogTitle>
         <Divider />
         <FilterDialogContent>
@@ -247,44 +244,21 @@ const HeadBar = ({ page = "home" }) => {
             >
               SMART WATCH
             </Category>
+
             <Category
               onClick={() => {
-                setcategorySelection("case");
+                setcategorySelection("earbud");
               }}
-              disabled={categorySelection === "case"}
-            >
-              CASE
-            </Category>
-            <Category
-              onClick={() => {
-                setcategorySelection("fitband");
-              }}
-              disabled={categorySelection === "fitband"}
-            >
-              FIT BAND
-            </Category>
-            <Category
-              onClick={() => {
-                setcategorySelection("earbuds");
-              }}
-              disabled={categorySelection === "earbuds"}
+              disabled={categorySelection === "earbud"}
             >
               EAR BUDS
-            </Category>
-            <Category
-              onClick={() => {
-                setcategorySelection("earphones");
-              }}
-              disabled={categorySelection === "earphones"}
-            >
-              EAR PHONES
             </Category>
           </Categories>
 
           {/* rating */}
           <p>minimum rating</p>
           <FilterDialogSlider
-            valueLabelDisplay={ filterRating === null ? "auto":'on' }
+            valueLabelDisplay={filterRating === null ? "auto" : "on"}
             onChange={(e, newValue) => {
               setFilterRating(newValue);
             }}

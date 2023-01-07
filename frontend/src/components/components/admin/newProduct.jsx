@@ -40,6 +40,12 @@ const NewProduct = ({ setLayerSelector }) => {
       dispatch(clearErrorsInAdmin());
     }
     if (createdSuccess) {
+      Alert({
+        title:'',
+        text: "Product Created !",
+      });
+      dispatch(clearCreateSuccessInAdmin());
+      dispatch(getAdminProducts({}));
       setLayerSelector("main");
     }
   }, [errorInAdmin]);

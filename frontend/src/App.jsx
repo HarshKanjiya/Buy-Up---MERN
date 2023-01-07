@@ -25,7 +25,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Orders from "./components/pages/orders/Orders";
 import { getUserOrders } from "./redux/slices/OrderSlice";
-import HomeV2 from "./components/pages/home/HomeV2";
 
 const lightTheme = {
   body: "#fff",
