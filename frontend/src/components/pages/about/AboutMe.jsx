@@ -6,7 +6,6 @@ import Linkdin from "../../../assets/images/linkedin.png";
 import Github from "../../../assets/images/github.png";
 import Gmail from "../../../assets/images/gmail.png";
 
-
 const AboutMe = () => {
   return (
     <Wrapper>
@@ -46,14 +45,14 @@ const AboutMe = () => {
               <a href="https://github.com/HarshKanjiya">
                 <img src={Github} alt="github" />
               </a>
-             
+
               <a href="https://www.instagram.com/harxh_designs/">
                 <img src={Insta} alt="instagram" />
               </a>
             </Links>
             <a href="mailto:harshkanjiya001@gmail.com">
-                <img src={Gmail} alt="email" />
-              </a>
+              <img src={Gmail} alt="email" />
+            </a>
           </Left>
           <Right>
             <Player
@@ -77,7 +76,6 @@ const Links = styled.div`
   display: flex;
   gap: 0.7rem;
   margin: 0.5rem 0;
- 
 `;
 
 const Left = styled.div`
@@ -117,6 +115,8 @@ const Body = styled.div`
 
   @media (max-width: 600px) {
     flex-direction: column-reverse;
+    padding: 0.5em;
+    margin: 0.5rem;
   }
 `;
 const Header = styled.div`
@@ -154,4 +154,7 @@ const Wrapper = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   background-image: linear-gradient(-40deg, #11483b, #08614b);
+  @media (max-width: 600px) {
+    padding: 0.5em;
+  }
 `;
