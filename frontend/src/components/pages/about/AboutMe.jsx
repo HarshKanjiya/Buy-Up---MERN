@@ -43,7 +43,7 @@ const AboutMe = () => {
               <a href="https://www.linkedin.com/in/harsh-kanjiya-306aa21b9/">
                 <img src={Linkdin} alt="linkedin" />
               </a>
-              <a href="https://www.instagram.com/harxh_designs/">
+              <a href="https://github.com/HarshKanjiya">
                 <img src={Github} alt="github" />
               </a>
              
