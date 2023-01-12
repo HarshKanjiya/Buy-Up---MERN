@@ -27,6 +27,7 @@
     "react-scripts": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
     "stripe": "^11.5.0",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "vercel": "^28.10.3"
   }
 }

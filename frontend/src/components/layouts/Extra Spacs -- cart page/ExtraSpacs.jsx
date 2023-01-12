@@ -27,11 +27,11 @@ const ExtraSpacs = () => {
   
   useEffect(() => {
     if (!spacsInfo) {
-      if (cartItems.length !== 0) {
+      if (cartItems && cartItems.length !== 0) {
         dispatch(setSpacsInfo(cartItems[0]));
       }
     } 
-    if (cartItems.length === 0) {
+    if (cartItems && cartItems.length === 0) {
       dispatch(setSpacsInfo(null));
     }
     dispatch(getTotalCost())

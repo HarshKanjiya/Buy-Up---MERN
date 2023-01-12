@@ -48,11 +48,11 @@ const Header = () => {
       </Link>
       <div className=" flex align-middle justify-center mr-8  gap-4 text-gray-500 ">
         <Link to="/cart" style={{ padding: 2 }}>
-          <StyledBadge badgeContent={cartItems.length}>
+          <StyledBadge badgeContent={cartItems && cartItems.length}>
             <ShoppingCartIcon
               style={{
                 height: "1.3rem",
-                color: cartItems.length !== 0 ? "#2bb594" : null,
+                color: (cartItems && cartItems.length) !== 0 ? "#2bb594" : null,
               }}
             />
           </StyledBadge>
@@ -123,12 +123,12 @@ const Header = () => {
                     >
                       <ShoppingCartIcon
                         style={{
-                          color: cartItems.length !== 0 ? "#2bb594" : null,
+                          color:(cartItems && cartItems.length) !== 0 ? "#2bb594" : null,
                         }}
                       />
                       <p
                         style={{
-                          color: cartItems.length !== 0 ? "#2bb594" : null,
+                          color:( cartItems && cartItems.length) !== 0 ? "#2bb594" : null,
                         }}
                       >
                         cart

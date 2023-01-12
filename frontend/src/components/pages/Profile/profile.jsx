@@ -28,10 +28,10 @@ const Profile = () => {
   );
 
   useEffect(() => {
-    dispatch(loadUser({}));
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
+    // dispatch(loadUser({}));
+    // if (isAuthenticated === false) {
+    //   navigate("/login");
+    // }
   }, [navigate]);
 
   const ChangeFormat = (date) => {

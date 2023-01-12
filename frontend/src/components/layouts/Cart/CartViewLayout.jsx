@@ -8,7 +8,7 @@ const CartViewLayout = ({ page = "cart" }) => {
   const { cartItems } = useSelector((state) => state.cart);
   return (
     <Wrapper>
-      {cartItems.length !== 0 && page === "cart" ? (
+      {cartItems && cartItems.length !== 0 && page === "cart" ? (
         <Header>
           <div className="cart-layout-header-left">
             <p>Product</p>
@@ -24,7 +24,7 @@ const CartViewLayout = ({ page = "cart" }) => {
         </Header>
       ) : null}
 
-      {cartItems.length !== 0 && page !== "cart" ? (
+      {cartItems && cartItems.length !== 0 && page !== "cart" ? (
         <HeaderForCart>
           <div className="cart-layout-header-left">
             <p>Product</p>
@@ -42,7 +42,7 @@ const CartViewLayout = ({ page = "cart" }) => {
 
       <AnimatePresence mode="wait">
         <motion.div className="CartViewLayout-List" layout>
-          {cartItems.length ? (
+          {(cartItems && cartItems.length) ? (
             cartItems.map((data, index) => (
               <CartCardView data={data} page={page} key={index} index={index} />
             ))

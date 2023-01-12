@@ -131,7 +131,7 @@ const cartPageSlice = createSlice({
     },
     getTotalCost: (state) => {
       let cost = 0;
-      state.cartItems.map((i) => {
+      state.cartItems && state.cartItems.map((i) => {
         cost = cost + i.price * i.quantity;
       });
       state.totalCost = cost;

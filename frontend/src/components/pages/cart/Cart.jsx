@@ -35,11 +35,11 @@ const Cart = () => {
   useEffect(() => {
     dispatch(getTotalCost());
   }, []);
-  useEffect(() => {
-    if (isAuthenticated === false) {
-      navigate("/login?redirect=/cart");
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated === false) {
+  //     navigate("/login?redirect=/cart");
+  //   }
+  // }, [isAuthenticated]);
 
   const HelperCheckOut = () => {
     navigate("/login?redirect=/shipping");
@@ -126,7 +126,7 @@ const Cart = () => {
                 </motion.button>
                 <p>Your Cart</p>
               </div>
-              {cartItems.length !== 0 ? (
+              {cartItems && cartItems.length !== 0 ? (
                 <motion.button
                   className="cart-delete-all-btn"
                   onClick={() => {
@@ -141,7 +141,7 @@ const Cart = () => {
             <Body>
               <CartViewLayout />
             </Body>
-            {cartItems.length !== 0 ? (
+            {cartItems && cartItems.length !== 0 ? (
               <Footer>
                 <p>
                   Total : <span>₹{totalCost}</span>{" "}
