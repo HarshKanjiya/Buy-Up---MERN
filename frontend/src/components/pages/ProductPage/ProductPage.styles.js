@@ -42,6 +42,12 @@ export const Left = styled.div`
     width: 30%;
   }
 
+  @media (max-width:480px){
+    width: 100%;
+    img{
+      width: 100%;
+    }
+  }
 
 
 `;

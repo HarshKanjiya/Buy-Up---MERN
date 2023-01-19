@@ -69,6 +69,7 @@ const ProductPage = () => {
   const { productInfo, loading, error } = useSelector(
     (state) => state.productPage
   );
+  const {cartItems} = useSelector(state => state.cart)
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [ReviewBoxVisibility, setReviewBoxVisibility] = useState(false);
@@ -76,6 +77,8 @@ const ProductPage = () => {
   const [userReviewComment, setUserReviewComment] = useState("");
   const [snackBar, setSnackBar] = useState(false);
   const [SnackTxt, setSnackTxt] = useState("");
+
+  console.log('cartItems :>> ', cartItems);
 
   useEffect(() => {
     if (error) {
