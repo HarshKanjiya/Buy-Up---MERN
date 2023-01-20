@@ -126,7 +126,7 @@ const Cart = () => {
                 </motion.button>
                 <p>Your Cart</p>
               </div>
-              {cartItems && cartItems.length !== 0 ? (
+              {cartItems && (cartItems.length !== 0) ? (
                 <motion.button
                   className="cart-delete-all-btn"
                   onClick={() => {
@@ -141,7 +141,7 @@ const Cart = () => {
             <Body>
               <CartViewLayout />
             </Body>
-            {cartItems && cartItems.length !== 0 ? (
+            { cartItems && (cartItems.length !== 0) ? (
               <Footer>
                 <p>
                   Total : <span>₹{totalCost}</span>{" "}

@@ -26,17 +26,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import Orders from "./components/pages/orders/Orders";
 import { getUserOrders } from "./redux/slices/OrderSlice";
 
-const lightTheme = {
-  body: "#fff",
-  title: "#fff",
-  subTitle: "#b6b6b6",
-};
-
-const themez = createTheme({
-  status: {
-    danger: "#232323",
-  },
-});
 
 function App() {
   const location = useLocation();

@@ -7,6 +7,7 @@ export const addItemToCart = createAsyncThunk(
   "products/addToCart",
   async ({ id, quantity }, { dispatch, rejectWithValue, getState }) => {
     try {
+      // console.log("id,quantity :>> ", id, quantity);
       const { data } = await axios.get(`${getSingleProductAPI}/${id}`);
       dispatch(
         addToCart({
@@ -38,14 +39,14 @@ const cartPageSlice = createSlice({
     spacsInfo: null,
     PRODUCT_QUANTITY: 1,
     totalCost: 0,
-    finalAmount:0,
+    finalAmount: 0,
     SHIPPING_INFO: {
-      address:'',
-      country:'',
-      state:'',
-      city:'',
-      pinCode:'',
-      phoneNo:'',
+      address: "",
+      country: "",
+      state: "",
+      city: "",
+      pinCode: "",
+      phoneNo: "",
     },
   },
   reducers: {
@@ -53,7 +54,8 @@ const cartPageSlice = createSlice({
       state.error = null;
     },
     setCartFromLocalStorage: (state) => {
-      const temp = JSON.parse(localStorage.getItem("cartItems"));
+      let temp = JSON.parse(localStorage.getItem("cartItems"));
+      if (temp === null) temp = [];
       state.cartItems = temp;
     },
     DeleteCart: (state) => {
@@ -131,13 +133,14 @@ const cartPageSlice = createSlice({
     },
     getTotalCost: (state) => {
       let cost = 0;
-      state.cartItems && state.cartItems.map((i) => {
-        cost = cost + i.price * i.quantity;
-      });
+      state.cartItems &&
+        state.cartItems.map((i) => {
+          cost = cost + i.price * i.quantity;
+        });
       state.totalCost = cost;
     },
-    setfinalAmountForPayment:(state,{payload}) => {
-      state.finalAmount = payload
+    setfinalAmountForPayment: (state, { payload }) => {
+      state.finalAmount = payload;
     },
 
     // shipping infooo
