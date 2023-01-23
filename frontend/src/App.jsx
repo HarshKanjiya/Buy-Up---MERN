@@ -35,7 +35,7 @@ function App() {
   useEffect(() => {
     dispatch(loadUser({}));
     dispatch(getUserOrders({}));
-    dispatch(setCartFromLocalStorage());
+    // dispatch(setCartFromLocalStorage());
     dispatch(GET_SHIPPING_INFO_FROM_LOCALSTORAGE());
     getStripeApiKey();
   }, []);

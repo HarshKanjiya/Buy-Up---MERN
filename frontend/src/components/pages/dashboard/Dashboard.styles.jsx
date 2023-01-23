@@ -95,10 +95,26 @@ export const LeftElement = styled.div`
     p {
       display: block;
       background-color: #2bb594;
+      @media (max-width:600px){
+      display:none;
+    }
     }
     .dashboard-left-hover-white {
       color: white;
     }
+
+    @media (max-width:600px){
+     box-shadow:none;
+     background-color: #fff;
+     color:#898989;
+     .dashboard-left-hover-white{
+      color:#898989;
+     }
+
+
+    }
+
+    
   }
 `;
 export const Right = styled.div`

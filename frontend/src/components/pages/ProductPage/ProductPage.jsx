@@ -78,7 +78,7 @@ const ProductPage = () => {
   const [snackBar, setSnackBar] = useState(false);
   const [SnackTxt, setSnackTxt] = useState("");
 
-  console.log('cartItems :>> ', cartItems);
+  // console.log('cartItems :>> ', cartItems);
 
   useEffect(() => {
     if (error) {

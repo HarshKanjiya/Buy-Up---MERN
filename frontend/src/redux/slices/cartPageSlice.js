@@ -54,9 +54,9 @@ const cartPageSlice = createSlice({
       state.error = null;
     },
     setCartFromLocalStorage: (state) => {
-      let temp = JSON.parse(localStorage.getItem("cartItems"));
-      if (temp === null) temp = [];
-      state.cartItems = temp;
+      // let temp = JSON.parse(localStorage.getItem("cartItems"));
+      // if (temp === null) temp = [];
+      // state.cartItems = temp;
     },
     DeleteCart: (state) => {
       state.cartItems = [];
@@ -71,7 +71,7 @@ const cartPageSlice = createSlice({
         }
       });
       state.cartItems = temp;
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     addToCart: (state, { payload }) => {
       const item = payload;
@@ -110,7 +110,7 @@ const cartPageSlice = createSlice({
         }
       });
       state.cartItems = temp;
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     removeQuantityFromSpacs: (state, { payload }) => {
       const id = payload;
@@ -123,7 +123,7 @@ const cartPageSlice = createSlice({
         }
       });
       state.cartItems = temp;
-      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     addIntoQuantity: (state) => {
       state.PRODUCT_QUANTITY = state.PRODUCT_QUANTITY + 1;

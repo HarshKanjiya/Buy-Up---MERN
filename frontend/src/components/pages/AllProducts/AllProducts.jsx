@@ -23,6 +23,7 @@ const AllProducts = () => {
     (state) => state.products
   );
 
+
   const [page, setPage] = useState(1);
   useEffect(() => {
     if (error) {
@@ -48,12 +49,12 @@ const AllProducts = () => {
       ) : productInfo.products ? (
         <motion.div
           key={"allProductsPage"}
-          // initial={{ opacity: 0 }}
-          // animate={{ opacity: 1 }}
-          // exit={{ opacity: 0 }}
-          // transition={{
-          //   duration: 0.4,
-          // }}
+        // initial={{ opacity: 0 }}
+        // animate={{ opacity: 1 }}
+        // exit={{ opacity: 0 }}
+        // transition={{
+        //   duration: 0.4,
+        // }}
         >
           <Header />
           <HeadBar page="products" />
@@ -68,7 +69,7 @@ const AllProducts = () => {
             </Body>
             {/* {resultPerPage <= productInfo.products.length ? ( */}
             <ProductPagination
-              count={Math.ceil(productInfo.productCount / resultPerPage)}
+              count={Math.ceil((productInfo.products.length >= 15 ? productInfo.productCount : productInfo.products.length) / resultPerPage)}
               boundaryCount={2}
               showFirstButton
               showLastButton
