@@ -5,25 +5,19 @@ import { getSingleProductAPI } from "../../APILinks";
 
 export const addItemToCart = createAsyncThunk(
   "products/addToCart",
-  async ({ id, quantity }, { dispatch, rejectWithValue, getState }) => {
+  async ({ id, quantity,productInfo }, { dispatch, rejectWithValue, getState }) => {
     try {
-      // console.log("id,quantity :>> ", id, quantity);
-      const { data } = await axios.get(`${getSingleProductAPI}/${id}`);
       dispatch(
         addToCart({
-          id: data.product._id,
-          name: data.product.name,
-          price: data.product.price,
-          image: data.product.images[0].url,
-          stock: data.product.stock,
+          id: productInfo._id,
+          name: productInfo.name,
+          price: productInfo.price,
+          image: productInfo.images[0].url,
+          stock: productInfo.stock,
           quantity: quantity,
         })
       );
 
-      localStorage.setItem(
-        "cartItems",
-        JSON.stringify(getState().cart.cartItems)
-      );
     } catch (error) {
       return rejectWithValue(error.response.data.message);
     }
@@ -54,9 +48,7 @@ const cartPageSlice = createSlice({
       state.error = null;
     },
     setCartFromLocalStorage: (state) => {
-      // let temp = JSON.parse(localStorage.getItem("cartItems"));
-      // if (temp === null) temp = [];
-      // state.cartItems = temp;
+
     },
     DeleteCart: (state) => {
       state.cartItems = [];
@@ -71,7 +63,6 @@ const cartPageSlice = createSlice({
         }
       });
       state.cartItems = temp;
-      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     addToCart: (state, { payload }) => {
       const item = payload;
@@ -110,7 +101,6 @@ const cartPageSlice = createSlice({
         }
       });
       state.cartItems = temp;
-      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     removeQuantityFromSpacs: (state, { payload }) => {
       const id = payload;
@@ -123,7 +113,6 @@ const cartPageSlice = createSlice({
         }
       });
       state.cartItems = temp;
-      // localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     addIntoQuantity: (state) => {
       state.PRODUCT_QUANTITY = state.PRODUCT_QUANTITY + 1;

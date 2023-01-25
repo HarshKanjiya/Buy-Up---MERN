@@ -53,6 +53,7 @@ export const signup = createAsyncThunk(
           },
         }
       );
+      console.log('response.data.user :>> ', response.data);
       return response.data.user;
     } catch (error) {
       return rejectWithValue(error.response.data.message);

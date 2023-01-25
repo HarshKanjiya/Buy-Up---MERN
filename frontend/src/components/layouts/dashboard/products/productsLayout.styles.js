@@ -6,6 +6,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   gap: 1rem;
   overflow-x: hidden;
+
+  @media (max-width:580px){
+    max-width:100%;
+  }
 `;
 export const Header = styled.div`
   width: 100%;
@@ -61,6 +65,7 @@ export const CardWrapper = styled(motion.div)`
   position: relative;
   overflow: hidden;
   margin: 0.5rem 0;
+  user-select:none;
 
   @media (max-width: 700px) {
     flex-direction: column;

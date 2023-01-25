@@ -56,7 +56,7 @@ const EditProduct = ({ setLayerSelector, product }) => {
   const [oldImages, setOldImages] = useState(oldImgSet);
   const [imagesPreview, setImagesPreview] = useState([]);
 
-  
+
 
   const Imghandler = (e) => {
     const files = Array.from(e.target.files);
@@ -68,8 +68,8 @@ const EditProduct = ({ setLayerSelector, product }) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-            setImagesPreview((old) => [...old, reader.result]);
-            setImages((old) => [...old, reader.result]);
+          setImagesPreview((old) => [...old, reader.result]);
+          setImages((old) => [...old, reader.result]);
         }
       };
 
@@ -299,4 +299,6 @@ const InputText = styled(TextField)`
   & .MuiInput-underline:after {
     border-color: #2bb594;
   }
+
+
 `;

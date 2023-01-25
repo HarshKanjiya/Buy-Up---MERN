@@ -5,6 +5,13 @@ export const HeadLine = styled.p`
   font-weight: 700;
   font-size: 2rem;
   color: #d1d1d1;
+
+  @media (max-width:786px){
+    font-size: 1.5rem;
+  }
+  @media (max-width:580px){
+    font-size: 1.3rem;
+  }
 `;
 export const HeadLineBeta = styled.p`
 width: max-content;

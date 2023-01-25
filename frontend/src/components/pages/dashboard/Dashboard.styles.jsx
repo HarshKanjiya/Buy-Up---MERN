@@ -11,6 +11,9 @@ export const Wrapper = styled.div`
   @media (max-width: 555px) {
     padding: 0.5rem;
   }
+  @media (max-width: 555px) {
+    padding: 0.3rem;
+  }
 `;
 export const Container = styled.div`
   width: 100%;

@@ -109,7 +109,7 @@ const ProductPage = () => {
   };
 
   const HelperAddItemToCart = () => {
-    dispatch(addItemToCart({ id: params.id, quantity }));
+    dispatch(addItemToCart({ id: params.id, quantity, productInfo: productInfo.product }));
     HelperSnackBarOpen();
   };
 
