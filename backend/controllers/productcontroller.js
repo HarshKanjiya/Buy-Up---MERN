@@ -243,3 +243,30 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     success: true,
   });
 });
+
+
+
+// catogry wise
+
+exports.getProductsFromCatogry = catchAsyncErrors(async (req, res) => {
+  const { category } = req.body;
+
+
+  const categories = ['smartphone', 'laptop', 'camera', 'earbud', 'smartphone']
+
+  if (!categories.includes(category)) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid category'
+    })
+  }
+
+
+  let products = await Product.find({ category:category })
+
+  res.status(200).json({
+    success: true,
+    products
+  })
+
+})

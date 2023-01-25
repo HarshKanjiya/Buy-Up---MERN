@@ -1,6 +1,7 @@
 // product APIs
 export const getProductsAPI = "/api/v1/products"//done
 export const getSingleProductAPI = "/api/v1/product/"//done
+export const getProductFromCategoryAPI = "/api/v1/product/fromcategory"
 
 // auth APIs
 export const logInAPI = "/api/v1/login"//done

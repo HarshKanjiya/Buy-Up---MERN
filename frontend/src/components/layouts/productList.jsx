@@ -8,40 +8,57 @@ import ProductCardView from "../components/productCardView";
 import '../../index.css'
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { getProductFromCategoryAPI } from "../../APILinks";
 
 
-const ProductList = () => {
+const ProductList = ({ category = "featured" }) => {
   const { productInfo } = useSelector(state => state.products)
-  const [products,setProducts] = useState(null)
-  const [sliderForPhone,setSliderForPhone] = useState(true)
-
-  useEffect(()=>{
-    if(productInfo){
+  const [products, setProducts] = useState(null)
+  const [sliderForPhone, setSliderForPhone] = useState(true)
+  useEffect(() => {
+    if (productInfo) {
       setProducts(productInfo.products)
     }
-  },[productInfo])
+    if (category !== "featured") {
+      HelperGetData(category)
+    }
+  }, [productInfo])
 
   useEffect(() => {
-    setSliderForPhone( Math.floor(window.innerWidth / 150))
+    setSliderForPhone(Math.floor(window.innerWidth / 150))
   }, [window.innerWidth]);
 
-  if(products){
+  const HelperGetData = async (category) => {
+    try {
+      await axios.post(getProductFromCategoryAPI, {
+        category: category
+      })
+        .then((res) => {
+          setProducts(res.data.products)
+        })
+
+    } catch (e) { console.log(e) }
+  }
+
+
+
+  if (products) {
     return (
       <div className=" mx-8 my-10  ">
         <div className="flex align-middle justify-between  ">
-          <p className=" text-xl font-600 ">Featured</p>
-          <a className=" text-blue-600 " >more</a>
+          <p className=" text-xl font-600 ">{category}</p>
+          <a className=" text-[#2bb594] " href={`/products/${category === 'featured' ? '' : category}`} >more</a>
         </div>
+
         <Swiper
-        className=" py-4 "
+          className=" py-4 "
           navigation
           modules={[Navigation]}
-          slidesPerView={ sliderForPhone }
-          
+          slidesPerView={sliderForPhone}
           draggable
           grabCursor
-          onSwiper={(swiper) => { setSliderForPhone( Math.floor(swiper.width / 150)) }}
-  
+          onSwiper={() => { setSliderForPhone(Math.floor(window.innerWidth / 150)) }}
         >
           {products ? (
             products.map((product, index) => {
@@ -49,13 +66,11 @@ const ProductList = () => {
                 <SwiperSlide key={index}>
                   <ProductCardView product={product} />
                 </SwiperSlide>
-               
               );
             })
           ) : (
             <p>no product</p>
           )}
-         
         </Swiper>
       </div>
     );

@@ -48,12 +48,15 @@ const Home = () => {
           transition={{
             duration: 0.4,
           }}
-         
+
         >
           <Header />
           <HeadBar />
           <HeroSectionCarousel />
           <ProductList />
+          <ProductList category="laptop" />
+          <ProductList category="smartphone" />
+          <ProductList category="earbud" />
           <Footer />
         </motion.div>
       )}

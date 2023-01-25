@@ -9,6 +9,7 @@ const {
   getAllReviewOfSingleProduct,
   deleteReview,
   getAdminProducts,
+  getProductsFromCatogry,
 } = require("../controllers/productcontroller");
 const { isAuthenticatedUser, authorixedRoles } = require("../middleware/auth");
 
@@ -23,6 +24,8 @@ router
   .put(isAuthenticatedUser, authorixedRoles("admin"), updateProduct)
   .delete(isAuthenticatedUser, authorixedRoles("admin"), deleteProduct);
 router.route("/product/:id").get(getSingleProduct);
+
+router.route("/product/fromcategory").post(getProductsFromCatogry)
 
 router
   .route("/admin/products")

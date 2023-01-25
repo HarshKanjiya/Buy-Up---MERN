@@ -111,6 +111,7 @@ const FooterText = styled.p`
   font-family: "Hubballi", cursive;
   color: white;
   background-color: black;
+  color: rgba(255,255,255,0.7);
 `;
 const Container = styled.div`
   width: 100vw;
@@ -227,6 +228,8 @@ const FooterBody = styled.div`
   .Footer-ProfileClass {
     max-width: 290px;
     text-justify: inter-word;
+    line-height: 1.4rem;
+  color: rgba(255,255,255,0.8);
   }
 
   @media (max-width: 480px) {
