@@ -360,7 +360,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [HarshKanjiya/Buy-Up---MERN](https://github.com/HarshKanjiya/Buy-Up---MERN)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|556<br/>Tools used|12/19/23 <br/>Report generated|
+|571<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
 </div>
 
@@ -2166,9 +2166,9 @@ Full tech stack [here](/techstack.md)
 </table>
 
 
-## <img src='https://img.stackshare.io/group.svg' /> Open source packages (341)</h2>
+## <img src='https://img.stackshare.io/group.svg' /> Open source packages (356)</h2>
 
-## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (336)
+## <img width='24' height='24' src='https://img.stackshare.io/service/1120/lejvzrnlpb308aftn31u.png'/> npm (351)
 
 |NAME|VERSION|LAST UPDATED|LAST UPDATED BY|LICENSE|VULNERABILITIES|
 |:------|:------|:------|:------|:------|:------|
@@ -2228,6 +2228,7 @@ Full tech stack [here](/techstack.md)
 |[bili](https://www.npmjs.com/bili)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[bl](https://www.npmjs.com/bl)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[body-parser](https://www.npmjs.com/body-parser)|v1.20.1|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[brace](https://www.npmjs.com/brace)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[brace-expansion](https://www.npmjs.com/brace-expansion)|v1.1.11|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[brfs](https://www.npmjs.com/brfs)|v2.0.1|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[bson](https://www.npmjs.com/bson)|v4.7.0|10/20/22|Harsh Kanjiya |Apache-2.0|N/A|
@@ -2236,6 +2237,7 @@ Full tech stack [here](/techstack.md)
 |[cac](https://www.npmjs.com/cac)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[camelcase](https://www.npmjs.com/camelcase)|v5.3.1|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[chai-subset](https://www.npmjs.com/chai-subset)|v1.6.0|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[chalk](https://www.npmjs.com/chalk)|v2.4.2|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[check-types](https://www.npmjs.com/check-types)|v11.1.2|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[cheerio](https://www.npmjs.com/cheerio)|v1.0.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[chokidar](https://www.npmjs.com/chokidar)|v3.5.3|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2245,6 +2247,7 @@ Full tech stack [here](/techstack.md)
 |[coffee-script](https://www.npmjs.com/coffee-script)|v1.12.6|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[color](https://www.npmjs.com/color)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[colors](https://www.npmjs.com/colors)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[commitlint](https://www.npmjs.com/commitlint)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[concat-stream](https://www.npmjs.com/concat-stream)|v2.0.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[concurrently](https://www.npmjs.com/concurrently)|v3.1.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[conf](https://www.npmjs.com/conf)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2259,6 +2262,7 @@ Full tech stack [here](/techstack.md)
 |[cookie-session](https://www.npmjs.com/cookie-session)|v2.0.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[cookie-signature](https://www.npmjs.com/cookie-signature)|v1.0.6|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[cookies](https://www.npmjs.com/cookies)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[copy](https://www.npmjs.com/copy)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[core-js](https://www.npmjs.com/core-js)|v3.26.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[cors](https://www.npmjs.com/cors)|v2.8.5|11/26/22|Harsh Kanjiya |MIT|N/A|
 |[covert](https://www.npmjs.com/covert)|v1.1.0|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2270,6 +2274,7 @@ Full tech stack [here](/techstack.md)
 |[csv](https://www.npmjs.com/csv)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[csv-parse](https://www.npmjs.com/csv-parse)|v4.16.3|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[d3](https://www.npmjs.com/d3)|N/A|10/20/22|Harsh Kanjiya |ISC|N/A|
+|[danger](https://www.npmjs.com/danger)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[debug](https://www.npmjs.com/debug)|v4.3.4|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[deep-equal](https://www.npmjs.com/deep-equal)|v1.0.1|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[defined](https://www.npmjs.com/defined)|v1.0.1|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2300,6 +2305,7 @@ Full tech stack [here](/techstack.md)
 |[express](https://www.npmjs.com/express)|v4.18.2|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[express-session](https://www.npmjs.com/express-session)|v1.17.2|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[extend](https://www.npmjs.com/extend)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[ffi](https://www.npmjs.com/ffi)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[figures](https://www.npmjs.com/figures)|v1.4.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[finalhandler](https://www.npmjs.com/finalhandler)|v1.2.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[flat](https://www.npmjs.com/flat)|N/A|10/20/22|Harsh Kanjiya |BSD-3-Clause|N/A|
@@ -2323,6 +2329,7 @@ Full tech stack [here](/techstack.md)
 |[http](https://www.npmjs.com/http)|N/A|10/20/22|Harsh Kanjiya |BSD-2-Clause|N/A|
 |[http-errors](https://www.npmjs.com/http-errors)|v2.0.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[https](https://www.npmjs.com/https)|N/A|10/20/22|Harsh Kanjiya |ISC|N/A|
+|[husky](https://www.npmjs.com/husky)|v0.14.3|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[hyperquest](https://www.npmjs.com/hyperquest)|v2.1.3|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[i](https://www.npmjs.com/i)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[iconv](https://www.npmjs.com/iconv)|N/A|10/20/22|Harsh Kanjiya |ISC|N/A|
@@ -2344,6 +2351,7 @@ Full tech stack [here](/techstack.md)
 |[is-plain-object](https://www.npmjs.com/is-plain-object)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[isobject](https://www.npmjs.com/isobject)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[js-yaml](https://www.npmjs.com/js-yaml)|v4.1.0|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[jscs](https://www.npmjs.com/jscs)|v3.0.7|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[jsonwebtoken](https://www.npmjs.com/jsonwebtoken)|v8.5.1|10/20/22|Harsh Kanjiya |MIT|[CVE-2022-23529](https://github.com/advisories/GHSA-27h2-hvpr-p74q) (High)<br/>[CVE-2022-23539](https://github.com/advisories/GHSA-8cf7-32gw-wr33) (Moderate)<br/>[CVE-2022-23540](https://github.com/advisories/GHSA-qwph-4952-7xr6) (Moderate)<br/>[CVE-2022-23541](https://github.com/advisories/GHSA-hjrf-2m68-5959) (Moderate)|
 |[karma-browserify](https://www.npmjs.com/karma-browserify)|v6.0.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[karma-chai](https://www.npmjs.com/karma-chai)|v0.1.0|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2356,12 +2364,13 @@ Full tech stack [here](/techstack.md)
 |[kind-of](https://www.npmjs.com/kind-of)|v6.0.3|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[lab](https://www.npmjs.com/lab)|N/A|10/20/22|Harsh Kanjiya |BSD-3-Clause|N/A|
 |[level](https://www.npmjs.com/level)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[lint-staged](https://www.npmjs.com/lint-staged)|v5.0.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[lodash.includes](https://www.npmjs.com/lodash.includes)|v4.3.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[lodash.isequal](https://www.npmjs.com/lodash.isequal)|v4.5.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[lodash.isplainobject](https://www.npmjs.com/lodash.isplainobject)|v4.0.6|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[lodash.isstring](https://www.npmjs.com/lodash.isstring)|v4.0.1|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[log](https://www.npmjs.com/log)|N/A|10/20/22|Harsh Kanjiya |ISC|N/A|
-|[marked](https://www.npmjs.com/marked)|v0.7.0|10/20/22|Harsh Kanjiya |MIT|[CVE-2022-21680](https://github.com/advisories/GHSA-rrrm-qjm4-v8hf) (High)<br/>[CVE-2022-21681](https://github.com/advisories/GHSA-5v2h-r2cx-5xgj) (High)|
+|[marked](https://www.npmjs.com/marked)|v0.7.0|10/20/22|Harsh Kanjiya |MIT|[CVE-2022-21681](https://github.com/advisories/GHSA-5v2h-r2cx-5xgj) (High)<br/>[CVE-2022-21680](https://github.com/advisories/GHSA-rrrm-qjm4-v8hf) (High)|
 |[merge](https://www.npmjs.com/merge)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[merge-descriptors](https://www.npmjs.com/merge-descriptors)|v1.0.1|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[method-override](https://www.npmjs.com/method-override)|v3.0.0|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2382,6 +2391,7 @@ Full tech stack [here](/techstack.md)
 |[multiparty](https://www.npmjs.com/multiparty)|v4.2.3|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[mv](https://www.npmjs.com/mv)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[nan](https://www.npmjs.com/nan)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[nano](https://www.npmjs.com/nano)|N/A|10/20/22|Harsh Kanjiya |Apache-2.0|N/A|
 |[ncp](https://www.npmjs.com/ncp)|v2.0.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[node](https://www.npmjs.com/node)|v21.2.0|10/20/22|Harsh Kanjiya |ISC|N/A|
 |[node-fetch](https://www.npmjs.com/node-fetch)|v2.6.7|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2406,6 +2416,7 @@ Full tech stack [here](/techstack.md)
 |[pem](https://www.npmjs.com/pem)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[phantom](https://www.npmjs.com/phantom)|N/A|10/20/22|Harsh Kanjiya |ISC|N/A|
 |[platform](https://www.npmjs.com/platform)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[poi](https://www.npmjs.com/poi)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[pretty](https://www.npmjs.com/pretty)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[pretty-quick](https://www.npmjs.com/pretty-quick)|v1.11.1|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[process](https://www.npmjs.com/process)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2439,9 +2450,11 @@ Full tech stack [here](/techstack.md)
 |[rollup-plugin-commonjs](https://www.npmjs.com/rollup-plugin-commonjs)|v10.1.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[rollup-plugin-node-globals](https://www.npmjs.com/rollup-plugin-node-globals)|v1.4.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[rollup-plugin-terser](https://www.npmjs.com/rollup-plugin-terser)|v7.0.2|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[rx](https://www.npmjs.com/rx)|N/A|10/20/22|Harsh Kanjiya |Apache-2.0|N/A|
 |[safe-buffer](https://www.npmjs.com/safe-buffer)|v5.1.2|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[safe-publish-latest](https://www.npmjs.com/safe-publish-latest)|v1.1.4|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[seedrandom](https://www.npmjs.com/seedrandom)|v2.4.3|10/20/22|Harsh Kanjiya |MIT|N/A|
+|[semantic-release](https://www.npmjs.com/semantic-release)|v18.0.0|10/20/22|Harsh Kanjiya |MIT|[CVE-2022-31051](https://github.com/advisories/GHSA-x2pg-mjhr-2m5x) (Moderate)|
 |[semistandard](https://www.npmjs.com/semistandard)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[semver](https://www.npmjs.com/semver)|v6.3.0|10/20/22|Harsh Kanjiya |ISC|[CVE-2022-25883](https://github.com/advisories/GHSA-c2qf-rxjj-qqgw) (Moderate)|
 |[send](https://www.npmjs.com/send)|v0.18.0|10/20/22|Harsh Kanjiya |MIT|N/A|
@@ -2467,6 +2480,7 @@ Full tech stack [here](/techstack.md)
 |[table](https://www.npmjs.com/table)|N/A|10/20/22|Harsh Kanjiya |BSD-3-Clause|N/A|
 |[tailwindcss](https://www.npmjs.com/tailwindcss)|v3.2.1|11/04/22|Harsh Kanjiya |MIT|N/A|
 |[tap](https://www.npmjs.com/tap)|v10.1|10/20/22|Harsh Kanjiya |ISC|N/A|
+|[tape](https://www.npmjs.com/tape)|v4.6.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[tar](https://www.npmjs.com/tar)|v6.1.13|10/20/22|Harsh Kanjiya |ISC|N/A|
 |[temp](https://www.npmjs.com/temp)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[terser](https://www.npmjs.com/terser)|v5.15.1|10/20/22|Harsh Kanjiya |BSD-2-Clause|N/A|
@@ -2506,6 +2520,7 @@ Full tech stack [here](/techstack.md)
 |[when](https://www.npmjs.com/when)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[write](https://www.npmjs.com/write)|N/A|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[xml2js](https://www.npmjs.com/xml2js)|v0.4.23|10/20/22|Harsh Kanjiya |MIT|[CVE-2023-0842](https://github.com/advisories/GHSA-776f-qx25-q3cc) (Moderate)|
+|[xo](https://www.npmjs.com/xo)|v0.24.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[yargs](https://www.npmjs.com/yargs)|v16.2.0|10/20/22|Harsh Kanjiya |MIT|N/A|
 |[yo](https://www.npmjs.com/yo)|N/A|10/20/22|Harsh Kanjiya |BSD-2-Clause|N/A|
 
