@@ -2,7 +2,7 @@ repo_name: HarshKanjiya/Buy-Up---MERN
 report_id: ee19d506d866bc6782b119e24299c8dc
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-05T08:23:38+00:00'
+timestamp: '2024-02-29T19:10:43+00:00'
 requested_by: HarshKanjiya
 provider: github
 branch: master
@@ -204,7 +204,7 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 06:55:19.000000000 Z
 - name: Swift
-  description: 'An innovative new programming language for Cocoa and Cocoa Touch. '
+  description: An innovative new programming language for Cocoa and Cocoa Touch.
   website_url: https://developer.apple.com/swift/
   license: Apache-2.0
   open_source: true
@@ -465,7 +465,7 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 10:31:47.000000000 Z
 - name: Next.js
-  description: 'A small framework for server-rendered universal JavaScript apps '
+  description: A small framework for server-rendered universal JavaScript apps
   website_url: https://nextjs.org/
   open_source: true
   hosted_saas: false
@@ -647,7 +647,7 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 06:55:19.000000000 Z
 - name: Gun
-  description: 'Self-hosted Firebase. '
+  description: Self-hosted Firebase.
   website_url: http://gun.js.org/#step1
   open_source: true
   hosted_saas: false
@@ -1164,7 +1164,7 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 06:55:19.000000000 Z
 - name: Monit
-  description: 'A free, open-source process supervision tool '
+  description: A free, open-source process supervision tool
   website_url: https://mmonit.com
   open_source: false
   hosted_saas: false
@@ -1214,7 +1214,7 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 06:55:19.000000000 Z
 - name: Prettier
-  description: 'Prettier is an opinionated code formatter. '
+  description: Prettier is an opinionated code formatter.
   website_url: https://prettier.io/
   version: 2.7.1
   license: MIT
@@ -1329,7 +1329,7 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 06:55:19.000000000 Z
 - name: Split
-  description: 'Split provides a unified solution for feature flags and experimentation '
+  description: Split provides a unified solution for feature flags and experimentation
   website_url: http://www.split.io
   open_source: false
   hosted_saas: true
@@ -1341,7 +1341,7 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 06:55:19.000000000 Z
 - name: SuperTest
-  description: 'A library for testing node.js HTTP servers '
+  description: A library for testing node.js HTTP servers
   website_url: https://www.npmjs.com/package/supertest
   version: 6.3.0
   license: MIT
@@ -2583,7 +2583,7 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 06:55:19.000000000 Z
 - name: oso
-  description: 'A batteries-included system for application authorization. '
+  description: A batteries-included system for application authorization.
   website_url: https://www.osohq.com/
   license: Apache-2.0
   open_source: true
@@ -4999,6 +4999,13 @@ tools:
   detection_source: node_modules/@types/node/package.json
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-10-20 06:55:19.000000000 Z
+  vulnerabilities:
+  - name: NPM IP package incorrectly identifies some private IP addresses as public
+    cve_id: CVE-2023-42282
+    cve_url: https://github.com/advisories/GHSA-78xj-cgh5-2h22
+    detected_date: Feb 10
+    severity: moderate
+    first_patched: 2.0.1
 - name: ipaddr.js
   description: A library for manipulating IPv4 and IPv6 addresses in JavaScript
   package_url: https://www.npmjs.com/ipaddr.js
@@ -7433,6 +7440,13 @@ tools:
   last_updated_by: Harsh Kanjiya
   last_updated_on: 2022-11-04 07:40:05.000000000 Z
   vulnerabilities:
+  - name: Vite dev server option `server.fs.deny` can be bypassed when hosted on case-insensitive
+      filesystem
+    cve_id: CVE-2024-23331
+    cve_url: https://github.com/advisories/GHSA-c24v-8rfc-w8vw
+    detected_date: Jan 20
+    severity: high
+    first_patched: 3.2.8
   - name: Vite Server Options (server.fs.deny) can be bypassed using double forward-slash
       (//)
     cve_id: CVE-2023-34092
